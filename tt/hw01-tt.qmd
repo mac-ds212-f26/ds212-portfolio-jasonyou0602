@@ -1,0 +1,131 @@
+---
+title: "Homework 01"
+---
+
+
+## TidyTuesday Part
+
+```{r}
+library(tidyverse)
+tuesdata <- tidytuesdayR::tt_load('2026-09-08')
+
+cafe <- tuesdata$cafe
+cappuccino_index <- tuesdata$cappuccino_index
+```
+# Research Question:
+
+How does cappuccino affordability vary by country?
+
+
+```{r}
+cappuccino_clean <- cappuccino_index |>
+  mutate(
+    country = str_replace_all(country, "\u00a0", " ")
+  )
+```
+
+```{r}
+most_affordable <- cappuccino_clean |>
+  slice_min(
+    order_by = index,
+    n = 5,
+    with_ties = FALSE
+  )
+
+least_affordable <- cappuccino_clean |>
+  slice_max(
+    order_by = index,
+    n = 5,
+    with_ties = FALSE
+  )
+
+most_affordable
+least_affordable
+```
+
+
+```{r}
+extreme_countries <- bind_rows(
+  most_affordable |>
+    mutate(group = "Most affordable"),
+  
+  least_affordable |>
+    mutate(group = "Least affordable")
+)
+```
+
+```{r}
+ggplot(extreme_countries, aes(x = index, y = fct_reorder(country, index),
+    fill = group)) +
+  geom_col(width = 0.7) +
+  geom_text(
+    aes(label = paste0(round(index, 1), " min")), hjust = -0.1, size = 3.5) +
+  facet_wrap(vars(group), scales = "free_y", ncol = 1
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Most affordable" = "green",
+      "Least affordable" = "red"
+    )
+  ) +
+  scale_x_continuous(
+    expand = expansion(mult = c(0, 0.15))
+  ) +
+  labs(
+    title = "Where is a cappuccino most and least affordable?",
+    subtitle = "In minutes of barista work",
+    x = "Minutes of work",
+    y = NULL
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    panel.grid.major.y = element_blank()
+  )
+```
+
+This plot tells us that Pakistan, Qatar, Djibouti, India and Vietnam's barista workers have to spend the most working time to afford a cappuccino, while the Netherlands, Switzerland, New Zealand, Italy and Australia's barista workers can spend the least working time to afford a cappuccino. On average, Australia's barista workers work for the shortest time, 10.1 minutes, to afford a cappuccino, while Pakistan's barista workers work for the longest time, 277 minutes, to afford a cappuccino.
+
+```{r}
+plot_data <- cappuccino_clean |>
+  mutate(
+    country = fct_reorder(country, index, .desc = TRUE)
+  ) |>
+  select(country, index, n) |>
+  pivot_longer(
+    cols = c(index, n),
+    names_to = "measure",
+    values_to = "value"
+  ) |>
+  mutate(
+    measure = recode(
+      measure,
+      index = "Minutes of work",
+      n = "Sample size"
+    )
+  )
+```
+
+```{r}
+ggplot(
+  plot_data,
+  aes(x = value, y = country, fill = measure)) +
+  geom_col(width = 0.75) +
+  facet_grid(cols = vars(measure)) +
+  scale_fill_manual(
+    values = c(
+      "Minutes of work" = "#614425",
+      "Sample size" = "darkblue"
+    )) +
+  labs(
+    title = "Cappuccino affordability and sample size by country",
+    x = NULL,
+    y = NULL,
+    fill = NULL,
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    panel.grid.major.y = element_blank())
+```
+This plot tells us about average minutes of work a barista have to spend to afford a cup of cappuccino by country. However, this data is distorted by the sample size of the dataset. The bar graph of the right shows how large each country's sample is. 
