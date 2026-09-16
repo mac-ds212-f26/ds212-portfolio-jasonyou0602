@@ -85,6 +85,10 @@ book:
       - extra/extra-sample1.qmd
       - extra/extra-sample2.qmd
 
+    - part: "TidyTuesday"
+      chapters:
+      - tt/hw01-tt.qmd
+
 
 
 format:
