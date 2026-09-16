@@ -26,18 +26,10 @@ cappuccino_clean <- cappuccino_index |>
 
 ```{r}
 most_affordable <- cappuccino_clean |>
-  slice_min(
-    order_by = index,
-    n = 5,
-    with_ties = FALSE
-  )
+  slice_min(order_by = index, n = 5)
 
 least_affordable <- cappuccino_clean |>
-  slice_max(
-    order_by = index,
-    n = 5,
-    with_ties = FALSE
-  )
+  slice_max(order_by = index, n = 5)
 
 most_affordable
 least_affordable
@@ -85,6 +77,8 @@ ggplot(extreme_countries, aes(x = index, y = fct_reorder(country, index),
 ```
 
 This plot tells us that Pakistan, Qatar, Djibouti, India and Vietnam's barista workers have to spend the most working time to afford a cappuccino, while the Netherlands, Switzerland, New Zealand, Italy and Australia's barista workers can spend the least working time to afford a cappuccino. On average, Australia's barista workers work for the shortest time, 10.1 minutes, to afford a cappuccino, while Pakistan's barista workers work for the longest time, 277 minutes, to afford a cappuccino.
+
+However, this data may not be entirely accurate, because the size of the sample for each countries vary a lot.
 
 ```{r}
 plot_data <- cappuccino_clean |>
