@@ -190,7 +190,7 @@
     "href": "ica/03-adv-ggplot-notes.html#exercise-3",
     "title": "3 Adv Data Viz",
     "section": "Exercise 3",
-    "text": "Exercise 3\nIn your visualization, also display the usual temperatures (NormalLow and NormalHigh) and actual 2011 temperatures (Low and High). Your plot should look like the one below. The hex code of the color used for the usual temperatures is \"#C8B8BA\" and for the color used for actual temperatures is \"#A90248\".\n\n\nSFO observed, Average, and Record Daily Temperatures in 2011\n\n\n\n\n\n\n\nTipFiner Control\n\n\n\nIf you’d like finer control of the width of these lines/rectangles, check out the geom_rect documentation page.",
+    "text": "Exercise 3\nIn your visualization, also display the usual temperatures (NormalLow and NormalHigh) and actual 2011 temperatures (Low and High). Your plot should look like the one below. The hex code of the color used for the usual temperatures is \"#C8B8BA\" and for the color used for actual temperatures is \"#A90248\".\n\n\nSFO observed, Average, and Record Daily Temperatures in 2011\n\n\nCodeggplot(weather, aes(x = dateInYear))+\n  geom_linerange(aes(ymin = RecordLow, ymax = RecordHigh), color = \"#ECEBE3\") +\n  geom_linerange(aes(ymin = NormalLow, ymax = NormalHigh), color = \"#C8B8BA\") +\n  geom_linerange(aes(ymin = Low, ymax = High), color = \"#A90248\") +\n  theme_classic()\n\n\n\n\n\n\n\n\n\n\n\n\n\nTipFiner Control\n\n\n\nIf you’d like finer control of the width of these lines/rectangles, check out the geom_rect documentation page.",
     "crumbs": [
       "In-Class Activities",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>3 Adv Data Viz</span>"
@@ -201,7 +201,7 @@
     "href": "ica/03-adv-ggplot-notes.html#exercise-4",
     "title": "3 Adv Data Viz",
     "section": "Exercise 4",
-    "text": "Exercise 4\nRecreate the visual demarcations of the months by adding vertical lines separating the months. Brainstorm how we might draw those vertical lines. What geom might we use? What subset of the data might we use in that geom layer to draw lines only at the month divisions?",
+    "text": "Exercise 4\nRecreate the visual demarcations of the months by adding vertical lines separating the months. Brainstorm how we might draw those vertical lines. What geom might we use? What subset of the data might we use in that geom layer to draw lines only at the month divisions?\n\nCodeggplot(weather, aes(x = dateInYear))+\n  geom_linerange(aes(ymin = RecordLow, ymax = RecordHigh), color = \"#ECEBE3\") +\n  geom_linerange(aes(ymin = NormalLow, ymax = NormalHigh), color = \"#C8B8BA\") +\n  geom_linerange(aes(ymin = Low, ymax = High), color = \"#A90248\") +\n  \n  theme_classic()",
     "crumbs": [
       "In-Class Activities",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>3 Adv Data Viz</span>"
@@ -271,6 +271,17 @@
     "crumbs": [
       "Extras",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Extra Sample 2</span>"
+    ]
+  },
+  {
+    "objectID": "tt/hw01-tt.html",
+    "href": "tt/hw01-tt.html",
+    "title": "Homework 01",
+    "section": "",
+    "text": "TidyTuesday Part\nCodelibrary(tidyverse)\ntuesdata &lt;- tidytuesdayR::tt_load('2026-09-08')\n\ncafe &lt;- tuesdata$cafe\ncappuccino_index &lt;- tuesdata$cappuccino_index",
+    "crumbs": [
+      "TidyTuesday",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Homework 01</span>"
     ]
   }
 ]
