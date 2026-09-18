@@ -51,7 +51,8 @@ ggplot(extreme_countries, aes(x = index, y = fct_reorder(country, index),
     fill = group)) +
   geom_col(width = 0.7) +
   geom_text(
-    aes(label = paste0(round(index, 1), " min")), hjust = -0.1, size = 3.5) +
+    aes(label = paste0(round(index, 1), " min")), hjust = -0.1, size = 3.5,
+    ) +
   facet_wrap(vars(group), scales = "free_y", ncol = 1
   ) +
   scale_fill_manual(
@@ -67,12 +68,14 @@ ggplot(extreme_countries, aes(x = index, y = fct_reorder(country, index),
     title = "Where is a cappuccino most and least affordable?",
     subtitle = "In minutes of barista work",
     x = "Minutes of work",
-    y = NULL
+    y = NULL,
+    caption = "Source: TidyTuesday"
   ) +
   theme_minimal() +
   theme(
     legend.position = "none",
-    panel.grid.major.y = element_blank()
+    panel.grid.major.y = element_blank(),
+    
   )
 ```
 
@@ -116,6 +119,7 @@ ggplot(
     x = NULL,
     y = NULL,
     fill = NULL,
+    caption = "Source: TidyTuesday"
   ) +
   theme_minimal() +
   theme(
