@@ -77,11 +77,17 @@ book:
       chapters:
       - ica/ica-sample1.qmd
       - ica/ica-sample2.qmd
+      - ica/cleaning.qmd
+      - ica/03-adv-ggplot-notes.qmd
 
     - part: "Extras"
       chapters:
       - extra/extra-sample1.qmd
       - extra/extra-sample2.qmd
+
+    - part: "TidyTuesday"
+      chapters:
+      - tt/hw01-tt.qmd
 
 
 
