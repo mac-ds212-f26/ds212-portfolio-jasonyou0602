@@ -329,25 +329,7 @@ ggsave("data/ica4.png", width = 5, height = 5, units = "in")
 Below we show how to make the MN counties map in the `leaflet` package.
 
 ```{r leaflet}
-library(leaflet)
 
-mn_counties_leaf <- mn_counties |> st_transform(4326) # Leaflet expects this CRS for vectors
-mn_cities_leaf <- mn_cities |> st_transform(4326)
-
-cities_per_county <- st_join(mn_cities_leaf, mn_counties_leaf) |>
-    st_drop_geometry() |> # removes geometry - makes the following calculation more efficient
-    count(name) 
-
-mn_counties_leaf |> 
-    filter(name %in% c("Anoka", "Hennepin", "Ramsey", "Dakota", "Carver", "Washington", "Scott")) |>
-    left_join(cities_per_county) |>
-    leaflet() |> 
-    addProviderTiles("OpenStreetMap.Mapnik") |> 
-    addPolygons(
-        color = "#444444", weight = 1, smoothFactor = 0.5, opacity = 1.0,
-        fillOpacity = 0.5, fillColor = "yellow",
-        highlightOptions = highlightOptions(color = "white", weight = 2, bringToFront = TRUE)) |>
-    addCircles(data = mn_cities_leaf |> filter(county %in% paste(c("Anoka", "Hennepin", "Ramsey", "Dakota", "Carver", "Washington", "Scott"), "County")), color = "#444444")
 ```
 
 
