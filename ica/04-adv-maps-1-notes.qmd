@@ -210,7 +210,9 @@ st_crs(mn_cities) == st_crs(mn_counties)
 
 ```{r}
 # Write your answer here
-
+ggplot() +
+  geom_sf(data = mn_counties) +
+  geom_sf(data = mn_cities, size = 0.5)
 ```
 
 
@@ -234,7 +236,7 @@ Look up the `scale_color_viridis_c()` documentation via the [ggplot2 reference](
 - Read the function description at the top. What is the advantage of using this function for making color palettes?
 - Look through the examples section. What is the difference between the `_d()`, `_c()`, and `_b()` variants of this function?
 
-
+> The difference between _d(), _c() and _b() is the color scale.
 
 
 ### Adding Elevation Raster Data
@@ -262,8 +264,15 @@ Build on our existing map by adding a raster layer for elevation as the backgrou
 - Add in the layers from the map above to show the largest cities and the county outlines. To remove a background color, use `fill = NA`.
 
 ```{r}
-
-
+ggplot() +
+    geom_raster(data = elev_df, aes(x = x, y = y, fill = elevation)) + # adding the elevation as first (bottom) layer
+    scale_fill_gradient(low = "darkgreen", high = "white", guide = FALSE) +
+    geom_sf(data = mn_counties, fill = NA, color = "black") + 
+    geom_sf(data = mn_cities |> filter(population >= 10000), mapping = aes(color = population, size = population))+ # cities layer
+    scale_color_viridis_c() + # continuous (gradient) color scale
+    labs(title = "Minnesota Cities with Population >= 10,000") + 
+    ggthemes::theme_map() +
+    theme(legend.position = "bottom") # move legend
 ```
 
 
@@ -310,7 +319,8 @@ Let's add to the above code chunk to save the map above to an image file called 
 ```{r save_plot_example, eval=FALSE}
 # Code for creating plot
 
-ggsave("relative path to image & file extension", width = ?, height = ?, units = "in")
+
+ggsave("data/ica4.png", width = 5, height = 5, units = "in")
 ```
 
 
