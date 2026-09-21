@@ -296,7 +296,8 @@ ggplot(precip_data, aes(x = dateInYear, y = CumPrec)) +
     linewidth = 0.5
   ) +
   geom_point(
-    data = precip_data |> filter(Precip == RecordP, Precip > 0),
+    data = precip_data |> filter(RecordP == 1),
+    aes(y = CumPrec + 0.12),
     shape = 25,
     fill = "black",
     color = "black",
