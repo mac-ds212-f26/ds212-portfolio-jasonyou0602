@@ -85,6 +85,7 @@ However, this data may not be entirely accurate, because the size of the sample 
 
 ```{r}
 plot_data <- cappuccino_clean |>
+  filter(n > 15) |>
   mutate(
     country = fct_reorder(country, index, .desc = TRUE)
   ) |>
@@ -105,25 +106,19 @@ plot_data <- cappuccino_clean |>
 
 ```{r}
 ggplot(
-  plot_data,
-  aes(x = value, y = country, fill = measure)) +
-  geom_col(width = 0.75) +
-  facet_grid(cols = vars(measure)) +
-  scale_fill_manual(
-    values = c(
-      "Minutes of work" = "#614425",
-      "Sample size" = "darkblue"
-    )) +
+  cappuccino_clean |>
+    filter(n > 10) |>
+    mutate(country = fct_reorder(country, index, .desc = TRUE)),
+  aes(x = index, y = country)
+) +
+  geom_col(width = 0.75, fill = "#614425") +
   labs(
-    title = "Cappuccino affordability and sample size by country",
-    x = NULL,
+    title = "Minutes of barista work by country to buy a cappuccino",
+    subtitle = "While working time is over 150 mins in India, it is only about 10 mins in Australia.",
+    x = "Minutes of work",
     y = NULL,
-    fill = NULL,
-    caption = "Source: TidyTuesday"
-  ) +
+    caption = "Author: Jason You | Source: Cappuccino Index, TidyTuesday")+
   theme_minimal() +
-  theme(
-    legend.position = "bottom",
-    panel.grid.major.y = element_blank())
+  theme(panel.grid.major.y = element_blank())
 ```
 This plot tells us about average minutes of work a barista have to spend to afford a cup of cappuccino by country. However, this data is distorted by the sample size of the dataset. The bar graph of the right shows how large each country's sample is. 

@@ -1,0 +1,89 @@
+---
+title: "Homework 02"
+---
+
+
+## TidyTuesday Part (Optional)
+
+::: {.callout-important title="Instructions"}
+
+You can count work on this week's TidyTuesday toward the exceptional work.
+
+:::
+
+Explore the week's [TidyTuesday](https://github.com/rfordatascience/tidytuesday) challenge. Develop a research question, then answer it through a short data story mainly composed of [effective visualizations](https://docs.google.com/presentation/d/1WHr6Itzm2IJLxvppcacxHpr8R4NxO4MfvWWUPmtQx6Q/preview?slide=id.g13360dab5d5_0_61).  Provide sufficient background for readers to grasp your narrative.  Refer to the Homework Instructions ⭐ page on the course website for details on how to submit this part.
+
+```{r}
+library(tidyverse)
+tuesdata <- tidytuesdayR::tt_load('2026-09-15')
+## OR
+tuesdata <- tidytuesdayR::tt_load(2026, week = 37)
+
+dead_sea_scrolls <- tuesdata$dead_sea_scrolls
+
+head(dead_sea_scrolls)
+```
+
+> Research question: Which are the most common compositions among the dead sea scrolls, and where are they distributed?
+
+```{r}
+top_compositions <- dead_sea_scrolls |>
+  filter(composition != "Unidentified") |>
+  count(composition, sort = TRUE) |>
+  slice_head(n = 15)
+
+ggplot(
+  top_compositions,
+  aes(x = n, y = fct_reorder(composition, n))
+) +
+  geom_col(fill = "#8C5A3F", width = 0.75) +
+  geom_text(
+    aes(label = n),
+    hjust = -0.2,
+    size = 3.5
+  ) +
+  scale_x_continuous(
+    expand = expansion(mult = c(0, 0.12))
+  ) +
+  labs(
+    title = "Which works appear most frequently among the Dead Sea Scrolls?",
+    x = "Number of manuscripts",
+    y = NULL,
+    caption = "Author: Jason You | Source: Leon Levy Dead Sea Scrolls Digital Library, Tidy Tuesday"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.y = element_blank()
+  )
+```
+> This graph shows the top 15 most common compositions found in the dead sea. The most common compositions is Psalms, followed by Deuteronomy and Phylacteries. There are a lot of compositions with the same number of appearance at 12 and 9.
+
+```{r}
+top_names <- top_compositions |>
+  slice_head(n = 12) |>
+  pull(composition)
+
+cave_compositions <- dead_sea_scrolls |>
+  filter(site_parent == "Qumran", composition %in% top_names,!is.na(cave)) |>
+  count(cave, composition)
+
+ggplot(
+  cave_compositions,
+  aes(x = factor(cave), y = composition, fill = n)) +
+  geom_tile(color = "white", linewidth = 0.5) +
+  geom_text(aes(label = n), size = 3) +
+  scale_fill_gradient(low = "#F3E9D7", high = "#8C5A3F") +
+  labs(
+    title = "Distribution of compositions types across the caves",
+    x = "Cave #",
+    y = NULL,
+    fill = "Manuscripts",
+    caption = "Author: Jason You | Source: Leon Levy Dead Sea Scrolls Digital Library, Tidy Tuesday"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid = element_blank()
+  )
+```
+
+> This graph shows that cave 4 have the most amount of scrolls, with all of the types of compositions and the most amount of each of them, while Cave 6 have the least amount of scolls, only one Damascus Document.
