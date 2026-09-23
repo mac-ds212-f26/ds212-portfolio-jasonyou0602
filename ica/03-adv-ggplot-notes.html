@@ -859,24 +859,25 @@ cookieconsent.run({
 <span id="cb10-22"><a href="#cb10-22"></a>    <span class="at">linewidth =</span> <span class="fl">0.5</span></span>
 <span id="cb10-23"><a href="#cb10-23"></a>  ) <span class="sc">+</span></span>
 <span id="cb10-24"><a href="#cb10-24"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb10-25"><a href="#cb10-25"></a>    <span class="at">data =</span> precip_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(Precip <span class="sc">==</span> RecordP, Precip <span class="sc">&gt;</span> <span class="dv">0</span>),</span>
-<span id="cb10-26"><a href="#cb10-26"></a>    <span class="at">shape =</span> <span class="dv">25</span>,</span>
-<span id="cb10-27"><a href="#cb10-27"></a>    <span class="at">fill =</span> <span class="st">"black"</span>,</span>
-<span id="cb10-28"><a href="#cb10-28"></a>    <span class="at">color =</span> <span class="st">"black"</span>,</span>
-<span id="cb10-29"><a href="#cb10-29"></a>    <span class="at">size =</span> <span class="fl">2.5</span></span>
-<span id="cb10-30"><a href="#cb10-30"></a>  ) <span class="sc">+</span></span>
-<span id="cb10-31"><a href="#cb10-31"></a>  <span class="fu">geom_text</span>(</span>
-<span id="cb10-32"><a href="#cb10-32"></a>    <span class="at">data =</span> month_totals,</span>
-<span id="cb10-33"><a href="#cb10-33"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(CumPrec, <span class="dv">2</span>)),</span>
-<span id="cb10-34"><a href="#cb10-34"></a>    <span class="at">hjust =</span> <span class="dv">1</span>,</span>
-<span id="cb10-35"><a href="#cb10-35"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>,</span>
-<span id="cb10-36"><a href="#cb10-36"></a>    <span class="at">size =</span> <span class="dv">3</span></span>
-<span id="cb10-37"><a href="#cb10-37"></a>  ) <span class="sc">+</span></span>
-<span id="cb10-38"><a href="#cb10-38"></a>  <span class="fu">labs</span>(</span>
-<span id="cb10-39"><a href="#cb10-39"></a>    <span class="at">x =</span> <span class="st">"dateInYear"</span>,</span>
-<span id="cb10-40"><a href="#cb10-40"></a>    <span class="at">y =</span> <span class="st">"CumPrec"</span></span>
-<span id="cb10-41"><a href="#cb10-41"></a>  ) <span class="sc">+</span></span>
-<span id="cb10-42"><a href="#cb10-42"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-25"><a href="#cb10-25"></a>    <span class="at">data =</span> precip_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(RecordP <span class="sc">==</span> <span class="dv">1</span>),</span>
+<span id="cb10-26"><a href="#cb10-26"></a>    <span class="fu">aes</span>(<span class="at">y =</span> CumPrec <span class="sc">+</span> <span class="fl">0.12</span>),</span>
+<span id="cb10-27"><a href="#cb10-27"></a>    <span class="at">shape =</span> <span class="dv">25</span>,</span>
+<span id="cb10-28"><a href="#cb10-28"></a>    <span class="at">fill =</span> <span class="st">"black"</span>,</span>
+<span id="cb10-29"><a href="#cb10-29"></a>    <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb10-30"><a href="#cb10-30"></a>    <span class="at">size =</span> <span class="fl">2.5</span></span>
+<span id="cb10-31"><a href="#cb10-31"></a>  ) <span class="sc">+</span></span>
+<span id="cb10-32"><a href="#cb10-32"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb10-33"><a href="#cb10-33"></a>    <span class="at">data =</span> month_totals,</span>
+<span id="cb10-34"><a href="#cb10-34"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(CumPrec, <span class="dv">2</span>)),</span>
+<span id="cb10-35"><a href="#cb10-35"></a>    <span class="at">hjust =</span> <span class="dv">1</span>,</span>
+<span id="cb10-36"><a href="#cb10-36"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>,</span>
+<span id="cb10-37"><a href="#cb10-37"></a>    <span class="at">size =</span> <span class="dv">3</span></span>
+<span id="cb10-38"><a href="#cb10-38"></a>  ) <span class="sc">+</span></span>
+<span id="cb10-39"><a href="#cb10-39"></a>  <span class="fu">labs</span>(</span>
+<span id="cb10-40"><a href="#cb10-40"></a>    <span class="at">x =</span> <span class="st">"dateInYear"</span>,</span>
+<span id="cb10-41"><a href="#cb10-41"></a>    <span class="at">y =</span> <span class="st">"CumPrec"</span></span>
+<span id="cb10-42"><a href="#cb10-42"></a>  ) <span class="sc">+</span></span>
+<span id="cb10-43"><a href="#cb10-43"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="03-adv-ggplot-notes_files/figure-html/weather_plot_precip-1.png" class="img-fluid figure-img" width="672"></p>
@@ -1672,28 +1673,29 @@ cookieconsent.run({
 <span id="cb11-302"><a href="#cb11-302"></a>    <span class="at">linewidth =</span> <span class="fl">0.5</span></span>
 <span id="cb11-303"><a href="#cb11-303"></a>  ) <span class="sc">+</span></span>
 <span id="cb11-304"><a href="#cb11-304"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb11-305"><a href="#cb11-305"></a>    <span class="at">data =</span> precip_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(Precip <span class="sc">==</span> RecordP, Precip <span class="sc">&gt;</span> <span class="dv">0</span>),</span>
-<span id="cb11-306"><a href="#cb11-306"></a>    <span class="at">shape =</span> <span class="dv">25</span>,</span>
-<span id="cb11-307"><a href="#cb11-307"></a>    <span class="at">fill =</span> <span class="st">"black"</span>,</span>
-<span id="cb11-308"><a href="#cb11-308"></a>    <span class="at">color =</span> <span class="st">"black"</span>,</span>
-<span id="cb11-309"><a href="#cb11-309"></a>    <span class="at">size =</span> <span class="fl">2.5</span></span>
-<span id="cb11-310"><a href="#cb11-310"></a>  ) <span class="sc">+</span></span>
-<span id="cb11-311"><a href="#cb11-311"></a>  <span class="fu">geom_text</span>(</span>
-<span id="cb11-312"><a href="#cb11-312"></a>    <span class="at">data =</span> month_totals,</span>
-<span id="cb11-313"><a href="#cb11-313"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(CumPrec, <span class="dv">2</span>)),</span>
-<span id="cb11-314"><a href="#cb11-314"></a>    <span class="at">hjust =</span> <span class="dv">1</span>,</span>
-<span id="cb11-315"><a href="#cb11-315"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>,</span>
-<span id="cb11-316"><a href="#cb11-316"></a>    <span class="at">size =</span> <span class="dv">3</span></span>
-<span id="cb11-317"><a href="#cb11-317"></a>  ) <span class="sc">+</span></span>
-<span id="cb11-318"><a href="#cb11-318"></a>  <span class="fu">labs</span>(</span>
-<span id="cb11-319"><a href="#cb11-319"></a>    <span class="at">x =</span> <span class="st">"dateInYear"</span>,</span>
-<span id="cb11-320"><a href="#cb11-320"></a>    <span class="at">y =</span> <span class="st">"CumPrec"</span></span>
-<span id="cb11-321"><a href="#cb11-321"></a>  ) <span class="sc">+</span></span>
-<span id="cb11-322"><a href="#cb11-322"></a>  <span class="fu">theme_classic</span>()</span>
-<span id="cb11-323"><a href="#cb11-323"></a><span class="in">```</span></span>
-<span id="cb11-324"><a href="#cb11-324"></a><span class="fu">## Done!</span></span>
-<span id="cb11-325"><a href="#cb11-325"></a></span>
-<span id="cb11-326"><a href="#cb11-326"></a><span class="ss">- </span>Check the ICA Instructions for how to (a) push your code to GitHub and (b) update your portfolio website</span>
+<span id="cb11-305"><a href="#cb11-305"></a>    <span class="at">data =</span> precip_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(RecordP <span class="sc">==</span> <span class="dv">1</span>),</span>
+<span id="cb11-306"><a href="#cb11-306"></a>    <span class="fu">aes</span>(<span class="at">y =</span> CumPrec <span class="sc">+</span> <span class="fl">0.12</span>),</span>
+<span id="cb11-307"><a href="#cb11-307"></a>    <span class="at">shape =</span> <span class="dv">25</span>,</span>
+<span id="cb11-308"><a href="#cb11-308"></a>    <span class="at">fill =</span> <span class="st">"black"</span>,</span>
+<span id="cb11-309"><a href="#cb11-309"></a>    <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb11-310"><a href="#cb11-310"></a>    <span class="at">size =</span> <span class="fl">2.5</span></span>
+<span id="cb11-311"><a href="#cb11-311"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-312"><a href="#cb11-312"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb11-313"><a href="#cb11-313"></a>    <span class="at">data =</span> month_totals,</span>
+<span id="cb11-314"><a href="#cb11-314"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(CumPrec, <span class="dv">2</span>)),</span>
+<span id="cb11-315"><a href="#cb11-315"></a>    <span class="at">hjust =</span> <span class="dv">1</span>,</span>
+<span id="cb11-316"><a href="#cb11-316"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>,</span>
+<span id="cb11-317"><a href="#cb11-317"></a>    <span class="at">size =</span> <span class="dv">3</span></span>
+<span id="cb11-318"><a href="#cb11-318"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-319"><a href="#cb11-319"></a>  <span class="fu">labs</span>(</span>
+<span id="cb11-320"><a href="#cb11-320"></a>    <span class="at">x =</span> <span class="st">"dateInYear"</span>,</span>
+<span id="cb11-321"><a href="#cb11-321"></a>    <span class="at">y =</span> <span class="st">"CumPrec"</span></span>
+<span id="cb11-322"><a href="#cb11-322"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-323"><a href="#cb11-323"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb11-324"><a href="#cb11-324"></a><span class="in">```</span></span>
+<span id="cb11-325"><a href="#cb11-325"></a><span class="fu">## Done!</span></span>
+<span id="cb11-326"><a href="#cb11-326"></a></span>
+<span id="cb11-327"><a href="#cb11-327"></a><span class="ss">- </span>Check the ICA Instructions for how to (a) push your code to GitHub and (b) update your portfolio website</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
