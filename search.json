@@ -360,5 +360,27 @@
       "TidyTuesday",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Homework 01</span>"
     ]
+  },
+  {
+    "objectID": "tt/hw02-tt.html",
+    "href": "tt/hw02-tt.html",
+    "title": "Homework 02",
+    "section": "",
+    "text": "TidyTuesday Part (Optional)\nExplore the week’s TidyTuesday challenge. Develop a research question, then answer it through a short data story mainly composed of effective visualizations. Provide sufficient background for readers to grasp your narrative. Refer to the Homework Instructions ⭐ page on the course website for details on how to submit this part.\nCodelibrary(tidyverse)\ntuesdata &lt;- tidytuesdayR::tt_load('2026-09-15')\n## OR\ntuesdata &lt;- tidytuesdayR::tt_load(2026, week = 37)\n\ndead_sea_scrolls &lt;- tuesdata$dead_sea_scrolls\n\nhead(dead_sea_scrolls)\n\n# A tibble: 6 × 18\n  manuscript_id short_name     composition composition_type language script_type\n  &lt;chr&gt;         &lt;chr&gt;          &lt;chr&gt;       &lt;chr&gt;            &lt;chr&gt;    &lt;chr&gt;      \n1 1Q1           1Q Gen         Genesis     Scripture        Hebrew   Square     \n2 1Q2           1Q Exod        Exodus      Scripture        Hebrew   Square     \n3 1Q3           1Q paleoLev-N… paleoLevit… Scripture        Hebrew   Paleo-Hebr…\n4 1Q4           1Q Deut        Deuteronomy Scripture        Hebrew   Square     \n5 1Q5           1Q Deut        Deuteronomy Scripture        Hebrew   Square     \n6 1Q6           1Q Judg        Judges      Scripture        Hebrew   Square     \n# ℹ 12 more variables: material &lt;chr&gt;, period &lt;chr&gt;, site &lt;chr&gt;,\n#   site_parent &lt;chr&gt;, cave &lt;dbl&gt;, num_images &lt;dbl&gt;, keywords &lt;chr&gt;,\n#   biblical_book &lt;chr&gt;, canon_status &lt;chr&gt;, bible_section &lt;chr&gt;,\n#   testament &lt;chr&gt;, content_category &lt;chr&gt;\nCodetop_compositions &lt;- dead_sea_scrolls |&gt;\n  filter(composition != \"Unidentified\") |&gt;\n  count(composition, sort = TRUE) |&gt;\n  slice_head(n = 15)\n\nggplot(\n  top_compositions,\n  aes(x = n, y = fct_reorder(composition, n))\n) +\n  geom_col(fill = \"#8C5A3F\", width = 0.75) +\n  geom_text(\n    aes(label = n),\n    hjust = -0.2,\n    size = 3.5\n  ) +\n  scale_x_continuous(\n    expand = expansion(mult = c(0, 0.12))\n  ) +\n  labs(\n    title = \"Which works appear most frequently among the Dead Sea Scrolls?\",\n    x = \"Number of manuscripts\",\n    y = NULL,\n    caption = \"Author: Jason You | Source: Leon Levy Dead Sea Scrolls Digital Library, Tidy Tuesday\"\n  ) +\n  theme_minimal() +\n  theme(\n    panel.grid.major.y = element_blank()\n  )\nCodetop_names &lt;- top_compositions |&gt;\n  slice_head(n = 12) |&gt;\n  pull(composition)\n\ncave_compositions &lt;- dead_sea_scrolls |&gt;\n  filter(site_parent == \"Qumran\", composition %in% top_names,!is.na(cave)) |&gt;\n  count(cave, composition)\n\nggplot(\n  cave_compositions,\n  aes(x = factor(cave), y = composition, fill = n)) +\n  geom_tile(color = \"white\", linewidth = 0.5) +\n  geom_text(aes(label = n), size = 3) +\n  scale_fill_gradient(low = \"#F3E9D7\", high = \"#8C5A3F\") +\n  labs(\n    title = \"Distribution of compositions types across the caves\",\n    x = \"Cave #\",\n    y = NULL,\n    fill = \"Manuscripts\",\n    caption = \"Author: Jason You | Source: Leon Levy Dead Sea Scrolls Digital Library, Tidy Tuesday\"\n  ) +\n  theme_minimal() +\n  theme(\n    panel.grid = element_blank()\n  )",
+    "crumbs": [
+      "TidyTuesday",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Homework 02</span>"
+    ]
+  },
+  {
+    "objectID": "tt/hw02-tt.html#tidytuesday-part-optional",
+    "href": "tt/hw02-tt.html#tidytuesday-part-optional",
+    "title": "Homework 02",
+    "section": "",
+    "text": "ImportantInstructions\n\n\n\nYou can count work on this week’s TidyTuesday toward the exceptional work.\n\n\n\n\n\nResearch question: Which are the most common compositions among the dead sea scrolls, and where are they distributed?\n\n\n\nThis graph shows the top 15 most common compositions found in the dead sea. The most common compositions is Psalms, followed by Deuteronomy and Phylacteries. There are a lot of compositions with the same number of appearance at 12 and 9.\n\n\n\nThis graph shows that cave 4 have the most amount of scrolls, with all of the types of compositions and the most amount of each of them, while Cave 6 have the least amount of scolls, only one Damascus Document.",
+    "crumbs": [
+      "TidyTuesday",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Homework 02</span>"
+    ]
   }
 ]
