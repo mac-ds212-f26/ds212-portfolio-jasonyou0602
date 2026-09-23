@@ -582,46 +582,41 @@ cookieconsent.run({
 <p>However, this data may not be entirely accurate, because the size of the sample for each countries vary a lot.</p>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>plot_data <span class="ot">&lt;-</span> cappuccino_clean <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb9-3"><a href="#cb9-3"></a>    <span class="at">country =</span> <span class="fu">fct_reorder</span>(country, index, <span class="at">.desc =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-4"><a href="#cb9-4"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a>  <span class="fu">select</span>(country, index, n) <span class="sc">|&gt;</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb9-7"><a href="#cb9-7"></a>    <span class="at">cols =</span> <span class="fu">c</span>(index, n),</span>
-<span id="cb9-8"><a href="#cb9-8"></a>    <span class="at">names_to =</span> <span class="st">"measure"</span>,</span>
-<span id="cb9-9"><a href="#cb9-9"></a>    <span class="at">values_to =</span> <span class="st">"value"</span></span>
-<span id="cb9-10"><a href="#cb9-10"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb9-11"><a href="#cb9-11"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb9-12"><a href="#cb9-12"></a>    <span class="at">measure =</span> <span class="fu">recode</span>(</span>
-<span id="cb9-13"><a href="#cb9-13"></a>      measure,</span>
-<span id="cb9-14"><a href="#cb9-14"></a>      <span class="at">index =</span> <span class="st">"Minutes of work"</span>,</span>
-<span id="cb9-15"><a href="#cb9-15"></a>      <span class="at">n =</span> <span class="st">"Sample size"</span></span>
-<span id="cb9-16"><a href="#cb9-16"></a>    )</span>
-<span id="cb9-17"><a href="#cb9-17"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">15</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-4"><a href="#cb9-4"></a>    <span class="at">country =</span> <span class="fu">fct_reorder</span>(country, index, <span class="at">.desc =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-5"><a href="#cb9-5"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a>  <span class="fu">select</span>(country, index, n) <span class="sc">|&gt;</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb9-8"><a href="#cb9-8"></a>    <span class="at">cols =</span> <span class="fu">c</span>(index, n),</span>
+<span id="cb9-9"><a href="#cb9-9"></a>    <span class="at">names_to =</span> <span class="st">"measure"</span>,</span>
+<span id="cb9-10"><a href="#cb9-10"></a>    <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-13"><a href="#cb9-13"></a>    <span class="at">measure =</span> <span class="fu">recode</span>(</span>
+<span id="cb9-14"><a href="#cb9-14"></a>      measure,</span>
+<span id="cb9-15"><a href="#cb9-15"></a>      <span class="at">index =</span> <span class="st">"Minutes of work"</span>,</span>
+<span id="cb9-16"><a href="#cb9-16"></a>      <span class="at">n =</span> <span class="st">"Sample size"</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a>    )</span>
+<span id="cb9-18"><a href="#cb9-18"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb10-2"><a href="#cb10-2"></a>  plot_data,</span>
-<span id="cb10-3"><a href="#cb10-3"></a>  <span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">y =</span> country, <span class="at">fill =</span> measure)) <span class="sc">+</span></span>
-<span id="cb10-4"><a href="#cb10-4"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(measure)) <span class="sc">+</span></span>
-<span id="cb10-6"><a href="#cb10-6"></a>  <span class="fu">scale_fill_manual</span>(</span>
-<span id="cb10-7"><a href="#cb10-7"></a>    <span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb10-8"><a href="#cb10-8"></a>      <span class="st">"Minutes of work"</span> <span class="ot">=</span> <span class="st">"#614425"</span>,</span>
-<span id="cb10-9"><a href="#cb10-9"></a>      <span class="st">"Sample size"</span> <span class="ot">=</span> <span class="st">"darkblue"</span></span>
-<span id="cb10-10"><a href="#cb10-10"></a>    )) <span class="sc">+</span></span>
-<span id="cb10-11"><a href="#cb10-11"></a>  <span class="fu">labs</span>(</span>
-<span id="cb10-12"><a href="#cb10-12"></a>    <span class="at">title =</span> <span class="st">"Cappuccino affordability and sample size by country"</span>,</span>
-<span id="cb10-13"><a href="#cb10-13"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb10-14"><a href="#cb10-14"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
-<span id="cb10-15"><a href="#cb10-15"></a>    <span class="at">fill =</span> <span class="cn">NULL</span>,</span>
-<span id="cb10-16"><a href="#cb10-16"></a>    <span class="at">caption =</span> <span class="st">"Source: TidyTuesday"</span></span>
-<span id="cb10-17"><a href="#cb10-17"></a>  ) <span class="sc">+</span></span>
-<span id="cb10-18"><a href="#cb10-18"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb10-19"><a href="#cb10-19"></a>  <span class="fu">theme</span>(</span>
-<span id="cb10-20"><a href="#cb10-20"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb10-21"><a href="#cb10-21"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-2"><a href="#cb10-2"></a>  cappuccino_clean <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>    <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>    <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">fct_reorder</span>(country, index, <span class="at">.desc =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb10-5"><a href="#cb10-5"></a>  <span class="fu">aes</span>(<span class="at">x =</span> index, <span class="at">y =</span> country)</span>
+<span id="cb10-6"><a href="#cb10-6"></a>) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.75</span>, <span class="at">fill =</span> <span class="st">"#614425"</span>) <span class="sc">+</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a>  <span class="fu">labs</span>(</span>
+<span id="cb10-9"><a href="#cb10-9"></a>    <span class="at">title =</span> <span class="st">"Minutes of barista work by country to buy a cappuccino"</span>,</span>
+<span id="cb10-10"><a href="#cb10-10"></a>    <span class="at">subtitle =</span> <span class="st">"While working time is over 150 mins in India, it is only about 10 mins in Australia."</span>,</span>
+<span id="cb10-11"><a href="#cb10-11"></a>    <span class="at">x =</span> <span class="st">"Minutes of work"</span>,</span>
+<span id="cb10-12"><a href="#cb10-12"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
+<span id="cb10-13"><a href="#cb10-13"></a>    <span class="at">caption =</span> <span class="st">"Author: Jason You | Source: Cappuccino Index, TidyTuesday"</span>)<span class="sc">+</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="hw01-tt_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
@@ -1197,48 +1192,43 @@ cookieconsent.run({
 <span id="cb11-95"><a href="#cb11-95"></a></span>
 <span id="cb11-98"><a href="#cb11-98"></a><span class="in">```{r}</span></span>
 <span id="cb11-99"><a href="#cb11-99"></a>plot_data <span class="ot">&lt;-</span> cappuccino_clean <span class="sc">|&gt;</span></span>
-<span id="cb11-100"><a href="#cb11-100"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb11-101"><a href="#cb11-101"></a>    <span class="at">country =</span> <span class="fu">fct_reorder</span>(country, index, <span class="at">.desc =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-102"><a href="#cb11-102"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb11-103"><a href="#cb11-103"></a>  <span class="fu">select</span>(country, index, n) <span class="sc">|&gt;</span></span>
-<span id="cb11-104"><a href="#cb11-104"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb11-105"><a href="#cb11-105"></a>    <span class="at">cols =</span> <span class="fu">c</span>(index, n),</span>
-<span id="cb11-106"><a href="#cb11-106"></a>    <span class="at">names_to =</span> <span class="st">"measure"</span>,</span>
-<span id="cb11-107"><a href="#cb11-107"></a>    <span class="at">values_to =</span> <span class="st">"value"</span></span>
-<span id="cb11-108"><a href="#cb11-108"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb11-109"><a href="#cb11-109"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb11-110"><a href="#cb11-110"></a>    <span class="at">measure =</span> <span class="fu">recode</span>(</span>
-<span id="cb11-111"><a href="#cb11-111"></a>      measure,</span>
-<span id="cb11-112"><a href="#cb11-112"></a>      <span class="at">index =</span> <span class="st">"Minutes of work"</span>,</span>
-<span id="cb11-113"><a href="#cb11-113"></a>      <span class="at">n =</span> <span class="st">"Sample size"</span></span>
-<span id="cb11-114"><a href="#cb11-114"></a>    )</span>
-<span id="cb11-115"><a href="#cb11-115"></a>  )</span>
-<span id="cb11-116"><a href="#cb11-116"></a><span class="in">```</span></span>
-<span id="cb11-117"><a href="#cb11-117"></a></span>
-<span id="cb11-120"><a href="#cb11-120"></a><span class="in">```{r}</span></span>
-<span id="cb11-121"><a href="#cb11-121"></a><span class="fu">ggplot</span>(</span>
-<span id="cb11-122"><a href="#cb11-122"></a>  plot_data,</span>
-<span id="cb11-123"><a href="#cb11-123"></a>  <span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">y =</span> country, <span class="at">fill =</span> measure)) <span class="sc">+</span></span>
-<span id="cb11-124"><a href="#cb11-124"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
-<span id="cb11-125"><a href="#cb11-125"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(measure)) <span class="sc">+</span></span>
-<span id="cb11-126"><a href="#cb11-126"></a>  <span class="fu">scale_fill_manual</span>(</span>
-<span id="cb11-127"><a href="#cb11-127"></a>    <span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb11-128"><a href="#cb11-128"></a>      <span class="st">"Minutes of work"</span> <span class="ot">=</span> <span class="st">"#614425"</span>,</span>
-<span id="cb11-129"><a href="#cb11-129"></a>      <span class="st">"Sample size"</span> <span class="ot">=</span> <span class="st">"darkblue"</span></span>
-<span id="cb11-130"><a href="#cb11-130"></a>    )) <span class="sc">+</span></span>
-<span id="cb11-131"><a href="#cb11-131"></a>  <span class="fu">labs</span>(</span>
-<span id="cb11-132"><a href="#cb11-132"></a>    <span class="at">title =</span> <span class="st">"Cappuccino affordability and sample size by country"</span>,</span>
-<span id="cb11-133"><a href="#cb11-133"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb11-134"><a href="#cb11-134"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
-<span id="cb11-135"><a href="#cb11-135"></a>    <span class="at">fill =</span> <span class="cn">NULL</span>,</span>
-<span id="cb11-136"><a href="#cb11-136"></a>    <span class="at">caption =</span> <span class="st">"Source: TidyTuesday"</span></span>
-<span id="cb11-137"><a href="#cb11-137"></a>  ) <span class="sc">+</span></span>
-<span id="cb11-138"><a href="#cb11-138"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb11-139"><a href="#cb11-139"></a>  <span class="fu">theme</span>(</span>
-<span id="cb11-140"><a href="#cb11-140"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb11-141"><a href="#cb11-141"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>())</span>
-<span id="cb11-142"><a href="#cb11-142"></a><span class="in">```</span></span>
-<span id="cb11-143"><a href="#cb11-143"></a>This plot tells us about average minutes of work a barista have to spend to afford a cup of cappuccino by country. However, this data is distorted by the sample size of the dataset. The bar graph of the right shows how large each country's sample is. </span>
+<span id="cb11-100"><a href="#cb11-100"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">15</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-101"><a href="#cb11-101"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb11-102"><a href="#cb11-102"></a>    <span class="at">country =</span> <span class="fu">fct_reorder</span>(country, index, <span class="at">.desc =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-103"><a href="#cb11-103"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb11-104"><a href="#cb11-104"></a>  <span class="fu">select</span>(country, index, n) <span class="sc">|&gt;</span></span>
+<span id="cb11-105"><a href="#cb11-105"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb11-106"><a href="#cb11-106"></a>    <span class="at">cols =</span> <span class="fu">c</span>(index, n),</span>
+<span id="cb11-107"><a href="#cb11-107"></a>    <span class="at">names_to =</span> <span class="st">"measure"</span>,</span>
+<span id="cb11-108"><a href="#cb11-108"></a>    <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb11-109"><a href="#cb11-109"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb11-110"><a href="#cb11-110"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb11-111"><a href="#cb11-111"></a>    <span class="at">measure =</span> <span class="fu">recode</span>(</span>
+<span id="cb11-112"><a href="#cb11-112"></a>      measure,</span>
+<span id="cb11-113"><a href="#cb11-113"></a>      <span class="at">index =</span> <span class="st">"Minutes of work"</span>,</span>
+<span id="cb11-114"><a href="#cb11-114"></a>      <span class="at">n =</span> <span class="st">"Sample size"</span></span>
+<span id="cb11-115"><a href="#cb11-115"></a>    )</span>
+<span id="cb11-116"><a href="#cb11-116"></a>  )</span>
+<span id="cb11-117"><a href="#cb11-117"></a><span class="in">```</span></span>
+<span id="cb11-118"><a href="#cb11-118"></a></span>
+<span id="cb11-121"><a href="#cb11-121"></a><span class="in">```{r}</span></span>
+<span id="cb11-122"><a href="#cb11-122"></a><span class="fu">ggplot</span>(</span>
+<span id="cb11-123"><a href="#cb11-123"></a>  cappuccino_clean <span class="sc">|&gt;</span></span>
+<span id="cb11-124"><a href="#cb11-124"></a>    <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-125"><a href="#cb11-125"></a>    <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">fct_reorder</span>(country, index, <span class="at">.desc =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb11-126"><a href="#cb11-126"></a>  <span class="fu">aes</span>(<span class="at">x =</span> index, <span class="at">y =</span> country)</span>
+<span id="cb11-127"><a href="#cb11-127"></a>) <span class="sc">+</span></span>
+<span id="cb11-128"><a href="#cb11-128"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.75</span>, <span class="at">fill =</span> <span class="st">"#614425"</span>) <span class="sc">+</span></span>
+<span id="cb11-129"><a href="#cb11-129"></a>  <span class="fu">labs</span>(</span>
+<span id="cb11-130"><a href="#cb11-130"></a>    <span class="at">title =</span> <span class="st">"Minutes of barista work by country to buy a cappuccino"</span>,</span>
+<span id="cb11-131"><a href="#cb11-131"></a>    <span class="at">subtitle =</span> <span class="st">"While working time is over 150 mins in India, it is only about 10 mins in Australia."</span>,</span>
+<span id="cb11-132"><a href="#cb11-132"></a>    <span class="at">x =</span> <span class="st">"Minutes of work"</span>,</span>
+<span id="cb11-133"><a href="#cb11-133"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
+<span id="cb11-134"><a href="#cb11-134"></a>    <span class="at">caption =</span> <span class="st">"Author: Jason You | Source: Cappuccino Index, TidyTuesday"</span>)<span class="sc">+</span></span>
+<span id="cb11-135"><a href="#cb11-135"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb11-136"><a href="#cb11-136"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb11-137"><a href="#cb11-137"></a><span class="in">```</span></span>
+<span id="cb11-138"><a href="#cb11-138"></a>This plot tells us about average minutes of work a barista have to spend to afford a cup of cappuccino by country. However, this data is distorted by the sample size of the dataset. The bar graph of the right shows how large each country's sample is. </span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
