@@ -113,8 +113,8 @@ ggplot(
 ) +
   geom_col(width = 0.75, fill = "#614425") +
   labs(
-    title = "Minutes of barista work by country to buy a cappuccino",
-    subtitle = "While working time is over 150 mins in India, it is only about 10 mins in Australia.",
+    title = "A small cappuccino: minutes of barista work needed by country",
+    subtitle = "In India, it takes about 8 times as many minutes of work as in Australia.",
     x = "Minutes of work",
     y = NULL,
     caption = "Author: Jason You | Source: Cappuccino Index, TidyTuesday")+
