@@ -382,5 +382,27 @@
       "TidyTuesday",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>Homework 02</span>"
     ]
+  },
+  {
+    "objectID": "tt/hw03-tt.html",
+    "href": "tt/hw03-tt.html",
+    "title": "Homework 03",
+    "section": "",
+    "text": "TidyTuesday Part (Optional)\nExplore the week’s TidyTuesday challenge. Develop a research question, then answer it through a short data story mainly composed of effective visualizations. Provide sufficient background for readers to grasp your narrative. Refer to the Homework Instructions ⭐ page on the course website for details on how to submit this part.\nCodelibrary(tidyverse)\nlibrary(ggplot2)\nlibrary(tidymodels)\nlibrary(ggforce)\ntuesdata &lt;- tidytuesdayR::tt_load(2026, week = 38)\nurban &lt;- tuesdata$urban\nCodechina_cities &lt;- urban |&gt;\n  filter(countryOrTerritoryName == \"China\", cityName %in% c(\"Beijing\", \"Hangzhou\", \"Chengdu\"\n                                                            , \"Suzhou\", \"Qingdao\", \"Haikou\",\n                                                            \"Tianjin\"))\nCodeggplot(\n  china_cities,\n  aes(\n    x = year,\n    y = averageShareOfGreenAreaInCityUrbanAreaPct,\n    color = cityName,\n    group = cityName\n  )\n) +\n  geom_line(linewidth = 1) +\n  geom_point(size = 2.5) +\n  scale_x_continuous(\n    breaks = c(1990, 2000, 2010, 2020, 2025)\n  ) +\n  labs(\n    title = \"Share of urban area classified as green in China, 1990–2025\",\n    x = NULL,\n    y = \"Green area (%)\",\n    color = NULL,\n    caption = \"Author: Jason You | Source: TidyTuesday, UN-Habitat Urban Indicators Database, Sept, 22nd, 2026\"\n  ) +\n  theme_minimal() +\n  theme(\n    legend.position = \"top\"\n  )\nCodecity_change &lt;- china_cities |&gt;\n  filter(year %in% c(1990, 2020)) |&gt;\n  select(cityName, year, averageShareOfGreenAreaInCityUrbanAreaPct) |&gt;\n  pivot_wider(\n    names_from = year,\n    values_from = averageShareOfGreenAreaInCityUrbanAreaPct,\n    names_prefix = \"green_\"\n  ) |&gt;\n  mutate(change = green_2020 - green_1990)\n\n\nggplot(\n  city_change,\n  aes(\n    y = fct_reorder(cityName, change)\n  )\n) +\n  geom_segment(\n    aes(\n      x = green_1990,\n      xend = green_2020,\n      yend = cityName\n    ),\n    linewidth = 1,\n    arrow = arrow(type = \"open\", length = unit(0.1, \"inches\"))\n  ) +\n  geom_point(\n    aes(x = green_1990),\n    size = 1\n  ) +\n  geom_point(\n    aes(x = green_2020),\n    size = 1\n  ) +\n  labs(\n    title = \"Change in Chinese city's green-area share from 1990 to 2025\",\n    subtitle = \"Beijing is the only city that becomes greener\",\n    x = \"Green area (%)\",\n    y = NULL,\n    caption = \"Author: Jason You | Source: TidyTuesday, UN-Habitat Urban Indicators Database, Sept, 22nd, 2026\"\n  ) +\n  theme_minimal()",
+    "crumbs": [
+      "TidyTuesday",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Homework 03</span>"
+    ]
+  },
+  {
+    "objectID": "tt/hw03-tt.html#tidytuesday-part-optional",
+    "href": "tt/hw03-tt.html#tidytuesday-part-optional",
+    "title": "Homework 03",
+    "section": "",
+    "text": "ImportantInstructions\n\n\n\nYou can count work on this week’s TidyTuesday toward the exceptional work.",
+    "crumbs": [
+      "TidyTuesday",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Homework 03</span>"
+    ]
   }
 ]
