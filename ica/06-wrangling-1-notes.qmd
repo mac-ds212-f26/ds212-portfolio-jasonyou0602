@@ -251,7 +251,11 @@ diamonds |>
   )
 
 #4
-
+diamonds |>
+  summarise(
+    any_fair_over_3000 = any(cut == "Fair" & price > 3000),
+    all_ideal_over_2000 = all(price[cut == "Ideal"] > 2000)
+  )
 
 #5
 
