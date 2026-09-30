@@ -91,6 +91,7 @@ book:
       chapters:
       - tt/hw01-tt.qmd
       - tt/hw02-tt.qmd
+      - tt/hw03-tt.qmd
 
 
 

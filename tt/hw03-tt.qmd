@@ -46,12 +46,11 @@ ggplot(
     breaks = c(1990, 2000, 2010, 2020, 2025)
   ) +
   labs(
-    title = "Chinese cities have followed different green-space trajectories",
-    subtitle = "Share of urban area classified as green, 1990–2025",
+    title = "Share of urban area classified as green in China, 1990–2025",
     x = NULL,
     y = "Green area (%)",
     color = NULL,
-    caption = "Source: UN-Habitat Urban Indicators Database"
+    caption = "Author: Jason You | Source: TidyTuesday, UN-Habitat Urban Indicators Database, Sept, 22nd, 2026"
   ) +
   theme_minimal() +
   theme(
@@ -98,7 +97,7 @@ ggplot(
     subtitle = "Beijing is the only city that becomes greener",
     x = "Green area (%)",
     y = NULL,
-    caption = "Source: UN-Habitat Urban Indicators Database"
+    caption = "Author: Jason You | Source: TidyTuesday, UN-Habitat Urban Indicators Database, Sept, 22nd, 2026"
   ) +
   theme_minimal()
 ```
