@@ -1,0 +1,104 @@
+---
+title: "Homework 03"
+---
+
+
+## TidyTuesday Part (Optional)
+
+::: {.callout-important title="Instructions"}
+You can count work on this week's TidyTuesday toward the exceptional work.
+:::
+
+Explore the week's [TidyTuesday](https://github.com/rfordatascience/tidytuesday) challenge. Develop a research question, then answer it through a short data story mainly composed of [effective visualizations](https://docs.google.com/presentation/d/1WHr6Itzm2IJLxvppcacxHpr8R4NxO4MfvWWUPmtQx6Q/preview?slide=id.g13360dab5d5_0_61).  Provide sufficient background for readers to grasp your narrative.  Refer to the Homework Instructions ⭐ page on the course website for details on how to submit this part.
+
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(tidymodels)
+library(ggforce)
+tuesdata <- tidytuesdayR::tt_load(2026, week = 38)
+urban <- tuesdata$urban
+```
+
+
+
+```{r}
+china_cities <- urban |>
+  filter(countryOrTerritoryName == "China", cityName %in% c("Beijing", "Hangzhou", "Chengdu"
+                                                            , "Suzhou", "Qingdao", "Haikou",
+                                                            "Tianjin"))
+```
+
+```{r}
+ggplot(
+  china_cities,
+  aes(
+    x = year,
+    y = averageShareOfGreenAreaInCityUrbanAreaPct,
+    color = cityName,
+    group = cityName
+  )
+) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2.5) +
+  scale_x_continuous(
+    breaks = c(1990, 2000, 2010, 2020, 2025)
+  ) +
+  labs(
+    title = "Share of urban area classified as green in China, 1990–2025",
+    x = NULL,
+    y = "Green area (%)",
+    color = NULL,
+    caption = "Author: Jason You | Source: TidyTuesday, UN-Habitat Urban Indicators Database, Sept, 22nd, 2026"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "top"
+  )
+```
+```{r}
+city_change <- china_cities |>
+  filter(year %in% c(1990, 2020)) |>
+  select(cityName, year, averageShareOfGreenAreaInCityUrbanAreaPct) |>
+  pivot_wider(
+    names_from = year,
+    values_from = averageShareOfGreenAreaInCityUrbanAreaPct,
+    names_prefix = "green_"
+  ) |>
+  mutate(change = green_2020 - green_1990)
+
+
+ggplot(
+  city_change,
+  aes(
+    y = fct_reorder(cityName, change)
+  )
+) +
+  geom_segment(
+    aes(
+      x = green_1990,
+      xend = green_2020,
+      yend = cityName
+    ),
+    linewidth = 1,
+    arrow = arrow(type = "open", length = unit(0.1, "inches"))
+  ) +
+  geom_point(
+    aes(x = green_1990),
+    size = 1
+  ) +
+  geom_point(
+    aes(x = green_2020),
+    size = 1
+  ) +
+  labs(
+    title = "Change in Chinese city's green-area share from 1990 to 2025",
+    subtitle = "Beijing is the only city that becomes greener",
+    x = "Green area (%)",
+    y = NULL,
+    caption = "Author: Jason You | Source: TidyTuesday, UN-Habitat Urban Indicators Database, Sept, 22nd, 2026"
+  ) +
+  theme_minimal()
+```
+
