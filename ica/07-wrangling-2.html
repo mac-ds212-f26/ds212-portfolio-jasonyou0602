@@ -683,8 +683,8 @@ cookieconsent.run({
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">str_view</span>(string1, <span class="at">html =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
-<div class="str_view html-widget html-fill-item" id="htmlwidget-9348bc550a483e4f36c6" style="width:960px;height:100%;"></div>
-<script type="application/json" data-for="htmlwidget-9348bc550a483e4f36c6">{"x":{"html":"<ul>\n  <li><pre>Record temp:<span class='special'>\t<\/span>102<\/pre><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="str_view html-widget html-fill-item" id="htmlwidget-3f60d446ac03285cbbd1" style="width:960px;height:100%;"></div>
+<script type="application/json" data-for="htmlwidget-3f60d446ac03285cbbd1">{"x":{"html":"<ul>\n  <li><pre>Record temp:<span class='special'>\t<\/span>102<\/pre><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section><section id="combine" class="level3"><h3 class="anchored" data-anchor-id="combine">Combine</h3>
@@ -825,48 +825,67 @@ cookieconsent.run({
 </div>
 </div>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a><span class="co"># write your answer below</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a><span class="co"># write your answer below</span></span>
+<span id="cb57-2"><a href="#cb57-2"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb57-3"><a href="#cb57-3"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb57-4"><a href="#cb57-4"></a>    <span class="at">middle_letter =</span> <span class="fu">str_sub</span>(</span>
+<span id="cb57-5"><a href="#cb57-5"></a>      word,</span>
+<span id="cb57-6"><a href="#cb57-6"></a>      <span class="at">start =</span> <span class="fu">ceiling</span>(<span class="fu">str_length</span>(word) <span class="sc">/</span> <span class="dv">2</span>),</span>
+<span id="cb57-7"><a href="#cb57-7"></a>      <span class="at">end =</span> <span class="fu">floor</span>(<span class="fu">str_length</span>(word) <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb57-8"><a href="#cb57-8"></a>    )</span>
+<span id="cb57-9"><a href="#cb57-9"></a>  )</span>
+<span id="cb57-10"><a href="#cb57-10"></a></span>
+<span id="cb57-11"><a href="#cb57-11"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  word_id word    middle_letter
+    &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;        
+1       1 replace l            
+2       2 match   t            
+3       3 pattern t            </code></pre>
+</div>
 </div>
 </section></section><section id="patterns" class="level2"><h2 class="anchored" data-anchor-id="patterns">Patterns</h2>
 <p>Suppose that you’re exploring text data looking for places where people describe happiness. There are many ways to search. We could search for the word “happy” but that excludes “happiness” so we might search for “happi”.</p>
 <p><strong>Regular expressions</strong> (regex) are a powerful language for describing patterns within strings.</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="co"># load few datasets</span></span>
-<span id="cb58-2"><a href="#cb58-2"></a><span class="fu">data</span>(fruit)</span>
-<span id="cb58-3"><a href="#cb58-3"></a><span class="fu">sample</span>(fruit, <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="co"># load few datasets</span></span>
+<span id="cb59-2"><a href="#cb59-2"></a><span class="fu">data</span>(fruit)</span>
+<span id="cb59-3"><a href="#cb59-3"></a><span class="fu">sample</span>(fruit, <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code> [1] "loquat"     "grapefruit" "date"       "cloudberry" "rambutan"  
- [6] "elderberry" "mango"      "blackberry" "rock melon" "avocado"   </code></pre>
+<pre><code> [1] "purple mangosteen" "mandarine"         "papaya"           
+ [4] "clementine"        "mango"             "persimmon"        
+ [7] "bilberry"          "eggplant"          "plum"             
+[10] "blackberry"       </code></pre>
 </div>
 </div>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="fu">data</span>(words)</span>
-<span id="cb60-2"><a href="#cb60-2"></a><span class="fu">sample</span>(words, <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="fu">data</span>(words)</span>
+<span id="cb61-2"><a href="#cb61-2"></a><span class="fu">sample</span>(words, <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code> [1] "council"    "look"       "wife"       "box"        "million"   
- [6] "still"      "spend"      "experience" "region"     "support"   </code></pre>
+<pre><code> [1] "opportunity" "sir"         "ready"       "win"         "slow"       
+ [6] "good"        "big"         "safe"        "stupid"      "some"       </code></pre>
 </div>
 </div>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="fu">data</span>(sentences)</span>
-<span id="cb62-2"><a href="#cb62-2"></a><span class="fu">sample</span>(sentences, <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="fu">data</span>(sentences)</span>
+<span id="cb63-2"><a href="#cb63-2"></a><span class="fu">sample</span>(sentences, <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code> [1] "The frosty air passed through the coat."          
- [2] "He offered proof in the form of a large chart."   
- [3] "Open the crate but don't break the glass."        
- [4] "Beat the dust from the rug onto the lawn."        
- [5] "Prod the old mule with a crooked stick."          
- [6] "Raise the sail and steer the ship northward."     
- [7] "The tube was blown and the tire flat and useless."
- [8] "Weave the carpet on the right hand side."         
- [9] "Bail the boat to stop it from sinking."           
-[10] "Her purse was full of useless trash."             </code></pre>
+<pre><code> [1] "The crooked maze failed to fool the mouse."   
+ [2] "Seven seals were stamped on great sheets."    
+ [3] "Press the pants and sew a button on the vest."
+ [4] "The salt breeze came across from the sea."    
+ [5] "The wide road shimmered in the hot sun."      
+ [6] "The small red neon lamp went out."            
+ [7] "He sent the figs, but kept the ripe cherries."
+ [8] "Hedge apples may stain your hands green."     
+ [9] "There is a fine hard tang in salty air."      
+[10] "Take shelter in this tent, but keep still."   </code></pre>
 </div>
 </div>
 <p>We can use <code>str_view()</code> with the <code>pattern</code> argument to see what parts of a string match the regex supplied in the <code>pattern</code> argument. (Matches are enclosed in <code>&lt;&gt;</code>.)</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="fu">str_view</span>(fruit, <span class="st">"berry"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a><span class="fu">str_view</span>(fruit, <span class="st">"berry"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code> [6] │ bil&lt;berry&gt;
  [7] │ black&lt;berry&gt;
@@ -902,7 +921,7 @@ cookieconsent.run({
 </ul></section><section id="predict-quantifier-matches" class="level3"><h3 class="anchored" data-anchor-id="predict-quantifier-matches">✏️ Predict Quantifier Matches</h3>
 <p>Before running the code below, predict what matches will be made. Run the code to check your guesses. Note that in all regex’s below the <code>?</code>, <code>+</code>, <code>*</code> applies to the <code>b</code> only (not the <code>a</code>).</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"ab"</span>, <span class="st">"abb"</span>), <span class="st">"ab?"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"ab"</span>, <span class="st">"abb"</span>), <span class="st">"ab?"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[1] │ &lt;a&gt;
 [2] │ &lt;ab&gt;
@@ -910,14 +929,14 @@ cookieconsent.run({
 </div>
 </div>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"ab"</span>, <span class="st">"abb"</span>), <span class="st">"ab+"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"ab"</span>, <span class="st">"abb"</span>), <span class="st">"ab+"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[2] │ &lt;ab&gt;
 [3] │ &lt;abb&gt;</code></pre>
 </div>
 </div>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"ab"</span>, <span class="st">"abb"</span>), <span class="st">"ab*"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"ab"</span>, <span class="st">"abb"</span>), <span class="st">"ab*"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[1] │ &lt;a&gt;
 [2] │ &lt;ab&gt;
@@ -930,16 +949,16 @@ cookieconsent.run({
 <li>We can invert the match by starting with <code>^</code>: <code>[^abcd]</code> matches anything except “a”, “b”, “c”, or “d”.</li>
 </ul>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="co"># Match words that have vowel-x-vowel</span></span>
-<span id="cb72-2"><a href="#cb72-2"></a><span class="fu">str_view</span>(words, <span class="st">"[aeiou]x[aeiou]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a><span class="co"># Match words that have vowel-x-vowel</span></span>
+<span id="cb73-2"><a href="#cb73-2"></a><span class="fu">str_view</span>(words, <span class="st">"[aeiou]x[aeiou]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[284] │ &lt;exa&gt;ct
 [285] │ &lt;exa&gt;mple
 [288] │ &lt;exe&gt;rcise
 [289] │ &lt;exi&gt;st</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a><span class="co"># Match words that have not_vowel-y-not_vowel</span></span>
-<span id="cb74-2"><a href="#cb74-2"></a><span class="fu">str_view</span>(words, <span class="st">"[^aeiou]y[^aeiou]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a><span class="co"># Match words that have not_vowel-y-not_vowel</span></span>
+<span id="cb75-2"><a href="#cb75-2"></a><span class="fu">str_view</span>(words, <span class="st">"[^aeiou]y[^aeiou]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[836] │ &lt;sys&gt;tem
 [901] │ &lt;typ&gt;e</code></pre>
@@ -947,12 +966,18 @@ cookieconsent.run({
 </div>
 </section><section id="find-vowel-pairs" class="level3"><h3 class="anchored" data-anchor-id="find-vowel-pairs">✏️ Find Vowel Pairs</h3>
 <p>Using the <code>words</code> dataset, find words that have two vowels in a row followed by an “m”.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1"></a>words[<span class="fu">str_detect</span>(words, <span class="st">"[aeiou]{2}m"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] "claim" "room"  "seem"  "team" </code></pre>
+</div>
+</div>
 </section><section id="alternation" class="level3"><h3 class="anchored" data-anchor-id="alternation">Alternation</h3>
 <ul>
 <li>The <strong>alternation</strong> operator <code>|</code> can be read just like the logical operator <code>|</code> (“OR”) to pick between one or more alternative patterns, eg, <code>apple|banana</code> searches for “apple” or “banana”.</li>
 </ul>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a><span class="fu">str_view</span>(fruit, <span class="st">"apple|melon|nut"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1"></a><span class="fu">str_view</span>(fruit, <span class="st">"apple|melon|nut"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code> [1] │ &lt;apple&gt;
 [13] │ canary &lt;melon&gt;
@@ -966,7 +991,7 @@ cookieconsent.run({
 </section><section id="find-repeated-vowels" class="level3"><h3 class="anchored" data-anchor-id="find-repeated-vowels">✏️ Find Repeated Vowels</h3>
 <p>Using the <code>fruit</code> dataset, find fruits that have a repeated vowel (“aa”, “ee”, “ii”, “oo”, or “uu”.)</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a><span class="co"># write your answer below</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a><span class="co"># write your answer below</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section><section id="anchors-groups" class="level3"><h3 class="anchored" data-anchor-id="anchors-groups">Anchors &amp; Groups</h3>
@@ -976,20 +1001,220 @@ cookieconsent.run({
 </ul></section><section id="find-words-with-y" class="level3"><h3 class="anchored" data-anchor-id="find-words-with-y">✏️ Find Words with y</h3>
 <p>Using the <code>words</code> dataset, find words that start with “y”</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1"></a><span class="co"># write your answer below</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a><span class="co"># write your answer below</span></span>
+<span id="cb82-2"><a href="#cb82-2"></a>words[<span class="fu">str_detect</span>(words, <span class="st">"^y"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] "year"      "yes"       "yesterday" "yet"       "you"       "young"    </code></pre>
+</div>
 </div>
 <p>Using the <code>words</code> dataset again, find words that don’t start with “y”.</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1"></a><span class="co"># write your answer below</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a><span class="co"># write your answer below</span></span>
+<span id="cb84-2"><a href="#cb84-2"></a>words[<span class="sc">!</span><span class="fu">str_detect</span>(words, <span class="st">"^y"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>  [1] "a"           "able"        "about"       "absolute"    "accept"     
+  [6] "account"     "achieve"     "across"      "act"         "active"     
+ [11] "actual"      "add"         "address"     "admit"       "advertise"  
+ [16] "affect"      "afford"      "after"       "afternoon"   "again"      
+ [21] "against"     "age"         "agent"       "ago"         "agree"      
+ [26] "air"         "all"         "allow"       "almost"      "along"      
+ [31] "already"     "alright"     "also"        "although"    "always"     
+ [36] "america"     "amount"      "and"         "another"     "answer"     
+ [41] "any"         "apart"       "apparent"    "appear"      "apply"      
+ [46] "appoint"     "approach"    "appropriate" "area"        "argue"      
+ [51] "arm"         "around"      "arrange"     "art"         "as"         
+ [56] "ask"         "associate"   "assume"      "at"          "attend"     
+ [61] "authority"   "available"   "aware"       "away"        "awful"      
+ [66] "baby"        "back"        "bad"         "bag"         "balance"    
+ [71] "ball"        "bank"        "bar"         "base"        "basis"      
+ [76] "be"          "bear"        "beat"        "beauty"      "because"    
+ [81] "become"      "bed"         "before"      "begin"       "behind"     
+ [86] "believe"     "benefit"     "best"        "bet"         "between"    
+ [91] "big"         "bill"        "birth"       "bit"         "black"      
+ [96] "bloke"       "blood"       "blow"        "blue"        "board"      
+[101] "boat"        "body"        "book"        "both"        "bother"     
+[106] "bottle"      "bottom"      "box"         "boy"         "break"      
+[111] "brief"       "brilliant"   "bring"       "britain"     "brother"    
+[116] "budget"      "build"       "bus"         "business"    "busy"       
+[121] "but"         "buy"         "by"          "cake"        "call"       
+[126] "can"         "car"         "card"        "care"        "carry"      
+[131] "case"        "cat"         "catch"       "cause"       "cent"       
+[136] "centre"      "certain"     "chair"       "chairman"    "chance"     
+[141] "change"      "chap"        "character"   "charge"      "cheap"      
+[146] "check"       "child"       "choice"      "choose"      "Christ"     
+[151] "Christmas"   "church"      "city"        "claim"       "class"      
+[156] "clean"       "clear"       "client"      "clock"       "close"      
+[161] "closes"      "clothe"      "club"        "coffee"      "cold"       
+[166] "colleague"   "collect"     "college"     "colour"      "come"       
+[171] "comment"     "commit"      "committee"   "common"      "community"  
+[176] "company"     "compare"     "complete"    "compute"     "concern"    
+[181] "condition"   "confer"      "consider"    "consult"     "contact"    
+[186] "continue"    "contract"    "control"     "converse"    "cook"       
+[191] "copy"        "corner"      "correct"     "cost"        "could"      
+[196] "council"     "count"       "country"     "county"      "couple"     
+[201] "course"      "court"       "cover"       "create"      "cross"      
+[206] "cup"         "current"     "cut"         "dad"         "danger"     
+[211] "date"        "day"         "dead"        "deal"        "dear"       
+[216] "debate"      "decide"      "decision"    "deep"        "definite"   
+[221] "degree"      "department"  "depend"      "describe"    "design"     
+[226] "detail"      "develop"     "die"         "difference"  "difficult"  
+[231] "dinner"      "direct"      "discuss"     "district"    "divide"     
+[236] "do"          "doctor"      "document"    "dog"         "door"       
+[241] "double"      "doubt"       "down"        "draw"        "dress"      
+[246] "drink"       "drive"       "drop"        "dry"         "due"        
+[251] "during"      "each"        "early"       "east"        "easy"       
+[256] "eat"         "economy"     "educate"     "effect"      "egg"        
+[261] "eight"       "either"      "elect"       "electric"    "eleven"     
+[266] "else"        "employ"      "encourage"   "end"         "engine"     
+[271] "english"     "enjoy"       "enough"      "enter"       "environment"
+[276] "equal"       "especial"    "europe"      "even"        "evening"    
+[281] "ever"        "every"       "evidence"    "exact"       "example"    
+[286] "except"      "excuse"      "exercise"    "exist"       "expect"     
+[291] "expense"     "experience"  "explain"     "express"     "extra"      
+[296] "eye"         "face"        "fact"        "fair"        "fall"       
+[301] "family"      "far"         "farm"        "fast"        "father"     
+[306] "favour"      "feed"        "feel"        "few"         "field"      
+[311] "fight"       "figure"      "file"        "fill"        "film"       
+[316] "final"       "finance"     "find"        "fine"        "finish"     
+[321] "fire"        "first"       "fish"        "fit"         "five"       
+[326] "flat"        "floor"       "fly"         "follow"      "food"       
+[331] "foot"        "for"         "force"       "forget"      "form"       
+[336] "fortune"     "forward"     "four"        "france"      "free"       
+[341] "friday"      "friend"      "from"        "front"       "full"       
+[346] "fun"         "function"    "fund"        "further"     "future"     
+[351] "game"        "garden"      "gas"         "general"     "germany"    
+[356] "get"         "girl"        "give"        "glass"       "go"         
+[361] "god"         "good"        "goodbye"     "govern"      "grand"      
+[366] "grant"       "great"       "green"       "ground"      "group"      
+[371] "grow"        "guess"       "guy"         "hair"        "half"       
+[376] "hall"        "hand"        "hang"        "happen"      "happy"      
+[381] "hard"        "hate"        "have"        "he"          "head"       
+[386] "health"      "hear"        "heart"       "heat"        "heavy"      
+[391] "hell"        "help"        "here"        "high"        "history"    
+[396] "hit"         "hold"        "holiday"     "home"        "honest"     
+[401] "hope"        "horse"       "hospital"    "hot"         "hour"       
+[406] "house"       "how"         "however"     "hullo"       "hundred"    
+[411] "husband"     "idea"        "identify"    "if"          "imagine"    
+[416] "important"   "improve"     "in"          "include"     "income"     
+[421] "increase"    "indeed"      "individual"  "industry"    "inform"     
+[426] "inside"      "instead"     "insure"      "interest"    "into"       
+[431] "introduce"   "invest"      "involve"     "issue"       "it"         
+[436] "item"        "jesus"       "job"         "join"        "judge"      
+[441] "jump"        "just"        "keep"        "key"         "kid"        
+[446] "kill"        "kind"        "king"        "kitchen"     "knock"      
+[451] "know"        "labour"      "lad"         "lady"        "land"       
+[456] "language"    "large"       "last"        "late"        "laugh"      
+[461] "law"         "lay"         "lead"        "learn"       "leave"      
+[466] "left"        "leg"         "less"        "let"         "letter"     
+[471] "level"       "lie"         "life"        "light"       "like"       
+[476] "likely"      "limit"       "line"        "link"        "list"       
+[481] "listen"      "little"      "live"        "load"        "local"      
+[486] "lock"        "london"      "long"        "look"        "lord"       
+[491] "lose"        "lot"         "love"        "low"         "luck"       
+[496] "lunch"       "machine"     "main"        "major"       "make"       
+[501] "man"         "manage"      "many"        "mark"        "market"     
+[506] "marry"       "match"       "matter"      "may"         "maybe"      
+[511] "mean"        "meaning"     "measure"     "meet"        "member"     
+[516] "mention"     "middle"      "might"       "mile"        "milk"       
+[521] "million"     "mind"        "minister"    "minus"       "minute"     
+[526] "miss"        "mister"      "moment"      "monday"      "money"      
+[531] "month"       "more"        "morning"     "most"        "mother"     
+[536] "motion"      "move"        "mrs"         "much"        "music"      
+[541] "must"        "name"        "nation"      "nature"      "near"       
+[546] "necessary"   "need"        "never"       "new"         "news"       
+[551] "next"        "nice"        "night"       "nine"        "no"         
+[556] "non"         "none"        "normal"      "north"       "not"        
+[561] "note"        "notice"      "now"         "number"      "obvious"    
+[566] "occasion"    "odd"         "of"          "off"         "offer"      
+[571] "office"      "often"       "okay"        "old"         "on"         
+[576] "once"        "one"         "only"        "open"        "operate"    
+[581] "opportunity" "oppose"      "or"          "order"       "organize"   
+[586] "original"    "other"       "otherwise"   "ought"       "out"        
+[591] "over"        "own"         "pack"        "page"        "paint"      
+[596] "pair"        "paper"       "paragraph"   "pardon"      "parent"     
+[601] "park"        "part"        "particular"  "party"       "pass"       
+[606] "past"        "pay"         "pence"       "pension"     "people"     
+[611] "per"         "percent"     "perfect"     "perhaps"     "period"     
+[616] "person"      "photograph"  "pick"        "picture"     "piece"      
+[621] "place"       "plan"        "play"        "please"      "plus"       
+[626] "point"       "police"      "policy"      "politic"     "poor"       
+[631] "position"    "positive"    "possible"    "post"        "pound"      
+[636] "power"       "practise"    "prepare"     "present"     "press"      
+[641] "pressure"    "presume"     "pretty"      "previous"    "price"      
+[646] "print"       "private"     "probable"    "problem"     "proceed"    
+[651] "process"     "produce"     "product"     "programme"   "project"    
+[656] "proper"      "propose"     "protect"     "provide"     "public"     
+[661] "pull"        "purpose"     "push"        "put"         "quality"    
+[666] "quarter"     "question"    "quick"       "quid"        "quiet"      
+[671] "quite"       "radio"       "rail"        "raise"       "range"      
+[676] "rate"        "rather"      "read"        "ready"       "real"       
+[681] "realise"     "really"      "reason"      "receive"     "recent"     
+[686] "reckon"      "recognize"   "recommend"   "record"      "red"        
+[691] "reduce"      "refer"       "regard"      "region"      "relation"   
+[696] "remember"    "report"      "represent"   "require"     "research"   
+[701] "resource"    "respect"     "responsible" "rest"        "result"     
+[706] "return"      "rid"         "right"       "ring"        "rise"       
+[711] "road"        "role"        "roll"        "room"        "round"      
+[716] "rule"        "run"         "safe"        "sale"        "same"       
+[721] "saturday"    "save"        "say"         "scheme"      "school"     
+[726] "science"     "score"       "scotland"    "seat"        "second"     
+[731] "secretary"   "section"     "secure"      "see"         "seem"       
+[736] "self"        "sell"        "send"        "sense"       "separate"   
+[741] "serious"     "serve"       "service"     "set"         "settle"     
+[746] "seven"       "sex"         "shall"       "share"       "she"        
+[751] "sheet"       "shoe"        "shoot"       "shop"        "short"      
+[756] "should"      "show"        "shut"        "sick"        "side"       
+[761] "sign"        "similar"     "simple"      "since"       "sing"       
+[766] "single"      "sir"         "sister"      "sit"         "site"       
+[771] "situate"     "six"         "size"        "sleep"       "slight"     
+[776] "slow"        "small"       "smoke"       "so"          "social"     
+[781] "society"     "some"        "son"         "soon"        "sorry"      
+[786] "sort"        "sound"       "south"       "space"       "speak"      
+[791] "special"     "specific"    "speed"       "spell"       "spend"      
+[796] "square"      "staff"       "stage"       "stairs"      "stand"      
+[801] "standard"    "start"       "state"       "station"     "stay"       
+[806] "step"        "stick"       "still"       "stop"        "story"      
+[811] "straight"    "strategy"    "street"      "strike"      "strong"     
+[816] "structure"   "student"     "study"       "stuff"       "stupid"     
+[821] "subject"     "succeed"     "such"        "sudden"      "suggest"    
+[826] "suit"        "summer"      "sun"         "sunday"      "supply"     
+[831] "support"     "suppose"     "sure"        "surprise"    "switch"     
+[836] "system"      "table"       "take"        "talk"        "tape"       
+[841] "tax"         "tea"         "teach"       "team"        "telephone"  
+[846] "television"  "tell"        "ten"         "tend"        "term"       
+[851] "terrible"    "test"        "than"        "thank"       "the"        
+[856] "then"        "there"       "therefore"   "they"        "thing"      
+[861] "think"       "thirteen"    "thirty"      "this"        "thou"       
+[866] "though"      "thousand"    "three"       "through"     "throw"      
+[871] "thursday"    "tie"         "time"        "to"          "today"      
+[876] "together"    "tomorrow"    "tonight"     "too"         "top"        
+[881] "total"       "touch"       "toward"      "town"        "trade"      
+[886] "traffic"     "train"       "transport"   "travel"      "treat"      
+[891] "tree"        "trouble"     "true"        "trust"       "try"        
+[896] "tuesday"     "turn"        "twelve"      "twenty"      "two"        
+[901] "type"        "under"       "understand"  "union"       "unit"       
+[906] "unite"       "university"  "unless"      "until"       "up"         
+[911] "upon"        "use"         "usual"       "value"       "various"    
+[916] "very"        "video"       "view"        "village"     "visit"      
+[921] "vote"        "wage"        "wait"        "walk"        "wall"       
+[926] "want"        "war"         "warm"        "wash"        "waste"      
+[931] "watch"       "water"       "way"         "we"          "wear"       
+[936] "wednesday"   "wee"         "week"        "weigh"       "welcome"    
+[941] "well"        "west"        "what"        "when"        "where"      
+[946] "whether"     "which"       "while"       "white"       "who"        
+[951] "whole"       "why"         "wide"        "wife"        "will"       
+[956] "win"         "wind"        "window"      "wish"        "with"       
+[961] "within"      "without"     "woman"       "wonder"      "wood"       
+[966] "word"        "work"        "world"       "worry"       "worse"      
+[971] "worth"       "would"       "write"       "wrong"      </code></pre>
+</div>
 </div>
 </section></section><section id="dear-abby-letters" class="level2"><h2 class="anchored" data-anchor-id="dear-abby-letters">Dear Abby Letters</h2>
 <section id="load-the-letters" class="level3"><h3 class="anchored" data-anchor-id="load-the-letters">Load the Letters</h3>
 <p>Read in the “Dear Abby” data underlying The Pudding’s <a href="https://pudding.cool/2018/11/dearabby/">30 Years of American Anxieties</a> article.</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a>posts <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/the-pudding/data/master/dearabby/raw_da_qs.csv"</span>)</span>
-<span id="cb81-2"><a href="#cb81-2"></a><span class="fu">str</span>(posts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1"></a>posts <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/the-pudding/data/master/dearabby/raw_da_qs.csv"</span>)</span>
+<span id="cb86-2"><a href="#cb86-2"></a><span class="fu">str</span>(posts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>spc_tbl_ [20,034 × 7] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
  $ year         : num [1:20034] 1985 1985 1985 1985 1985 ...
@@ -1520,405 +1745,414 @@ cookieconsent.run({
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb83" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb83-1"><a href="#cb83-1"></a><span class="co">---</span></span>
-<span id="cb83-2"><a href="#cb83-2"></a><span class="an">title:</span><span class="co"> "7 Adv Data wrangling II"</span></span>
-<span id="cb83-3"><a href="#cb83-3"></a><span class="co">---</span></span>
-<span id="cb83-4"><a href="#cb83-4"></a></span>
-<span id="cb83-5"><a href="#cb83-5"></a></span>
-<span id="cb83-6"><a href="#cb83-6"></a></span>
-<span id="cb83-7"><a href="#cb83-7"></a><span class="fu">## 🧩 Learning Goals</span></span>
-<span id="cb83-8"><a href="#cb83-8"></a></span>
-<span id="cb83-9"><a href="#cb83-9"></a>By the end of this lesson, you should be able to:</span>
-<span id="cb83-10"><a href="#cb83-10"></a></span>
-<span id="cb83-11"><a href="#cb83-11"></a><span class="ss">- </span>Manipulate and explore strings using the <span class="in">`stringr`</span> package</span>
-<span id="cb83-12"><a href="#cb83-12"></a><span class="ss">- </span>Construct regular expressions to find patterns in strings</span>
-<span id="cb83-13"><a href="#cb83-13"></a></span>
-<span id="cb83-14"><a href="#cb83-14"></a></span>
-<span id="cb83-15"><a href="#cb83-15"></a><span class="fu">## Motivation</span></span>
-<span id="cb83-16"><a href="#cb83-16"></a></span>
-<span id="cb83-17"><a href="#cb83-17"></a>In 2018 the data journalism organization <span class="co">[</span><span class="ot">The Pudding</span><span class="co">](https://pudding.cool/)</span> featured a story called <span class="co">[</span><span class="ot">30 Years of American Anxieties</span><span class="co">](https://pudding.cool/2018/11/dearabby/)</span> highlighting themes in 30 years of posts to the Dear Abby column (an American advice column).</span>
-<span id="cb83-18"><a href="#cb83-18"></a></span>
-<span id="cb83-19"><a href="#cb83-19"></a>To understand themes in text data, one can conduct a **qualitative text analysis** which is a manual process that involved multiple people reading through the instances of text several time until they reach a consensus about themes.  Given the amount of labor involved, this process is suitable for medium datasets.</span>
-<span id="cb83-20"><a href="#cb83-20"></a></span>
-<span id="cb83-21"><a href="#cb83-21"></a>For large datasets, one might want to use **quantitative &amp; computational text analysis** which leverages computers, data science techniques, and natural language process to extract themes from the data.  We will explore this approach in this lesson.</span>
-<span id="cb83-22"><a href="#cb83-22"></a></span>
-<span id="cb83-23"><a href="#cb83-23"></a>Both qualitative and computational approaches can be used in tandem. Often, using computational tools can help focus a close reading of select texts, which parallels the spirit of a qualitative analysis.</span>
-<span id="cb83-24"><a href="#cb83-24"></a></span>
-<span id="cb83-25"><a href="#cb83-25"></a>To prepare ourselves for a computational analysis, let's learn about strings.</span>
-<span id="cb83-26"><a href="#cb83-26"></a></span>
-<span id="cb83-27"><a href="#cb83-27"></a></span>
-<span id="cb83-28"><a href="#cb83-28"></a><span class="fu">## Strings</span></span>
-<span id="cb83-29"><a href="#cb83-29"></a></span>
-<span id="cb83-30"><a href="#cb83-30"></a>Strings are objects of the <span class="in">`character`</span> class (abbreviated as <span class="in">`&lt;chr&gt;`</span> in tibbles).</span>
-<span id="cb83-31"><a href="#cb83-31"></a></span>
-<span id="cb83-32"><a href="#cb83-32"></a>When you print out strings, they display with double quotes:</span>
-<span id="cb83-33"><a href="#cb83-33"></a></span>
-<span id="cb83-34"><a href="#cb83-34"></a><span class="in">```{r chr_class}</span></span>
-<span id="cb83-35"><a href="#cb83-35"></a>some_string <span class="ot">&lt;-</span> <span class="st">"banana"</span></span>
-<span id="cb83-36"><a href="#cb83-36"></a>some_string</span>
-<span id="cb83-37"><a href="#cb83-37"></a><span class="in">```</span></span>
-<span id="cb83-38"><a href="#cb83-38"></a></span>
-<span id="cb83-39"><a href="#cb83-39"></a>Working with strings generally will involve the use of **regular expressions**, a tool for finding patterns in strings.</span>
-<span id="cb83-40"><a href="#cb83-40"></a></span>
-<span id="cb83-41"><a href="#cb83-41"></a>Regular expressions (regex, for short) look like the following:</span>
-<span id="cb83-42"><a href="#cb83-42"></a></span>
-<span id="cb83-43"><a href="#cb83-43"></a><span class="in">```</span></span>
-<span id="cb83-44"><a href="#cb83-44"></a><span class="in">"^the" &lt;-- Find strings that start with "the"</span></span>
-<span id="cb83-45"><a href="#cb83-45"></a><span class="in">"end$" &lt;-- Find strings that end with "end"</span></span>
-<span id="cb83-46"><a href="#cb83-46"></a><span class="in">```</span></span>
-<span id="cb83-47"><a href="#cb83-47"></a></span>
-<span id="cb83-48"><a href="#cb83-48"></a>Before getting to regular expressions, let's go over some fundamentals about working with strings. The <span class="in">`stringr`</span> package (which a package in the <span class="in">`tidyverse`</span> ecosystem) is great for working with strings.</span>
-<span id="cb83-49"><a href="#cb83-49"></a></span>
-<span id="cb83-50"><a href="#cb83-50"></a><span class="in">```{r doc_setup_07}</span></span>
-<span id="cb83-51"><a href="#cb83-51"></a><span class="co">#| message: false</span></span>
-<span id="cb83-52"><a href="#cb83-52"></a></span>
-<span id="cb83-53"><a href="#cb83-53"></a><span class="fu">library</span>(tidyverse) <span class="co"># The stringr package is part of tidyverse</span></span>
-<span id="cb83-54"><a href="#cb83-54"></a><span class="in">```</span></span>
-<span id="cb83-55"><a href="#cb83-55"></a></span>
-<span id="cb83-56"><a href="#cb83-56"></a></span>
-<span id="cb83-57"><a href="#cb83-57"></a><span class="fu">### Create Strings</span></span>
-<span id="cb83-58"><a href="#cb83-58"></a></span>
-<span id="cb83-59"><a href="#cb83-59"></a>Creating strings by hand is useful for testing out regular expressions.</span>
-<span id="cb83-60"><a href="#cb83-60"></a></span>
-<span id="cb83-61"><a href="#cb83-61"></a>To create a string, type any text in either double quotes <span class="in">`"double"`</span> or single quotes <span class="in">`'single'`</span>. Using double or single quotes doesn't matter unless your string itself has single or double quotes.</span>
-<span id="cb83-62"><a href="#cb83-62"></a></span>
-<span id="cb83-63"><a href="#cb83-63"></a><span class="in">```{r create_strings}</span></span>
-<span id="cb83-64"><a href="#cb83-64"></a>string1 <span class="ot">&lt;-</span> <span class="st">"This is a string"</span></span>
-<span id="cb83-65"><a href="#cb83-65"></a>string2 <span class="ot">&lt;-</span> <span class="st">'If I want to include a "quote" inside a string, I use single quotes'</span></span>
-<span id="cb83-66"><a href="#cb83-66"></a>string3 <span class="ot">&lt;-</span> <span class="fu">c</span>(string1, string2) <span class="co"># string / character vector (of greater than length 1)</span></span>
-<span id="cb83-67"><a href="#cb83-67"></a></span>
-<span id="cb83-68"><a href="#cb83-68"></a></span>
-<span id="cb83-69"><a href="#cb83-69"></a><span class="fu">class</span>(string1)</span>
-<span id="cb83-70"><a href="#cb83-70"></a><span class="fu">class</span>(string2)</span>
-<span id="cb83-71"><a href="#cb83-71"></a><span class="fu">class</span>(string3)</span>
-<span id="cb83-72"><a href="#cb83-72"></a></span>
-<span id="cb83-73"><a href="#cb83-73"></a><span class="fu">length</span>(string1)</span>
-<span id="cb83-74"><a href="#cb83-74"></a><span class="fu">length</span>(string2)</span>
-<span id="cb83-75"><a href="#cb83-75"></a><span class="fu">length</span>(string3)</span>
-<span id="cb83-76"><a href="#cb83-76"></a><span class="in">```</span></span>
-<span id="cb83-77"><a href="#cb83-77"></a></span>
-<span id="cb83-78"><a href="#cb83-78"></a>We can view these strings "naturally" (without the opening and closing quotes) with <span class="in">`str_view()`</span>:</span>
-<span id="cb83-79"><a href="#cb83-79"></a></span>
-<span id="cb83-80"><a href="#cb83-80"></a><span class="in">```{r str_view}</span></span>
-<span id="cb83-81"><a href="#cb83-81"></a><span class="fu">str_view</span>(string1)</span>
-<span id="cb83-82"><a href="#cb83-82"></a><span class="fu">str_view</span>(string2)</span>
-<span id="cb83-83"><a href="#cb83-83"></a><span class="fu">str_view</span>(string3)</span>
-<span id="cb83-84"><a href="#cb83-84"></a><span class="in">```</span></span>
-<span id="cb83-85"><a href="#cb83-85"></a></span>
-<span id="cb83-86"><a href="#cb83-86"></a></span>
-<span id="cb83-87"><a href="#cb83-87"></a><span class="fu">### ✏️ Quote String</span></span>
-<span id="cb83-88"><a href="#cb83-88"></a></span>
-<span id="cb83-89"><a href="#cb83-89"></a>Create the string <span class="in">`It's Thursday`</span>. What happens if you put the string inside single quotes? Double quotes?</span>
-<span id="cb83-90"><a href="#cb83-90"></a></span>
-<span id="cb83-91"><a href="#cb83-91"></a><span class="in">```{r ex_create_string}</span></span>
-<span id="cb83-92"><a href="#cb83-92"></a><span class="co"># write your answer below</span></span>
-<span id="cb83-93"><a href="#cb83-93"></a>string_thu <span class="ot">&lt;-</span> <span class="st">"It's Thursday"</span></span>
-<span id="cb83-94"><a href="#cb83-94"></a><span class="in">```</span></span>
-<span id="cb83-95"><a href="#cb83-95"></a></span>
-<span id="cb83-96"><a href="#cb83-96"></a></span>
-<span id="cb83-97"><a href="#cb83-97"></a><span class="fu">### Escape Characters</span></span>
-<span id="cb83-98"><a href="#cb83-98"></a></span>
-<span id="cb83-99"><a href="#cb83-99"></a>Because <span class="in">`"`</span> and <span class="in">`'`</span> are special characters in the creation of strings, R offers another way to put them inside a string. We can **escape** these special characters by putting a <span class="in">`\`</span> in front of them:</span>
-<span id="cb83-100"><a href="#cb83-100"></a></span>
-<span id="cb83-101"><a href="#cb83-101"></a><span class="in">```{r escape_chars}</span></span>
-<span id="cb83-102"><a href="#cb83-102"></a>string1 <span class="ot">&lt;-</span> <span class="st">"This is a string with </span><span class="sc">\"</span><span class="st">double quotes</span><span class="sc">\"</span><span class="st">"</span></span>
-<span id="cb83-103"><a href="#cb83-103"></a>string2 <span class="ot">&lt;-</span> <span class="st">"This is a string with </span><span class="sc">\'</span><span class="st">single quotes</span><span class="sc">\'</span><span class="st">"</span></span>
-<span id="cb83-104"><a href="#cb83-104"></a><span class="fu">str_view</span>(string1)</span>
-<span id="cb83-105"><a href="#cb83-105"></a><span class="fu">str_view</span>(string2)</span>
-<span id="cb83-106"><a href="#cb83-106"></a><span class="in">```</span></span>
-<span id="cb83-107"><a href="#cb83-107"></a></span>
-<span id="cb83-108"><a href="#cb83-108"></a>Given that <span class="in">`\`</span> is a special character, how can we put the <span class="in">`\`</span> character in strings? We have to escape it with <span class="in">`\\`</span>.</span>
-<span id="cb83-109"><a href="#cb83-109"></a></span>
-<span id="cb83-110"><a href="#cb83-110"></a></span>
-<span id="cb83-111"><a href="#cb83-111"></a><span class="fu">### ✏️ Escape Backslash</span></span>
-<span id="cb83-112"><a href="#cb83-112"></a></span>
-<span id="cb83-113"><a href="#cb83-113"></a>Create the string <span class="in">`C:\Users`</span>. What happens when you don't escape the <span class="in">`\`</span>?</span>
-<span id="cb83-114"><a href="#cb83-114"></a></span>
-<span id="cb83-115"><a href="#cb83-115"></a><span class="in">```{r ex_create_string_slash}</span></span>
-<span id="cb83-116"><a href="#cb83-116"></a><span class="co"># write your answer below</span></span>
-<span id="cb83-117"><a href="#cb83-117"></a>str_user <span class="ot">&lt;-</span> <span class="st">'`C:</span><span class="sc">\\</span><span class="st">Users`'</span></span>
-<span id="cb83-118"><a href="#cb83-118"></a><span class="in">```</span></span>
-<span id="cb83-119"><a href="#cb83-119"></a></span>
-<span id="cb83-120"><a href="#cb83-120"></a></span>
-<span id="cb83-121"><a href="#cb83-121"></a><span class="fu">### Special Characters</span></span>
-<span id="cb83-122"><a href="#cb83-122"></a></span>
-<span id="cb83-123"><a href="#cb83-123"></a>Other special characters include:</span>
-<span id="cb83-124"><a href="#cb83-124"></a></span>
-<span id="cb83-125"><a href="#cb83-125"></a><span class="ss">- </span><span class="in">`\t`</span> &lt;- creates a tab</span>
-<span id="cb83-126"><a href="#cb83-126"></a><span class="ss">- </span><span class="in">`\n`</span> &lt;- creates a newline</span>
-<span id="cb83-127"><a href="#cb83-127"></a></span>
-<span id="cb83-128"><a href="#cb83-128"></a>Both can be useful in plots to more neatly arrange text.</span>
-<span id="cb83-129"><a href="#cb83-129"></a></span>
-<span id="cb83-130"><a href="#cb83-130"></a><span class="in">```{r escape_tab_newline}</span></span>
-<span id="cb83-131"><a href="#cb83-131"></a>string1 <span class="ot">&lt;-</span> <span class="st">"Record temp:</span><span class="sc">\t</span><span class="st">102"</span></span>
-<span id="cb83-132"><a href="#cb83-132"></a>string2 <span class="ot">&lt;-</span> <span class="st">"Record temp:</span><span class="sc">\n</span><span class="st">102"</span></span>
-<span id="cb83-133"><a href="#cb83-133"></a></span>
-<span id="cb83-134"><a href="#cb83-134"></a><span class="fu">str_view</span>(string1)</span>
-<span id="cb83-135"><a href="#cb83-135"></a><span class="fu">str_view</span>(string2)</span>
-<span id="cb83-136"><a href="#cb83-136"></a><span class="in">```</span></span>
-<span id="cb83-137"><a href="#cb83-137"></a></span>
-<span id="cb83-138"><a href="#cb83-138"></a>Can we get <span class="in">`str_view()`</span> to show the tab instead of <span class="in">`{\t}`</span>? We can use the <span class="in">`html`</span> argument to have the string displayed as if on a webpage:</span>
-<span id="cb83-139"><a href="#cb83-139"></a></span>
-<span id="cb83-140"><a href="#cb83-140"></a><span class="in">```{r str_view_html}</span></span>
-<span id="cb83-141"><a href="#cb83-141"></a><span class="fu">str_view</span>(string1, <span class="at">html =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb83-142"><a href="#cb83-142"></a><span class="in">```</span></span>
-<span id="cb83-143"><a href="#cb83-143"></a></span>
-<span id="cb83-144"><a href="#cb83-144"></a></span>
-<span id="cb83-145"><a href="#cb83-145"></a><span class="fu">### Combine</span></span>
-<span id="cb83-146"><a href="#cb83-146"></a></span>
-<span id="cb83-147"><a href="#cb83-147"></a>Often we will want to create new strings within data frames. We can use <span class="in">`str_c()`</span> or <span class="in">`str_glue()`</span>, both of which are vectorized functions, ie, they take vectors as inputs and provide vectors as outputs which means that they can be used within <span class="in">`mutate()`</span></span>
-<span id="cb83-148"><a href="#cb83-148"></a></span>
-<span id="cb83-149"><a href="#cb83-149"></a><span class="ss">- </span>With <span class="in">`str_c()`</span> the strings to be combined are all arguments separated by commas.</span>
-<span id="cb83-150"><a href="#cb83-150"></a><span class="ss">- </span>With <span class="in">`str_glue()`</span> the desired string is written as a template with variable names inside curly braces <span class="in">`{}`</span>.</span>
-<span id="cb83-151"><a href="#cb83-151"></a></span>
-<span id="cb83-152"><a href="#cb83-152"></a><span class="in">```{r str_c_glue}</span></span>
-<span id="cb83-153"><a href="#cb83-153"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb83-154"><a href="#cb83-154"></a>    <span class="at">first_name =</span> <span class="fu">c</span>(<span class="st">"Arya"</span>, <span class="st">"Olenna"</span>, <span class="st">"Tyrion"</span>, <span class="st">"Melisandre"</span>),</span>
-<span id="cb83-155"><a href="#cb83-155"></a>    <span class="at">last_name =</span> <span class="fu">c</span>(<span class="st">"Stark"</span>, <span class="st">"Tyrell"</span>, <span class="st">"Lannister"</span>, <span class="cn">NA</span>)</span>
-<span id="cb83-156"><a href="#cb83-156"></a>)</span>
-<span id="cb83-157"><a href="#cb83-157"></a>df</span>
-<span id="cb83-158"><a href="#cb83-158"></a><span class="in">```</span></span>
-<span id="cb83-159"><a href="#cb83-159"></a></span>
-<span id="cb83-162"><a href="#cb83-162"></a><span class="in">```{r}</span></span>
-<span id="cb83-163"><a href="#cb83-163"></a>df <span class="sc">|&gt;</span></span>
-<span id="cb83-164"><a href="#cb83-164"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb83-165"><a href="#cb83-165"></a>        <span class="at">full_name1 =</span> <span class="fu">str_c</span>(first_name, <span class="st">" "</span>, last_name),</span>
-<span id="cb83-166"><a href="#cb83-166"></a>        <span class="at">full_name2 =</span> <span class="fu">str_glue</span>(<span class="st">"{first_name} {last_name}"</span>)</span>
-<span id="cb83-167"><a href="#cb83-167"></a>    )</span>
-<span id="cb83-168"><a href="#cb83-168"></a><span class="in">```</span></span>
-<span id="cb83-169"><a href="#cb83-169"></a></span>
-<span id="cb83-170"><a href="#cb83-170"></a><span class="fu">### ✏️ Build Date Strings</span></span>
-<span id="cb83-171"><a href="#cb83-171"></a></span>
-<span id="cb83-172"><a href="#cb83-172"></a>In the following data frame, create a full date string in month-day-year format using both <span class="in">`str_c()`</span> and <span class="in">`str_glue()`</span>.</span>
-<span id="cb83-173"><a href="#cb83-173"></a></span>
-<span id="cb83-174"><a href="#cb83-174"></a><span class="in">```{r ex_str_c_glue}</span></span>
-<span id="cb83-175"><a href="#cb83-175"></a>df_dates <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb83-176"><a href="#cb83-176"></a>    <span class="at">year =</span> <span class="dv">2000</span><span class="sc">:</span><span class="dv">2002</span>,</span>
-<span id="cb83-177"><a href="#cb83-177"></a>    <span class="at">month =</span> <span class="fu">c</span>(<span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>),</span>
-<span id="cb83-178"><a href="#cb83-178"></a>    <span class="at">day =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span></span>
-<span id="cb83-179"><a href="#cb83-179"></a>)</span>
-<span id="cb83-180"><a href="#cb83-180"></a>df_dates</span>
-<span id="cb83-181"><a href="#cb83-181"></a><span class="in">```</span></span>
-<span id="cb83-182"><a href="#cb83-182"></a></span>
-<span id="cb83-185"><a href="#cb83-185"></a><span class="in">```{r}</span></span>
-<span id="cb83-186"><a href="#cb83-186"></a><span class="co"># write your answer below</span></span>
-<span id="cb83-187"><a href="#cb83-187"></a></span>
-<span id="cb83-188"><a href="#cb83-188"></a><span class="in">```</span></span>
-<span id="cb83-189"><a href="#cb83-189"></a></span>
-<span id="cb83-190"><a href="#cb83-190"></a></span>
-<span id="cb83-191"><a href="#cb83-191"></a><span class="fu">### Length</span></span>
-<span id="cb83-192"><a href="#cb83-192"></a></span>
-<span id="cb83-193"><a href="#cb83-193"></a>The <span class="in">`str_length()`</span> counts the number of characters in a string.</span>
-<span id="cb83-194"><a href="#cb83-194"></a></span>
-<span id="cb83-195"><a href="#cb83-195"></a><span class="in">```{r str_length}</span></span>
-<span id="cb83-196"><a href="#cb83-196"></a>comments <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb83-197"><a href="#cb83-197"></a>    <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>),</span>
-<span id="cb83-198"><a href="#cb83-198"></a>    <span class="at">comment =</span> <span class="fu">c</span>(<span class="st">"The essay was well organized around the core message and had good transitions."</span>, <span class="st">"Good job!"</span>)</span>
-<span id="cb83-199"><a href="#cb83-199"></a>)</span>
-<span id="cb83-200"><a href="#cb83-200"></a>comments</span>
-<span id="cb83-201"><a href="#cb83-201"></a><span class="in">```</span></span>
-<span id="cb83-202"><a href="#cb83-202"></a></span>
-<span id="cb83-205"><a href="#cb83-205"></a><span class="in">```{r}</span></span>
-<span id="cb83-206"><a href="#cb83-206"></a>comments <span class="sc">|&gt;</span></span>
-<span id="cb83-207"><a href="#cb83-207"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb83-208"><a href="#cb83-208"></a>        <span class="at">comment_length =</span> <span class="fu">str_length</span>(comment)</span>
-<span id="cb83-209"><a href="#cb83-209"></a>    )</span>
-<span id="cb83-210"><a href="#cb83-210"></a><span class="in">```</span></span>
-<span id="cb83-211"><a href="#cb83-211"></a></span>
-<span id="cb83-212"><a href="#cb83-212"></a><span class="fu">### Substring</span></span>
-<span id="cb83-213"><a href="#cb83-213"></a></span>
-<span id="cb83-214"><a href="#cb83-214"></a>The <span class="in">`str_sub()`</span> function gets a substring of a string. The 2nd and 3rd arguments indicate the beginning and ending position to extract.</span>
-<span id="cb83-215"><a href="#cb83-215"></a></span>
-<span id="cb83-216"><a href="#cb83-216"></a><span class="ss">- </span>Negative positions indicate the position from the end of the word, eg, -3 indicates "3rd letter from the end"</span>
-<span id="cb83-217"><a href="#cb83-217"></a><span class="ss">- </span>Specifying a position that goes beyond the word won't result in an error. <span class="in">`str_sub()`</span> will just go as far as possible.</span>
-<span id="cb83-218"><a href="#cb83-218"></a></span>
-<span id="cb83-219"><a href="#cb83-219"></a><span class="in">```{r str_sub}</span></span>
-<span id="cb83-220"><a href="#cb83-220"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Apple"</span>, <span class="st">"Banana"</span>, <span class="st">"Pear"</span>)</span>
-<span id="cb83-221"><a href="#cb83-221"></a>x</span>
-<span id="cb83-222"><a href="#cb83-222"></a><span class="in">```</span></span>
-<span id="cb83-223"><a href="#cb83-223"></a></span>
-<span id="cb83-226"><a href="#cb83-226"></a><span class="in">```{r}</span></span>
-<span id="cb83-227"><a href="#cb83-227"></a><span class="fu">str_sub</span>(x, <span class="at">start =</span> <span class="dv">1</span>, <span class="at">end =</span> <span class="dv">3</span>)</span>
-<span id="cb83-228"><a href="#cb83-228"></a><span class="fu">str_sub</span>(x, <span class="at">start =</span> <span class="sc">-</span><span class="dv">3</span>, <span class="at">end =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb83-229"><a href="#cb83-229"></a><span class="fu">str_sub</span>(x, <span class="at">start =</span> <span class="dv">2</span>, <span class="at">end =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb83-230"><a href="#cb83-230"></a><span class="fu">str_sub</span>(<span class="st">"a"</span>, <span class="at">start =</span> <span class="dv">1</span>, <span class="at">end =</span> <span class="dv">15</span>)</span>
-<span id="cb83-231"><a href="#cb83-231"></a><span class="in">```</span></span>
-<span id="cb83-232"><a href="#cb83-232"></a></span>
-<span id="cb83-233"><a href="#cb83-233"></a><span class="fu">### ✏️ Find Middle Letter</span></span>
-<span id="cb83-234"><a href="#cb83-234"></a></span>
-<span id="cb83-235"><a href="#cb83-235"></a>Using <span class="in">`str_sub()`</span>, create a new variable with only the middle letter of each word in the data frame below. (Challenge: How would you handle words with an even number of letters?)</span>
-<span id="cb83-236"><a href="#cb83-236"></a></span>
-<span id="cb83-237"><a href="#cb83-237"></a><span class="in">```{r ex_str_sub}</span></span>
-<span id="cb83-238"><a href="#cb83-238"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb83-239"><a href="#cb83-239"></a>    <span class="at">word_id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb83-240"><a href="#cb83-240"></a>    <span class="at">word =</span> <span class="fu">c</span>(<span class="st">"replace"</span>, <span class="st">"match"</span>, <span class="st">"pattern"</span>)</span>
-<span id="cb83-241"><a href="#cb83-241"></a>)</span>
-<span id="cb83-242"><a href="#cb83-242"></a>df</span>
-<span id="cb83-243"><a href="#cb83-243"></a><span class="in">```</span></span>
-<span id="cb83-244"><a href="#cb83-244"></a></span>
-<span id="cb83-247"><a href="#cb83-247"></a><span class="in">```{r}</span></span>
-<span id="cb83-248"><a href="#cb83-248"></a><span class="co"># write your answer below</span></span>
-<span id="cb83-249"><a href="#cb83-249"></a></span>
-<span id="cb83-250"><a href="#cb83-250"></a><span class="in">```</span></span>
-<span id="cb83-251"><a href="#cb83-251"></a></span>
-<span id="cb83-252"><a href="#cb83-252"></a></span>
-<span id="cb83-253"><a href="#cb83-253"></a><span class="fu">## Patterns</span></span>
-<span id="cb83-254"><a href="#cb83-254"></a></span>
-<span id="cb83-255"><a href="#cb83-255"></a>Suppose that you're exploring text data looking for places where people describe happiness. There are many ways to search. We could search for the word "happy" but that excludes "happiness" so we might search for "happi".</span>
-<span id="cb83-256"><a href="#cb83-256"></a></span>
-<span id="cb83-257"><a href="#cb83-257"></a>**Regular expressions** (regex) are a powerful language for describing patterns within strings.</span>
-<span id="cb83-258"><a href="#cb83-258"></a></span>
-<span id="cb83-259"><a href="#cb83-259"></a><span class="in">```{r load_regex_data}</span></span>
-<span id="cb83-260"><a href="#cb83-260"></a><span class="co"># load few datasets</span></span>
-<span id="cb83-261"><a href="#cb83-261"></a><span class="fu">data</span>(fruit)</span>
-<span id="cb83-262"><a href="#cb83-262"></a><span class="fu">sample</span>(fruit, <span class="dv">10</span>)</span>
-<span id="cb83-263"><a href="#cb83-263"></a><span class="in">```</span></span>
-<span id="cb83-264"><a href="#cb83-264"></a></span>
-<span id="cb83-267"><a href="#cb83-267"></a><span class="in">```{r}</span></span>
-<span id="cb83-268"><a href="#cb83-268"></a><span class="fu">data</span>(words)</span>
-<span id="cb83-269"><a href="#cb83-269"></a><span class="fu">sample</span>(words, <span class="dv">10</span>)</span>
-<span id="cb83-270"><a href="#cb83-270"></a><span class="in">```</span></span>
-<span id="cb83-271"><a href="#cb83-271"></a></span>
-<span id="cb83-274"><a href="#cb83-274"></a><span class="in">```{r}</span></span>
-<span id="cb83-275"><a href="#cb83-275"></a><span class="fu">data</span>(sentences)</span>
-<span id="cb83-276"><a href="#cb83-276"></a><span class="fu">sample</span>(sentences, <span class="dv">10</span>)</span>
-<span id="cb83-277"><a href="#cb83-277"></a><span class="in">```</span></span>
-<span id="cb83-278"><a href="#cb83-278"></a></span>
-<span id="cb83-279"><a href="#cb83-279"></a>We can use <span class="in">`str_view()`</span> with the <span class="in">`pattern`</span> argument to see what parts of a string match the regex supplied in the <span class="in">`pattern`</span> argument. (Matches are enclosed in <span class="in">`&lt;&gt;`</span>.)</span>
-<span id="cb83-280"><a href="#cb83-280"></a></span>
-<span id="cb83-281"><a href="#cb83-281"></a><span class="in">```{r str_view_pattern}</span></span>
-<span id="cb83-282"><a href="#cb83-282"></a><span class="fu">str_view</span>(fruit, <span class="st">"berry"</span>)</span>
-<span id="cb83-283"><a href="#cb83-283"></a><span class="in">```</span></span>
-<span id="cb83-284"><a href="#cb83-284"></a></span>
-<span id="cb83-285"><a href="#cb83-285"></a></span>
-<span id="cb83-286"><a href="#cb83-286"></a><span class="fu">### Quantifiers</span></span>
-<span id="cb83-287"><a href="#cb83-287"></a></span>
-<span id="cb83-288"><a href="#cb83-288"></a><span class="ss">- </span>Letters and numbers in a regex are matched exactly and are called **literal characters**.</span>
-<span id="cb83-289"><a href="#cb83-289"></a><span class="ss">- </span>Most punctuation characters, like <span class="in">`.`</span>, <span class="in">`+`</span>, <span class="in">`*`</span>, <span class="in">`[`</span>, <span class="in">`]`</span>, and <span class="in">`?`</span>, have special meanings and are called **metacharacters**.</span>
-<span id="cb83-290"><a href="#cb83-290"></a><span class="ss">- </span>**Quantifiers** are metacharacters that specify how many times the proceeding character (group or character class) must occurs for a match to be found:</span>
-<span id="cb83-291"><a href="#cb83-291"></a><span class="ss">    - </span><span class="in">`?`</span>: the proceeding character must occurs 0 or 1 times for a match to be found</span>
-<span id="cb83-292"><a href="#cb83-292"></a><span class="ss">    - </span><span class="in">`+`</span>: the proceeding character must occurs 1+ (1 or more times) for a match to be found</span>
-<span id="cb83-293"><a href="#cb83-293"></a><span class="ss">    - </span><span class="in">`*`</span>: the proceeding character must occurs 0+ (0 or more times) for a match to be found</span>
-<span id="cb83-294"><a href="#cb83-294"></a></span>
-<span id="cb83-295"><a href="#cb83-295"></a></span>
-<span id="cb83-296"><a href="#cb83-296"></a><span class="fu">### ✏️ Predict Quantifier Matches</span></span>
-<span id="cb83-297"><a href="#cb83-297"></a></span>
-<span id="cb83-298"><a href="#cb83-298"></a>Before running the code below, predict what matches will be made. Run the code to check your guesses. Note that in all regex's below the <span class="in">`?`</span>, <span class="in">`+`</span>, <span class="in">`*`</span> applies to the <span class="in">`b`</span> only (not the <span class="in">`a`</span>).</span>
-<span id="cb83-299"><a href="#cb83-299"></a></span>
-<span id="cb83-300"><a href="#cb83-300"></a><span class="in">```{r ex_regex_quantifiers}</span></span>
-<span id="cb83-301"><a href="#cb83-301"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"ab"</span>, <span class="st">"abb"</span>), <span class="st">"ab?"</span>)</span>
-<span id="cb83-302"><a href="#cb83-302"></a><span class="in">```</span></span>
-<span id="cb83-303"><a href="#cb83-303"></a></span>
-<span id="cb83-306"><a href="#cb83-306"></a><span class="in">```{r}</span></span>
-<span id="cb83-307"><a href="#cb83-307"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"ab"</span>, <span class="st">"abb"</span>), <span class="st">"ab+"</span>)</span>
-<span id="cb83-308"><a href="#cb83-308"></a><span class="in">```</span></span>
-<span id="cb83-309"><a href="#cb83-309"></a></span>
-<span id="cb83-312"><a href="#cb83-312"></a><span class="in">```{r}</span></span>
-<span id="cb83-313"><a href="#cb83-313"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"ab"</span>, <span class="st">"abb"</span>), <span class="st">"ab*"</span>)</span>
-<span id="cb83-314"><a href="#cb83-314"></a><span class="in">```</span></span>
-<span id="cb83-315"><a href="#cb83-315"></a></span>
-<span id="cb83-316"><a href="#cb83-316"></a><span class="fu">### Character Classes</span></span>
-<span id="cb83-317"><a href="#cb83-317"></a></span>
-<span id="cb83-318"><a href="#cb83-318"></a><span class="ss">- </span>We can match any of a set of characters with <span class="in">`[]`</span> (called a **character class**), e.g., <span class="in">`[abcd]`</span> matches "a", "b", "c", or "d".</span>
-<span id="cb83-319"><a href="#cb83-319"></a><span class="ss">- </span>We can invert the match by starting with <span class="in">`^`</span>: <span class="in">`[^abcd]`</span> matches anything except "a", "b", "c", or "d".</span>
-<span id="cb83-320"><a href="#cb83-320"></a></span>
-<span id="cb83-321"><a href="#cb83-321"></a><span class="in">```{r regex_classes}</span></span>
-<span id="cb83-322"><a href="#cb83-322"></a><span class="co"># Match words that have vowel-x-vowel</span></span>
-<span id="cb83-323"><a href="#cb83-323"></a><span class="fu">str_view</span>(words, <span class="st">"[aeiou]x[aeiou]"</span>)</span>
-<span id="cb83-324"><a href="#cb83-324"></a></span>
-<span id="cb83-325"><a href="#cb83-325"></a><span class="co"># Match words that have not_vowel-y-not_vowel</span></span>
-<span id="cb83-326"><a href="#cb83-326"></a><span class="fu">str_view</span>(words, <span class="st">"[^aeiou]y[^aeiou]"</span>)</span>
-<span id="cb83-327"><a href="#cb83-327"></a><span class="in">```</span></span>
-<span id="cb83-328"><a href="#cb83-328"></a></span>
-<span id="cb83-329"><a href="#cb83-329"></a></span>
-<span id="cb83-330"><a href="#cb83-330"></a><span class="fu">### ✏️ Find Vowel Pairs</span></span>
-<span id="cb83-331"><a href="#cb83-331"></a></span>
-<span id="cb83-332"><a href="#cb83-332"></a>Using the <span class="in">`words`</span> dataset, find words that have two vowels in a row followed by an "m".</span>
-<span id="cb83-333"><a href="#cb83-333"></a></span>
-<span id="cb83-334"><a href="#cb83-334"></a><span class="in">```{r ex_regex_classes}</span></span>
-<span id="cb83-335"><a href="#cb83-335"></a></span>
-<span id="cb83-336"><a href="#cb83-336"></a><span class="in">```</span></span>
-<span id="cb83-337"><a href="#cb83-337"></a></span>
-<span id="cb83-338"><a href="#cb83-338"></a></span>
-<span id="cb83-339"><a href="#cb83-339"></a><span class="fu">### Alternation</span></span>
-<span id="cb83-340"><a href="#cb83-340"></a></span>
-<span id="cb83-341"><a href="#cb83-341"></a><span class="ss">- </span>The **alternation** operator <span class="in">`|`</span> can be read just like the logical operator <span class="in">`|`</span> ("OR") to pick between one or more alternative patterns, eg, <span class="in">`apple|banana`</span> searches for "apple" or "banana".</span>
-<span id="cb83-342"><a href="#cb83-342"></a></span>
-<span id="cb83-343"><a href="#cb83-343"></a><span class="in">```{r regex_alternation}</span></span>
-<span id="cb83-344"><a href="#cb83-344"></a><span class="fu">str_view</span>(fruit, <span class="st">"apple|melon|nut"</span>)</span>
-<span id="cb83-345"><a href="#cb83-345"></a><span class="in">```</span></span>
-<span id="cb83-346"><a href="#cb83-346"></a></span>
-<span id="cb83-347"><a href="#cb83-347"></a></span>
-<span id="cb83-348"><a href="#cb83-348"></a><span class="fu">### ✏️ Find Repeated Vowels</span></span>
-<span id="cb83-349"><a href="#cb83-349"></a></span>
-<span id="cb83-350"><a href="#cb83-350"></a>Using the <span class="in">`fruit`</span> dataset, find fruits that have a repeated vowel ("aa", "ee", "ii", "oo", or "uu".)</span>
-<span id="cb83-351"><a href="#cb83-351"></a></span>
-<span id="cb83-352"><a href="#cb83-352"></a><span class="in">```{r ex_regex_alternation}</span></span>
-<span id="cb83-353"><a href="#cb83-353"></a><span class="co"># write your answer below</span></span>
-<span id="cb83-354"><a href="#cb83-354"></a></span>
-<span id="cb83-355"><a href="#cb83-355"></a><span class="in">```</span></span>
-<span id="cb83-356"><a href="#cb83-356"></a></span>
-<span id="cb83-357"><a href="#cb83-357"></a></span>
-<span id="cb83-358"><a href="#cb83-358"></a><span class="fu">### Anchors &amp; Groups</span></span>
-<span id="cb83-359"><a href="#cb83-359"></a></span>
-<span id="cb83-360"><a href="#cb83-360"></a><span class="ss">- </span>The <span class="in">`^`</span> operator indicates the beginning of a string, and the <span class="in">`$`</span> operator indicates the end of a string, eg, <span class="in">`^a`</span> matches strings that start with "a", and <span class="in">`a$`</span> matches words that end with "a".</span>
-<span id="cb83-361"><a href="#cb83-361"></a><span class="ss">- </span>Parentheses group together parts of a regular expression that should be taken as a bundle. Much like parentheses in arithmetic statements, eg, <span class="in">`ab+`</span> is a little confusing. Does it match "ab" one or more times? Or does it match "a" first, then just "b" one or more times? (The latter, as we saw in an earlier example.) We can be very explicit and use <span class="in">`a(b)+`</span>.</span>
-<span id="cb83-362"><a href="#cb83-362"></a></span>
-<span id="cb83-363"><a href="#cb83-363"></a></span>
-<span id="cb83-364"><a href="#cb83-364"></a><span class="fu">### ✏️ Find Words with y</span></span>
-<span id="cb83-365"><a href="#cb83-365"></a></span>
-<span id="cb83-366"><a href="#cb83-366"></a>Using the <span class="in">`words`</span> dataset, find words that start with "y"</span>
-<span id="cb83-367"><a href="#cb83-367"></a></span>
-<span id="cb83-368"><a href="#cb83-368"></a><span class="in">```{r ex_regex_start_end_group}</span></span>
-<span id="cb83-369"><a href="#cb83-369"></a><span class="co"># write your answer below</span></span>
-<span id="cb83-370"><a href="#cb83-370"></a></span>
-<span id="cb83-371"><a href="#cb83-371"></a><span class="in">```</span></span>
-<span id="cb83-372"><a href="#cb83-372"></a></span>
-<span id="cb83-373"><a href="#cb83-373"></a>Using the <span class="in">`words`</span> dataset again, find words that don't start with "y".</span>
-<span id="cb83-374"><a href="#cb83-374"></a></span>
-<span id="cb83-375"><a href="#cb83-375"></a><span class="in">```{r ex_regex_start_end_group_2}</span></span>
-<span id="cb83-376"><a href="#cb83-376"></a><span class="co"># write your answer below</span></span>
-<span id="cb83-377"><a href="#cb83-377"></a></span>
-<span id="cb83-378"><a href="#cb83-378"></a><span class="in">```</span></span>
-<span id="cb83-379"><a href="#cb83-379"></a></span>
-<span id="cb83-380"><a href="#cb83-380"></a></span>
-<span id="cb83-381"><a href="#cb83-381"></a><span class="fu">## Dear Abby Letters</span></span>
-<span id="cb83-382"><a href="#cb83-382"></a></span>
-<span id="cb83-383"><a href="#cb83-383"></a><span class="fu">### Load the Letters</span></span>
-<span id="cb83-384"><a href="#cb83-384"></a></span>
-<span id="cb83-385"><a href="#cb83-385"></a>Read in the "Dear Abby" data underlying The Pudding's <span class="co">[</span><span class="ot">30 Years of American Anxieties</span><span class="co">](https://pudding.cool/2018/11/dearabby/)</span> article.</span>
-<span id="cb83-386"><a href="#cb83-386"></a></span>
-<span id="cb83-387"><a href="#cb83-387"></a><span class="in">```{r read_dear_abby}</span></span>
-<span id="cb83-388"><a href="#cb83-388"></a>posts <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/the-pudding/data/master/dearabby/raw_da_qs.csv"</span>)</span>
-<span id="cb83-389"><a href="#cb83-389"></a><span class="fu">str</span>(posts)</span>
-<span id="cb83-390"><a href="#cb83-390"></a><span class="in">```</span></span>
-<span id="cb83-391"><a href="#cb83-391"></a></span>
-<span id="cb83-392"><a href="#cb83-392"></a>Take a couple minutes to scroll through the <span class="co">[</span><span class="ot">30 Years of American Anxieties</span><span class="co">](https://pudding.cool/2018/11/dearabby/)</span> article to get ideas for themes that you might want to search for using regular expressions.</span>
-<span id="cb83-393"><a href="#cb83-393"></a></span>
-<span id="cb83-394"><a href="#cb83-394"></a><span class="fu">### Regex Functions</span></span>
-<span id="cb83-395"><a href="#cb83-395"></a></span>
-<span id="cb83-396"><a href="#cb83-396"></a>The following are core <span class="in">`stringr`</span> functions that use regular expressions:</span>
-<span id="cb83-397"><a href="#cb83-397"></a></span>
-<span id="cb83-398"><a href="#cb83-398"></a><span class="ss">- </span><span class="in">`str_view()`</span> - View the first occurrence in a string that matches the regex</span>
-<span id="cb83-399"><a href="#cb83-399"></a><span class="ss">- </span><span class="in">`str_count()`</span> - Count the number of times a regex matches within a string</span>
-<span id="cb83-400"><a href="#cb83-400"></a><span class="ss">- </span><span class="in">`str_detect()`</span> - Determine if (TRUE/FALSE) the regex is found within string</span>
-<span id="cb83-401"><a href="#cb83-401"></a><span class="ss">- </span><span class="in">`str_subset()`</span> - Return subset of strings that match the regex</span>
-<span id="cb83-402"><a href="#cb83-402"></a><span class="ss">- </span><span class="in">`str_extract(), str_extract_all()`</span> - Return portion of each string that matches the regex. <span class="in">`str_extract()`</span> extracts the first instance of the match. <span class="in">`str_extract_all()`</span> extracts all matches.</span>
-<span id="cb83-403"><a href="#cb83-403"></a><span class="ss">- </span><span class="in">`str_replace(), str_replace_all()`</span> - Replace portion of string that matches the regex with something else. <span class="in">`str_replace()`</span> replaces the first instance of the match. <span class="in">`str_replace_all()`</span> replaces all instances of the match.</span>
-<span id="cb83-404"><a href="#cb83-404"></a><span class="ss">- </span><span class="in">`str_remove(), str_remove_all()`</span> - Removes the portion of the string that matches the pattern. Equivalent to <span class="in">`str_replace(x, "THE REGEX PATTERN", "")`</span></span>
-<span id="cb83-405"><a href="#cb83-405"></a></span>
-<span id="cb83-406"><a href="#cb83-406"></a></span>
-<span id="cb83-407"><a href="#cb83-407"></a><span class="fu">### ✏️ Search for Themes</span></span>
-<span id="cb83-408"><a href="#cb83-408"></a></span>
-<span id="cb83-409"><a href="#cb83-409"></a>Pick a theme from the article and use each of the functions above, starting with <span class="in">`str_count()`</span>, to search for it in the <span class="in">`posts`</span> data. Pull up each function's documentation page and read through the arguments as you go.</span>
-<span id="cb83-410"><a href="#cb83-410"></a></span>
-<span id="cb83-413"><a href="#cb83-413"></a><span class="in">```{r}</span></span>
-<span id="cb83-414"><a href="#cb83-414"></a><span class="in">```</span></span>
-<span id="cb83-415"><a href="#cb83-415"></a></span>
-<span id="cb83-416"><a href="#cb83-416"></a></span>
-<span id="cb83-417"><a href="#cb83-417"></a><span class="fu">## Done!</span></span>
-<span id="cb83-418"><a href="#cb83-418"></a></span>
-<span id="cb83-419"><a href="#cb83-419"></a><span class="ss">- </span>Check the ICA Instructions for how to (a) push your code to GitHub and (b) update your portfolio website</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb88" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb88-1"><a href="#cb88-1"></a><span class="co">---</span></span>
+<span id="cb88-2"><a href="#cb88-2"></a><span class="an">title:</span><span class="co"> "7 Adv Data wrangling II"</span></span>
+<span id="cb88-3"><a href="#cb88-3"></a><span class="co">---</span></span>
+<span id="cb88-4"><a href="#cb88-4"></a></span>
+<span id="cb88-5"><a href="#cb88-5"></a></span>
+<span id="cb88-6"><a href="#cb88-6"></a></span>
+<span id="cb88-7"><a href="#cb88-7"></a><span class="fu">## 🧩 Learning Goals</span></span>
+<span id="cb88-8"><a href="#cb88-8"></a></span>
+<span id="cb88-9"><a href="#cb88-9"></a>By the end of this lesson, you should be able to:</span>
+<span id="cb88-10"><a href="#cb88-10"></a></span>
+<span id="cb88-11"><a href="#cb88-11"></a><span class="ss">- </span>Manipulate and explore strings using the <span class="in">`stringr`</span> package</span>
+<span id="cb88-12"><a href="#cb88-12"></a><span class="ss">- </span>Construct regular expressions to find patterns in strings</span>
+<span id="cb88-13"><a href="#cb88-13"></a></span>
+<span id="cb88-14"><a href="#cb88-14"></a></span>
+<span id="cb88-15"><a href="#cb88-15"></a><span class="fu">## Motivation</span></span>
+<span id="cb88-16"><a href="#cb88-16"></a></span>
+<span id="cb88-17"><a href="#cb88-17"></a>In 2018 the data journalism organization <span class="co">[</span><span class="ot">The Pudding</span><span class="co">](https://pudding.cool/)</span> featured a story called <span class="co">[</span><span class="ot">30 Years of American Anxieties</span><span class="co">](https://pudding.cool/2018/11/dearabby/)</span> highlighting themes in 30 years of posts to the Dear Abby column (an American advice column).</span>
+<span id="cb88-18"><a href="#cb88-18"></a></span>
+<span id="cb88-19"><a href="#cb88-19"></a>To understand themes in text data, one can conduct a **qualitative text analysis** which is a manual process that involved multiple people reading through the instances of text several time until they reach a consensus about themes.  Given the amount of labor involved, this process is suitable for medium datasets.</span>
+<span id="cb88-20"><a href="#cb88-20"></a></span>
+<span id="cb88-21"><a href="#cb88-21"></a>For large datasets, one might want to use **quantitative &amp; computational text analysis** which leverages computers, data science techniques, and natural language process to extract themes from the data.  We will explore this approach in this lesson.</span>
+<span id="cb88-22"><a href="#cb88-22"></a></span>
+<span id="cb88-23"><a href="#cb88-23"></a>Both qualitative and computational approaches can be used in tandem. Often, using computational tools can help focus a close reading of select texts, which parallels the spirit of a qualitative analysis.</span>
+<span id="cb88-24"><a href="#cb88-24"></a></span>
+<span id="cb88-25"><a href="#cb88-25"></a>To prepare ourselves for a computational analysis, let's learn about strings.</span>
+<span id="cb88-26"><a href="#cb88-26"></a></span>
+<span id="cb88-27"><a href="#cb88-27"></a></span>
+<span id="cb88-28"><a href="#cb88-28"></a><span class="fu">## Strings</span></span>
+<span id="cb88-29"><a href="#cb88-29"></a></span>
+<span id="cb88-30"><a href="#cb88-30"></a>Strings are objects of the <span class="in">`character`</span> class (abbreviated as <span class="in">`&lt;chr&gt;`</span> in tibbles).</span>
+<span id="cb88-31"><a href="#cb88-31"></a></span>
+<span id="cb88-32"><a href="#cb88-32"></a>When you print out strings, they display with double quotes:</span>
+<span id="cb88-33"><a href="#cb88-33"></a></span>
+<span id="cb88-34"><a href="#cb88-34"></a><span class="in">```{r chr_class}</span></span>
+<span id="cb88-35"><a href="#cb88-35"></a>some_string <span class="ot">&lt;-</span> <span class="st">"banana"</span></span>
+<span id="cb88-36"><a href="#cb88-36"></a>some_string</span>
+<span id="cb88-37"><a href="#cb88-37"></a><span class="in">```</span></span>
+<span id="cb88-38"><a href="#cb88-38"></a></span>
+<span id="cb88-39"><a href="#cb88-39"></a>Working with strings generally will involve the use of **regular expressions**, a tool for finding patterns in strings.</span>
+<span id="cb88-40"><a href="#cb88-40"></a></span>
+<span id="cb88-41"><a href="#cb88-41"></a>Regular expressions (regex, for short) look like the following:</span>
+<span id="cb88-42"><a href="#cb88-42"></a></span>
+<span id="cb88-43"><a href="#cb88-43"></a><span class="in">```</span></span>
+<span id="cb88-44"><a href="#cb88-44"></a><span class="in">"^the" &lt;-- Find strings that start with "the"</span></span>
+<span id="cb88-45"><a href="#cb88-45"></a><span class="in">"end$" &lt;-- Find strings that end with "end"</span></span>
+<span id="cb88-46"><a href="#cb88-46"></a><span class="in">```</span></span>
+<span id="cb88-47"><a href="#cb88-47"></a></span>
+<span id="cb88-48"><a href="#cb88-48"></a>Before getting to regular expressions, let's go over some fundamentals about working with strings. The <span class="in">`stringr`</span> package (which a package in the <span class="in">`tidyverse`</span> ecosystem) is great for working with strings.</span>
+<span id="cb88-49"><a href="#cb88-49"></a></span>
+<span id="cb88-50"><a href="#cb88-50"></a><span class="in">```{r doc_setup_07}</span></span>
+<span id="cb88-51"><a href="#cb88-51"></a><span class="co">#| message: false</span></span>
+<span id="cb88-52"><a href="#cb88-52"></a></span>
+<span id="cb88-53"><a href="#cb88-53"></a><span class="fu">library</span>(tidyverse) <span class="co"># The stringr package is part of tidyverse</span></span>
+<span id="cb88-54"><a href="#cb88-54"></a><span class="in">```</span></span>
+<span id="cb88-55"><a href="#cb88-55"></a></span>
+<span id="cb88-56"><a href="#cb88-56"></a></span>
+<span id="cb88-57"><a href="#cb88-57"></a><span class="fu">### Create Strings</span></span>
+<span id="cb88-58"><a href="#cb88-58"></a></span>
+<span id="cb88-59"><a href="#cb88-59"></a>Creating strings by hand is useful for testing out regular expressions.</span>
+<span id="cb88-60"><a href="#cb88-60"></a></span>
+<span id="cb88-61"><a href="#cb88-61"></a>To create a string, type any text in either double quotes <span class="in">`"double"`</span> or single quotes <span class="in">`'single'`</span>. Using double or single quotes doesn't matter unless your string itself has single or double quotes.</span>
+<span id="cb88-62"><a href="#cb88-62"></a></span>
+<span id="cb88-63"><a href="#cb88-63"></a><span class="in">```{r create_strings}</span></span>
+<span id="cb88-64"><a href="#cb88-64"></a>string1 <span class="ot">&lt;-</span> <span class="st">"This is a string"</span></span>
+<span id="cb88-65"><a href="#cb88-65"></a>string2 <span class="ot">&lt;-</span> <span class="st">'If I want to include a "quote" inside a string, I use single quotes'</span></span>
+<span id="cb88-66"><a href="#cb88-66"></a>string3 <span class="ot">&lt;-</span> <span class="fu">c</span>(string1, string2) <span class="co"># string / character vector (of greater than length 1)</span></span>
+<span id="cb88-67"><a href="#cb88-67"></a></span>
+<span id="cb88-68"><a href="#cb88-68"></a></span>
+<span id="cb88-69"><a href="#cb88-69"></a><span class="fu">class</span>(string1)</span>
+<span id="cb88-70"><a href="#cb88-70"></a><span class="fu">class</span>(string2)</span>
+<span id="cb88-71"><a href="#cb88-71"></a><span class="fu">class</span>(string3)</span>
+<span id="cb88-72"><a href="#cb88-72"></a></span>
+<span id="cb88-73"><a href="#cb88-73"></a><span class="fu">length</span>(string1)</span>
+<span id="cb88-74"><a href="#cb88-74"></a><span class="fu">length</span>(string2)</span>
+<span id="cb88-75"><a href="#cb88-75"></a><span class="fu">length</span>(string3)</span>
+<span id="cb88-76"><a href="#cb88-76"></a><span class="in">```</span></span>
+<span id="cb88-77"><a href="#cb88-77"></a></span>
+<span id="cb88-78"><a href="#cb88-78"></a>We can view these strings "naturally" (without the opening and closing quotes) with <span class="in">`str_view()`</span>:</span>
+<span id="cb88-79"><a href="#cb88-79"></a></span>
+<span id="cb88-80"><a href="#cb88-80"></a><span class="in">```{r str_view}</span></span>
+<span id="cb88-81"><a href="#cb88-81"></a><span class="fu">str_view</span>(string1)</span>
+<span id="cb88-82"><a href="#cb88-82"></a><span class="fu">str_view</span>(string2)</span>
+<span id="cb88-83"><a href="#cb88-83"></a><span class="fu">str_view</span>(string3)</span>
+<span id="cb88-84"><a href="#cb88-84"></a><span class="in">```</span></span>
+<span id="cb88-85"><a href="#cb88-85"></a></span>
+<span id="cb88-86"><a href="#cb88-86"></a></span>
+<span id="cb88-87"><a href="#cb88-87"></a><span class="fu">### ✏️ Quote String</span></span>
+<span id="cb88-88"><a href="#cb88-88"></a></span>
+<span id="cb88-89"><a href="#cb88-89"></a>Create the string <span class="in">`It's Thursday`</span>. What happens if you put the string inside single quotes? Double quotes?</span>
+<span id="cb88-90"><a href="#cb88-90"></a></span>
+<span id="cb88-91"><a href="#cb88-91"></a><span class="in">```{r ex_create_string}</span></span>
+<span id="cb88-92"><a href="#cb88-92"></a><span class="co"># write your answer below</span></span>
+<span id="cb88-93"><a href="#cb88-93"></a>string_thu <span class="ot">&lt;-</span> <span class="st">"It's Thursday"</span></span>
+<span id="cb88-94"><a href="#cb88-94"></a><span class="in">```</span></span>
+<span id="cb88-95"><a href="#cb88-95"></a></span>
+<span id="cb88-96"><a href="#cb88-96"></a></span>
+<span id="cb88-97"><a href="#cb88-97"></a><span class="fu">### Escape Characters</span></span>
+<span id="cb88-98"><a href="#cb88-98"></a></span>
+<span id="cb88-99"><a href="#cb88-99"></a>Because <span class="in">`"`</span> and <span class="in">`'`</span> are special characters in the creation of strings, R offers another way to put them inside a string. We can **escape** these special characters by putting a <span class="in">`\`</span> in front of them:</span>
+<span id="cb88-100"><a href="#cb88-100"></a></span>
+<span id="cb88-101"><a href="#cb88-101"></a><span class="in">```{r escape_chars}</span></span>
+<span id="cb88-102"><a href="#cb88-102"></a>string1 <span class="ot">&lt;-</span> <span class="st">"This is a string with </span><span class="sc">\"</span><span class="st">double quotes</span><span class="sc">\"</span><span class="st">"</span></span>
+<span id="cb88-103"><a href="#cb88-103"></a>string2 <span class="ot">&lt;-</span> <span class="st">"This is a string with </span><span class="sc">\'</span><span class="st">single quotes</span><span class="sc">\'</span><span class="st">"</span></span>
+<span id="cb88-104"><a href="#cb88-104"></a><span class="fu">str_view</span>(string1)</span>
+<span id="cb88-105"><a href="#cb88-105"></a><span class="fu">str_view</span>(string2)</span>
+<span id="cb88-106"><a href="#cb88-106"></a><span class="in">```</span></span>
+<span id="cb88-107"><a href="#cb88-107"></a></span>
+<span id="cb88-108"><a href="#cb88-108"></a>Given that <span class="in">`\`</span> is a special character, how can we put the <span class="in">`\`</span> character in strings? We have to escape it with <span class="in">`\\`</span>.</span>
+<span id="cb88-109"><a href="#cb88-109"></a></span>
+<span id="cb88-110"><a href="#cb88-110"></a></span>
+<span id="cb88-111"><a href="#cb88-111"></a><span class="fu">### ✏️ Escape Backslash</span></span>
+<span id="cb88-112"><a href="#cb88-112"></a></span>
+<span id="cb88-113"><a href="#cb88-113"></a>Create the string <span class="in">`C:\Users`</span>. What happens when you don't escape the <span class="in">`\`</span>?</span>
+<span id="cb88-114"><a href="#cb88-114"></a></span>
+<span id="cb88-115"><a href="#cb88-115"></a><span class="in">```{r ex_create_string_slash}</span></span>
+<span id="cb88-116"><a href="#cb88-116"></a><span class="co"># write your answer below</span></span>
+<span id="cb88-117"><a href="#cb88-117"></a>str_user <span class="ot">&lt;-</span> <span class="st">'`C:</span><span class="sc">\\</span><span class="st">Users`'</span></span>
+<span id="cb88-118"><a href="#cb88-118"></a><span class="in">```</span></span>
+<span id="cb88-119"><a href="#cb88-119"></a></span>
+<span id="cb88-120"><a href="#cb88-120"></a></span>
+<span id="cb88-121"><a href="#cb88-121"></a><span class="fu">### Special Characters</span></span>
+<span id="cb88-122"><a href="#cb88-122"></a></span>
+<span id="cb88-123"><a href="#cb88-123"></a>Other special characters include:</span>
+<span id="cb88-124"><a href="#cb88-124"></a></span>
+<span id="cb88-125"><a href="#cb88-125"></a><span class="ss">- </span><span class="in">`\t`</span> &lt;- creates a tab</span>
+<span id="cb88-126"><a href="#cb88-126"></a><span class="ss">- </span><span class="in">`\n`</span> &lt;- creates a newline</span>
+<span id="cb88-127"><a href="#cb88-127"></a></span>
+<span id="cb88-128"><a href="#cb88-128"></a>Both can be useful in plots to more neatly arrange text.</span>
+<span id="cb88-129"><a href="#cb88-129"></a></span>
+<span id="cb88-130"><a href="#cb88-130"></a><span class="in">```{r escape_tab_newline}</span></span>
+<span id="cb88-131"><a href="#cb88-131"></a>string1 <span class="ot">&lt;-</span> <span class="st">"Record temp:</span><span class="sc">\t</span><span class="st">102"</span></span>
+<span id="cb88-132"><a href="#cb88-132"></a>string2 <span class="ot">&lt;-</span> <span class="st">"Record temp:</span><span class="sc">\n</span><span class="st">102"</span></span>
+<span id="cb88-133"><a href="#cb88-133"></a></span>
+<span id="cb88-134"><a href="#cb88-134"></a><span class="fu">str_view</span>(string1)</span>
+<span id="cb88-135"><a href="#cb88-135"></a><span class="fu">str_view</span>(string2)</span>
+<span id="cb88-136"><a href="#cb88-136"></a><span class="in">```</span></span>
+<span id="cb88-137"><a href="#cb88-137"></a></span>
+<span id="cb88-138"><a href="#cb88-138"></a>Can we get <span class="in">`str_view()`</span> to show the tab instead of <span class="in">`{\t}`</span>? We can use the <span class="in">`html`</span> argument to have the string displayed as if on a webpage:</span>
+<span id="cb88-139"><a href="#cb88-139"></a></span>
+<span id="cb88-140"><a href="#cb88-140"></a><span class="in">```{r str_view_html}</span></span>
+<span id="cb88-141"><a href="#cb88-141"></a><span class="fu">str_view</span>(string1, <span class="at">html =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb88-142"><a href="#cb88-142"></a><span class="in">```</span></span>
+<span id="cb88-143"><a href="#cb88-143"></a></span>
+<span id="cb88-144"><a href="#cb88-144"></a></span>
+<span id="cb88-145"><a href="#cb88-145"></a><span class="fu">### Combine</span></span>
+<span id="cb88-146"><a href="#cb88-146"></a></span>
+<span id="cb88-147"><a href="#cb88-147"></a>Often we will want to create new strings within data frames. We can use <span class="in">`str_c()`</span> or <span class="in">`str_glue()`</span>, both of which are vectorized functions, ie, they take vectors as inputs and provide vectors as outputs which means that they can be used within <span class="in">`mutate()`</span></span>
+<span id="cb88-148"><a href="#cb88-148"></a></span>
+<span id="cb88-149"><a href="#cb88-149"></a><span class="ss">- </span>With <span class="in">`str_c()`</span> the strings to be combined are all arguments separated by commas.</span>
+<span id="cb88-150"><a href="#cb88-150"></a><span class="ss">- </span>With <span class="in">`str_glue()`</span> the desired string is written as a template with variable names inside curly braces <span class="in">`{}`</span>.</span>
+<span id="cb88-151"><a href="#cb88-151"></a></span>
+<span id="cb88-152"><a href="#cb88-152"></a><span class="in">```{r str_c_glue}</span></span>
+<span id="cb88-153"><a href="#cb88-153"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb88-154"><a href="#cb88-154"></a>    <span class="at">first_name =</span> <span class="fu">c</span>(<span class="st">"Arya"</span>, <span class="st">"Olenna"</span>, <span class="st">"Tyrion"</span>, <span class="st">"Melisandre"</span>),</span>
+<span id="cb88-155"><a href="#cb88-155"></a>    <span class="at">last_name =</span> <span class="fu">c</span>(<span class="st">"Stark"</span>, <span class="st">"Tyrell"</span>, <span class="st">"Lannister"</span>, <span class="cn">NA</span>)</span>
+<span id="cb88-156"><a href="#cb88-156"></a>)</span>
+<span id="cb88-157"><a href="#cb88-157"></a>df</span>
+<span id="cb88-158"><a href="#cb88-158"></a><span class="in">```</span></span>
+<span id="cb88-159"><a href="#cb88-159"></a></span>
+<span id="cb88-162"><a href="#cb88-162"></a><span class="in">```{r}</span></span>
+<span id="cb88-163"><a href="#cb88-163"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb88-164"><a href="#cb88-164"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb88-165"><a href="#cb88-165"></a>        <span class="at">full_name1 =</span> <span class="fu">str_c</span>(first_name, <span class="st">" "</span>, last_name),</span>
+<span id="cb88-166"><a href="#cb88-166"></a>        <span class="at">full_name2 =</span> <span class="fu">str_glue</span>(<span class="st">"{first_name} {last_name}"</span>)</span>
+<span id="cb88-167"><a href="#cb88-167"></a>    )</span>
+<span id="cb88-168"><a href="#cb88-168"></a><span class="in">```</span></span>
+<span id="cb88-169"><a href="#cb88-169"></a></span>
+<span id="cb88-170"><a href="#cb88-170"></a><span class="fu">### ✏️ Build Date Strings</span></span>
+<span id="cb88-171"><a href="#cb88-171"></a></span>
+<span id="cb88-172"><a href="#cb88-172"></a>In the following data frame, create a full date string in month-day-year format using both <span class="in">`str_c()`</span> and <span class="in">`str_glue()`</span>.</span>
+<span id="cb88-173"><a href="#cb88-173"></a></span>
+<span id="cb88-174"><a href="#cb88-174"></a><span class="in">```{r ex_str_c_glue}</span></span>
+<span id="cb88-175"><a href="#cb88-175"></a>df_dates <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb88-176"><a href="#cb88-176"></a>    <span class="at">year =</span> <span class="dv">2000</span><span class="sc">:</span><span class="dv">2002</span>,</span>
+<span id="cb88-177"><a href="#cb88-177"></a>    <span class="at">month =</span> <span class="fu">c</span>(<span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>),</span>
+<span id="cb88-178"><a href="#cb88-178"></a>    <span class="at">day =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span></span>
+<span id="cb88-179"><a href="#cb88-179"></a>)</span>
+<span id="cb88-180"><a href="#cb88-180"></a>df_dates</span>
+<span id="cb88-181"><a href="#cb88-181"></a><span class="in">```</span></span>
+<span id="cb88-182"><a href="#cb88-182"></a></span>
+<span id="cb88-185"><a href="#cb88-185"></a><span class="in">```{r}</span></span>
+<span id="cb88-186"><a href="#cb88-186"></a><span class="co"># write your answer below</span></span>
+<span id="cb88-187"><a href="#cb88-187"></a></span>
+<span id="cb88-188"><a href="#cb88-188"></a><span class="in">```</span></span>
+<span id="cb88-189"><a href="#cb88-189"></a></span>
+<span id="cb88-190"><a href="#cb88-190"></a></span>
+<span id="cb88-191"><a href="#cb88-191"></a><span class="fu">### Length</span></span>
+<span id="cb88-192"><a href="#cb88-192"></a></span>
+<span id="cb88-193"><a href="#cb88-193"></a>The <span class="in">`str_length()`</span> counts the number of characters in a string.</span>
+<span id="cb88-194"><a href="#cb88-194"></a></span>
+<span id="cb88-195"><a href="#cb88-195"></a><span class="in">```{r str_length}</span></span>
+<span id="cb88-196"><a href="#cb88-196"></a>comments <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb88-197"><a href="#cb88-197"></a>    <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>),</span>
+<span id="cb88-198"><a href="#cb88-198"></a>    <span class="at">comment =</span> <span class="fu">c</span>(<span class="st">"The essay was well organized around the core message and had good transitions."</span>, <span class="st">"Good job!"</span>)</span>
+<span id="cb88-199"><a href="#cb88-199"></a>)</span>
+<span id="cb88-200"><a href="#cb88-200"></a>comments</span>
+<span id="cb88-201"><a href="#cb88-201"></a><span class="in">```</span></span>
+<span id="cb88-202"><a href="#cb88-202"></a></span>
+<span id="cb88-205"><a href="#cb88-205"></a><span class="in">```{r}</span></span>
+<span id="cb88-206"><a href="#cb88-206"></a>comments <span class="sc">|&gt;</span></span>
+<span id="cb88-207"><a href="#cb88-207"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb88-208"><a href="#cb88-208"></a>        <span class="at">comment_length =</span> <span class="fu">str_length</span>(comment)</span>
+<span id="cb88-209"><a href="#cb88-209"></a>    )</span>
+<span id="cb88-210"><a href="#cb88-210"></a><span class="in">```</span></span>
+<span id="cb88-211"><a href="#cb88-211"></a></span>
+<span id="cb88-212"><a href="#cb88-212"></a><span class="fu">### Substring</span></span>
+<span id="cb88-213"><a href="#cb88-213"></a></span>
+<span id="cb88-214"><a href="#cb88-214"></a>The <span class="in">`str_sub()`</span> function gets a substring of a string. The 2nd and 3rd arguments indicate the beginning and ending position to extract.</span>
+<span id="cb88-215"><a href="#cb88-215"></a></span>
+<span id="cb88-216"><a href="#cb88-216"></a><span class="ss">- </span>Negative positions indicate the position from the end of the word, eg, -3 indicates "3rd letter from the end"</span>
+<span id="cb88-217"><a href="#cb88-217"></a><span class="ss">- </span>Specifying a position that goes beyond the word won't result in an error. <span class="in">`str_sub()`</span> will just go as far as possible.</span>
+<span id="cb88-218"><a href="#cb88-218"></a></span>
+<span id="cb88-219"><a href="#cb88-219"></a><span class="in">```{r str_sub}</span></span>
+<span id="cb88-220"><a href="#cb88-220"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Apple"</span>, <span class="st">"Banana"</span>, <span class="st">"Pear"</span>)</span>
+<span id="cb88-221"><a href="#cb88-221"></a>x</span>
+<span id="cb88-222"><a href="#cb88-222"></a><span class="in">```</span></span>
+<span id="cb88-223"><a href="#cb88-223"></a></span>
+<span id="cb88-226"><a href="#cb88-226"></a><span class="in">```{r}</span></span>
+<span id="cb88-227"><a href="#cb88-227"></a><span class="fu">str_sub</span>(x, <span class="at">start =</span> <span class="dv">1</span>, <span class="at">end =</span> <span class="dv">3</span>)</span>
+<span id="cb88-228"><a href="#cb88-228"></a><span class="fu">str_sub</span>(x, <span class="at">start =</span> <span class="sc">-</span><span class="dv">3</span>, <span class="at">end =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb88-229"><a href="#cb88-229"></a><span class="fu">str_sub</span>(x, <span class="at">start =</span> <span class="dv">2</span>, <span class="at">end =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb88-230"><a href="#cb88-230"></a><span class="fu">str_sub</span>(<span class="st">"a"</span>, <span class="at">start =</span> <span class="dv">1</span>, <span class="at">end =</span> <span class="dv">15</span>)</span>
+<span id="cb88-231"><a href="#cb88-231"></a><span class="in">```</span></span>
+<span id="cb88-232"><a href="#cb88-232"></a></span>
+<span id="cb88-233"><a href="#cb88-233"></a><span class="fu">### ✏️ Find Middle Letter</span></span>
+<span id="cb88-234"><a href="#cb88-234"></a></span>
+<span id="cb88-235"><a href="#cb88-235"></a>Using <span class="in">`str_sub()`</span>, create a new variable with only the middle letter of each word in the data frame below. (Challenge: How would you handle words with an even number of letters?)</span>
+<span id="cb88-236"><a href="#cb88-236"></a></span>
+<span id="cb88-237"><a href="#cb88-237"></a><span class="in">```{r ex_str_sub}</span></span>
+<span id="cb88-238"><a href="#cb88-238"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb88-239"><a href="#cb88-239"></a>    <span class="at">word_id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb88-240"><a href="#cb88-240"></a>    <span class="at">word =</span> <span class="fu">c</span>(<span class="st">"replace"</span>, <span class="st">"match"</span>, <span class="st">"pattern"</span>)</span>
+<span id="cb88-241"><a href="#cb88-241"></a>)</span>
+<span id="cb88-242"><a href="#cb88-242"></a>df</span>
+<span id="cb88-243"><a href="#cb88-243"></a><span class="in">```</span></span>
+<span id="cb88-244"><a href="#cb88-244"></a></span>
+<span id="cb88-247"><a href="#cb88-247"></a><span class="in">```{r}</span></span>
+<span id="cb88-248"><a href="#cb88-248"></a><span class="co"># write your answer below</span></span>
+<span id="cb88-249"><a href="#cb88-249"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb88-250"><a href="#cb88-250"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb88-251"><a href="#cb88-251"></a>    <span class="at">middle_letter =</span> <span class="fu">str_sub</span>(</span>
+<span id="cb88-252"><a href="#cb88-252"></a>      word,</span>
+<span id="cb88-253"><a href="#cb88-253"></a>      <span class="at">start =</span> <span class="fu">ceiling</span>(<span class="fu">str_length</span>(word) <span class="sc">/</span> <span class="dv">2</span>),</span>
+<span id="cb88-254"><a href="#cb88-254"></a>      <span class="at">end =</span> <span class="fu">floor</span>(<span class="fu">str_length</span>(word) <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb88-255"><a href="#cb88-255"></a>    )</span>
+<span id="cb88-256"><a href="#cb88-256"></a>  )</span>
+<span id="cb88-257"><a href="#cb88-257"></a></span>
+<span id="cb88-258"><a href="#cb88-258"></a>df</span>
+<span id="cb88-259"><a href="#cb88-259"></a><span class="in">```</span></span>
+<span id="cb88-260"><a href="#cb88-260"></a></span>
+<span id="cb88-261"><a href="#cb88-261"></a></span>
+<span id="cb88-262"><a href="#cb88-262"></a><span class="fu">## Patterns</span></span>
+<span id="cb88-263"><a href="#cb88-263"></a></span>
+<span id="cb88-264"><a href="#cb88-264"></a>Suppose that you're exploring text data looking for places where people describe happiness. There are many ways to search. We could search for the word "happy" but that excludes "happiness" so we might search for "happi".</span>
+<span id="cb88-265"><a href="#cb88-265"></a></span>
+<span id="cb88-266"><a href="#cb88-266"></a>**Regular expressions** (regex) are a powerful language for describing patterns within strings.</span>
+<span id="cb88-267"><a href="#cb88-267"></a></span>
+<span id="cb88-268"><a href="#cb88-268"></a><span class="in">```{r load_regex_data}</span></span>
+<span id="cb88-269"><a href="#cb88-269"></a><span class="co"># load few datasets</span></span>
+<span id="cb88-270"><a href="#cb88-270"></a><span class="fu">data</span>(fruit)</span>
+<span id="cb88-271"><a href="#cb88-271"></a><span class="fu">sample</span>(fruit, <span class="dv">10</span>)</span>
+<span id="cb88-272"><a href="#cb88-272"></a><span class="in">```</span></span>
+<span id="cb88-273"><a href="#cb88-273"></a></span>
+<span id="cb88-276"><a href="#cb88-276"></a><span class="in">```{r}</span></span>
+<span id="cb88-277"><a href="#cb88-277"></a><span class="fu">data</span>(words)</span>
+<span id="cb88-278"><a href="#cb88-278"></a><span class="fu">sample</span>(words, <span class="dv">10</span>)</span>
+<span id="cb88-279"><a href="#cb88-279"></a><span class="in">```</span></span>
+<span id="cb88-280"><a href="#cb88-280"></a></span>
+<span id="cb88-283"><a href="#cb88-283"></a><span class="in">```{r}</span></span>
+<span id="cb88-284"><a href="#cb88-284"></a><span class="fu">data</span>(sentences)</span>
+<span id="cb88-285"><a href="#cb88-285"></a><span class="fu">sample</span>(sentences, <span class="dv">10</span>)</span>
+<span id="cb88-286"><a href="#cb88-286"></a><span class="in">```</span></span>
+<span id="cb88-287"><a href="#cb88-287"></a></span>
+<span id="cb88-288"><a href="#cb88-288"></a>We can use <span class="in">`str_view()`</span> with the <span class="in">`pattern`</span> argument to see what parts of a string match the regex supplied in the <span class="in">`pattern`</span> argument. (Matches are enclosed in <span class="in">`&lt;&gt;`</span>.)</span>
+<span id="cb88-289"><a href="#cb88-289"></a></span>
+<span id="cb88-290"><a href="#cb88-290"></a><span class="in">```{r str_view_pattern}</span></span>
+<span id="cb88-291"><a href="#cb88-291"></a><span class="fu">str_view</span>(fruit, <span class="st">"berry"</span>)</span>
+<span id="cb88-292"><a href="#cb88-292"></a><span class="in">```</span></span>
+<span id="cb88-293"><a href="#cb88-293"></a></span>
+<span id="cb88-294"><a href="#cb88-294"></a></span>
+<span id="cb88-295"><a href="#cb88-295"></a><span class="fu">### Quantifiers</span></span>
+<span id="cb88-296"><a href="#cb88-296"></a></span>
+<span id="cb88-297"><a href="#cb88-297"></a><span class="ss">- </span>Letters and numbers in a regex are matched exactly and are called **literal characters**.</span>
+<span id="cb88-298"><a href="#cb88-298"></a><span class="ss">- </span>Most punctuation characters, like <span class="in">`.`</span>, <span class="in">`+`</span>, <span class="in">`*`</span>, <span class="in">`[`</span>, <span class="in">`]`</span>, and <span class="in">`?`</span>, have special meanings and are called **metacharacters**.</span>
+<span id="cb88-299"><a href="#cb88-299"></a><span class="ss">- </span>**Quantifiers** are metacharacters that specify how many times the proceeding character (group or character class) must occurs for a match to be found:</span>
+<span id="cb88-300"><a href="#cb88-300"></a><span class="ss">    - </span><span class="in">`?`</span>: the proceeding character must occurs 0 or 1 times for a match to be found</span>
+<span id="cb88-301"><a href="#cb88-301"></a><span class="ss">    - </span><span class="in">`+`</span>: the proceeding character must occurs 1+ (1 or more times) for a match to be found</span>
+<span id="cb88-302"><a href="#cb88-302"></a><span class="ss">    - </span><span class="in">`*`</span>: the proceeding character must occurs 0+ (0 or more times) for a match to be found</span>
+<span id="cb88-303"><a href="#cb88-303"></a></span>
+<span id="cb88-304"><a href="#cb88-304"></a></span>
+<span id="cb88-305"><a href="#cb88-305"></a><span class="fu">### ✏️ Predict Quantifier Matches</span></span>
+<span id="cb88-306"><a href="#cb88-306"></a></span>
+<span id="cb88-307"><a href="#cb88-307"></a>Before running the code below, predict what matches will be made. Run the code to check your guesses. Note that in all regex's below the <span class="in">`?`</span>, <span class="in">`+`</span>, <span class="in">`*`</span> applies to the <span class="in">`b`</span> only (not the <span class="in">`a`</span>).</span>
+<span id="cb88-308"><a href="#cb88-308"></a></span>
+<span id="cb88-309"><a href="#cb88-309"></a><span class="in">```{r ex_regex_quantifiers}</span></span>
+<span id="cb88-310"><a href="#cb88-310"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"ab"</span>, <span class="st">"abb"</span>), <span class="st">"ab?"</span>)</span>
+<span id="cb88-311"><a href="#cb88-311"></a><span class="in">```</span></span>
+<span id="cb88-312"><a href="#cb88-312"></a></span>
+<span id="cb88-315"><a href="#cb88-315"></a><span class="in">```{r}</span></span>
+<span id="cb88-316"><a href="#cb88-316"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"ab"</span>, <span class="st">"abb"</span>), <span class="st">"ab+"</span>)</span>
+<span id="cb88-317"><a href="#cb88-317"></a><span class="in">```</span></span>
+<span id="cb88-318"><a href="#cb88-318"></a></span>
+<span id="cb88-321"><a href="#cb88-321"></a><span class="in">```{r}</span></span>
+<span id="cb88-322"><a href="#cb88-322"></a><span class="fu">str_view</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"ab"</span>, <span class="st">"abb"</span>), <span class="st">"ab*"</span>)</span>
+<span id="cb88-323"><a href="#cb88-323"></a><span class="in">```</span></span>
+<span id="cb88-324"><a href="#cb88-324"></a></span>
+<span id="cb88-325"><a href="#cb88-325"></a><span class="fu">### Character Classes</span></span>
+<span id="cb88-326"><a href="#cb88-326"></a></span>
+<span id="cb88-327"><a href="#cb88-327"></a><span class="ss">- </span>We can match any of a set of characters with <span class="in">`[]`</span> (called a **character class**), e.g., <span class="in">`[abcd]`</span> matches "a", "b", "c", or "d".</span>
+<span id="cb88-328"><a href="#cb88-328"></a><span class="ss">- </span>We can invert the match by starting with <span class="in">`^`</span>: <span class="in">`[^abcd]`</span> matches anything except "a", "b", "c", or "d".</span>
+<span id="cb88-329"><a href="#cb88-329"></a></span>
+<span id="cb88-330"><a href="#cb88-330"></a><span class="in">```{r regex_classes}</span></span>
+<span id="cb88-331"><a href="#cb88-331"></a><span class="co"># Match words that have vowel-x-vowel</span></span>
+<span id="cb88-332"><a href="#cb88-332"></a><span class="fu">str_view</span>(words, <span class="st">"[aeiou]x[aeiou]"</span>)</span>
+<span id="cb88-333"><a href="#cb88-333"></a></span>
+<span id="cb88-334"><a href="#cb88-334"></a><span class="co"># Match words that have not_vowel-y-not_vowel</span></span>
+<span id="cb88-335"><a href="#cb88-335"></a><span class="fu">str_view</span>(words, <span class="st">"[^aeiou]y[^aeiou]"</span>)</span>
+<span id="cb88-336"><a href="#cb88-336"></a><span class="in">```</span></span>
+<span id="cb88-337"><a href="#cb88-337"></a></span>
+<span id="cb88-338"><a href="#cb88-338"></a></span>
+<span id="cb88-339"><a href="#cb88-339"></a><span class="fu">### ✏️ Find Vowel Pairs</span></span>
+<span id="cb88-340"><a href="#cb88-340"></a></span>
+<span id="cb88-341"><a href="#cb88-341"></a>Using the <span class="in">`words`</span> dataset, find words that have two vowels in a row followed by an "m".</span>
+<span id="cb88-342"><a href="#cb88-342"></a></span>
+<span id="cb88-343"><a href="#cb88-343"></a><span class="in">```{r ex_regex_classes}</span></span>
+<span id="cb88-344"><a href="#cb88-344"></a>words[<span class="fu">str_detect</span>(words, <span class="st">"[aeiou]{2}m"</span>)]</span>
+<span id="cb88-345"><a href="#cb88-345"></a><span class="in">```</span></span>
+<span id="cb88-346"><a href="#cb88-346"></a></span>
+<span id="cb88-347"><a href="#cb88-347"></a></span>
+<span id="cb88-348"><a href="#cb88-348"></a><span class="fu">### Alternation</span></span>
+<span id="cb88-349"><a href="#cb88-349"></a></span>
+<span id="cb88-350"><a href="#cb88-350"></a><span class="ss">- </span>The **alternation** operator <span class="in">`|`</span> can be read just like the logical operator <span class="in">`|`</span> ("OR") to pick between one or more alternative patterns, eg, <span class="in">`apple|banana`</span> searches for "apple" or "banana".</span>
+<span id="cb88-351"><a href="#cb88-351"></a></span>
+<span id="cb88-352"><a href="#cb88-352"></a><span class="in">```{r regex_alternation}</span></span>
+<span id="cb88-353"><a href="#cb88-353"></a><span class="fu">str_view</span>(fruit, <span class="st">"apple|melon|nut"</span>)</span>
+<span id="cb88-354"><a href="#cb88-354"></a><span class="in">```</span></span>
+<span id="cb88-355"><a href="#cb88-355"></a></span>
+<span id="cb88-356"><a href="#cb88-356"></a></span>
+<span id="cb88-357"><a href="#cb88-357"></a><span class="fu">### ✏️ Find Repeated Vowels</span></span>
+<span id="cb88-358"><a href="#cb88-358"></a></span>
+<span id="cb88-359"><a href="#cb88-359"></a>Using the <span class="in">`fruit`</span> dataset, find fruits that have a repeated vowel ("aa", "ee", "ii", "oo", or "uu".)</span>
+<span id="cb88-360"><a href="#cb88-360"></a></span>
+<span id="cb88-361"><a href="#cb88-361"></a><span class="in">```{r ex_regex_alternation}</span></span>
+<span id="cb88-362"><a href="#cb88-362"></a><span class="co"># write your answer below</span></span>
+<span id="cb88-363"><a href="#cb88-363"></a></span>
+<span id="cb88-364"><a href="#cb88-364"></a><span class="in">```</span></span>
+<span id="cb88-365"><a href="#cb88-365"></a></span>
+<span id="cb88-366"><a href="#cb88-366"></a></span>
+<span id="cb88-367"><a href="#cb88-367"></a><span class="fu">### Anchors &amp; Groups</span></span>
+<span id="cb88-368"><a href="#cb88-368"></a></span>
+<span id="cb88-369"><a href="#cb88-369"></a><span class="ss">- </span>The <span class="in">`^`</span> operator indicates the beginning of a string, and the <span class="in">`$`</span> operator indicates the end of a string, eg, <span class="in">`^a`</span> matches strings that start with "a", and <span class="in">`a$`</span> matches words that end with "a".</span>
+<span id="cb88-370"><a href="#cb88-370"></a><span class="ss">- </span>Parentheses group together parts of a regular expression that should be taken as a bundle. Much like parentheses in arithmetic statements, eg, <span class="in">`ab+`</span> is a little confusing. Does it match "ab" one or more times? Or does it match "a" first, then just "b" one or more times? (The latter, as we saw in an earlier example.) We can be very explicit and use <span class="in">`a(b)+`</span>.</span>
+<span id="cb88-371"><a href="#cb88-371"></a></span>
+<span id="cb88-372"><a href="#cb88-372"></a></span>
+<span id="cb88-373"><a href="#cb88-373"></a><span class="fu">### ✏️ Find Words with y</span></span>
+<span id="cb88-374"><a href="#cb88-374"></a></span>
+<span id="cb88-375"><a href="#cb88-375"></a>Using the <span class="in">`words`</span> dataset, find words that start with "y"</span>
+<span id="cb88-376"><a href="#cb88-376"></a></span>
+<span id="cb88-377"><a href="#cb88-377"></a><span class="in">```{r ex_regex_start_end_group}</span></span>
+<span id="cb88-378"><a href="#cb88-378"></a><span class="co"># write your answer below</span></span>
+<span id="cb88-379"><a href="#cb88-379"></a>words[<span class="fu">str_detect</span>(words, <span class="st">"^y"</span>)]</span>
+<span id="cb88-380"><a href="#cb88-380"></a><span class="in">```</span></span>
+<span id="cb88-381"><a href="#cb88-381"></a></span>
+<span id="cb88-382"><a href="#cb88-382"></a>Using the <span class="in">`words`</span> dataset again, find words that don't start with "y".</span>
+<span id="cb88-383"><a href="#cb88-383"></a></span>
+<span id="cb88-384"><a href="#cb88-384"></a><span class="in">```{r ex_regex_start_end_group_2}</span></span>
+<span id="cb88-385"><a href="#cb88-385"></a><span class="co"># write your answer below</span></span>
+<span id="cb88-386"><a href="#cb88-386"></a>words[<span class="sc">!</span><span class="fu">str_detect</span>(words, <span class="st">"^y"</span>)]</span>
+<span id="cb88-387"><a href="#cb88-387"></a><span class="in">```</span></span>
+<span id="cb88-388"><a href="#cb88-388"></a></span>
+<span id="cb88-389"><a href="#cb88-389"></a></span>
+<span id="cb88-390"><a href="#cb88-390"></a><span class="fu">## Dear Abby Letters</span></span>
+<span id="cb88-391"><a href="#cb88-391"></a></span>
+<span id="cb88-392"><a href="#cb88-392"></a><span class="fu">### Load the Letters</span></span>
+<span id="cb88-393"><a href="#cb88-393"></a></span>
+<span id="cb88-394"><a href="#cb88-394"></a>Read in the "Dear Abby" data underlying The Pudding's <span class="co">[</span><span class="ot">30 Years of American Anxieties</span><span class="co">](https://pudding.cool/2018/11/dearabby/)</span> article.</span>
+<span id="cb88-395"><a href="#cb88-395"></a></span>
+<span id="cb88-396"><a href="#cb88-396"></a><span class="in">```{r read_dear_abby}</span></span>
+<span id="cb88-397"><a href="#cb88-397"></a>posts <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/the-pudding/data/master/dearabby/raw_da_qs.csv"</span>)</span>
+<span id="cb88-398"><a href="#cb88-398"></a><span class="fu">str</span>(posts)</span>
+<span id="cb88-399"><a href="#cb88-399"></a><span class="in">```</span></span>
+<span id="cb88-400"><a href="#cb88-400"></a></span>
+<span id="cb88-401"><a href="#cb88-401"></a>Take a couple minutes to scroll through the <span class="co">[</span><span class="ot">30 Years of American Anxieties</span><span class="co">](https://pudding.cool/2018/11/dearabby/)</span> article to get ideas for themes that you might want to search for using regular expressions.</span>
+<span id="cb88-402"><a href="#cb88-402"></a></span>
+<span id="cb88-403"><a href="#cb88-403"></a><span class="fu">### Regex Functions</span></span>
+<span id="cb88-404"><a href="#cb88-404"></a></span>
+<span id="cb88-405"><a href="#cb88-405"></a>The following are core <span class="in">`stringr`</span> functions that use regular expressions:</span>
+<span id="cb88-406"><a href="#cb88-406"></a></span>
+<span id="cb88-407"><a href="#cb88-407"></a><span class="ss">- </span><span class="in">`str_view()`</span> - View the first occurrence in a string that matches the regex</span>
+<span id="cb88-408"><a href="#cb88-408"></a><span class="ss">- </span><span class="in">`str_count()`</span> - Count the number of times a regex matches within a string</span>
+<span id="cb88-409"><a href="#cb88-409"></a><span class="ss">- </span><span class="in">`str_detect()`</span> - Determine if (TRUE/FALSE) the regex is found within string</span>
+<span id="cb88-410"><a href="#cb88-410"></a><span class="ss">- </span><span class="in">`str_subset()`</span> - Return subset of strings that match the regex</span>
+<span id="cb88-411"><a href="#cb88-411"></a><span class="ss">- </span><span class="in">`str_extract(), str_extract_all()`</span> - Return portion of each string that matches the regex. <span class="in">`str_extract()`</span> extracts the first instance of the match. <span class="in">`str_extract_all()`</span> extracts all matches.</span>
+<span id="cb88-412"><a href="#cb88-412"></a><span class="ss">- </span><span class="in">`str_replace(), str_replace_all()`</span> - Replace portion of string that matches the regex with something else. <span class="in">`str_replace()`</span> replaces the first instance of the match. <span class="in">`str_replace_all()`</span> replaces all instances of the match.</span>
+<span id="cb88-413"><a href="#cb88-413"></a><span class="ss">- </span><span class="in">`str_remove(), str_remove_all()`</span> - Removes the portion of the string that matches the pattern. Equivalent to <span class="in">`str_replace(x, "THE REGEX PATTERN", "")`</span></span>
+<span id="cb88-414"><a href="#cb88-414"></a></span>
+<span id="cb88-415"><a href="#cb88-415"></a></span>
+<span id="cb88-416"><a href="#cb88-416"></a><span class="fu">### ✏️ Search for Themes</span></span>
+<span id="cb88-417"><a href="#cb88-417"></a></span>
+<span id="cb88-418"><a href="#cb88-418"></a>Pick a theme from the article and use each of the functions above, starting with <span class="in">`str_count()`</span>, to search for it in the <span class="in">`posts`</span> data. Pull up each function's documentation page and read through the arguments as you go.</span>
+<span id="cb88-419"><a href="#cb88-419"></a></span>
+<span id="cb88-422"><a href="#cb88-422"></a><span class="in">```{r}</span></span>
+<span id="cb88-423"><a href="#cb88-423"></a><span class="in">```</span></span>
+<span id="cb88-424"><a href="#cb88-424"></a></span>
+<span id="cb88-425"><a href="#cb88-425"></a></span>
+<span id="cb88-426"><a href="#cb88-426"></a><span class="fu">## Done!</span></span>
+<span id="cb88-427"><a href="#cb88-427"></a></span>
+<span id="cb88-428"><a href="#cb88-428"></a><span class="ss">- </span>Check the ICA Instructions for how to (a) push your code to GitHub and (b) update your portfolio website</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
