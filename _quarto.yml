@@ -80,7 +80,9 @@ book:
       - ica/cleaning.qmd
       - ica/03-adv-ggplot-notes.qmd
       - ica/04-adv-maps-1-notes.qmd
-
+      - ica/06-wrangling-1-notes.qmd
+      - ica/07-wrangling-2.qmd
+      - ica/08-missing-data.qmd
 
     - part: "Extras"
       chapters:
