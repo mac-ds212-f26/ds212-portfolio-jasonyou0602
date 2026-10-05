@@ -339,12 +339,7 @@ We want to see how `Month`, `Wind`, and `Temp` relate to the chance of missingne
 Does it look like a linear regression model (perhaps with variable transformations) could be effective in imputing the missing ozone data?
 
 ```{r}
-bp1 <- ggplot(airquality, aes(fill = is.na(Ozone), x = Month) +
-    geom_bar()
-    
-    
 
-  
 ```
 
 
