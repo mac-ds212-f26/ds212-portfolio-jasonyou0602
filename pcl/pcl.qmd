@@ -16,3 +16,4 @@ title: "Pre-Class Learning Summaries"
 ![](0930.png)
 ![](1002.png)
 ![](1005.png)
+![](1007.png)

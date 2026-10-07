@@ -69,20 +69,27 @@ cave_compositions <- dead_sea_scrolls |>
 
 ggplot(
   cave_compositions,
-  aes(x = factor(cave), y = composition, fill = n)) +
+  aes(x = factor(cave), y = composition, fill = n)
+) +
   geom_tile(color = "white", linewidth = 0.5) +
   geom_text(aes(label = n), size = 3) +
   scale_fill_gradient(low = "#F3E9D7", high = "#8C5A3F") +
   labs(
-    title = "Distribution of compositions types across the caves",
-    x = "Cave #",
+    title = "Most Common Dead Sea Scroll Compositions Across Qumran Caves",
+    subtitle = "The most common composition types are concentrated in a few caves rather than evenly distributed across Qumran.",
+    x = NULL,
     y = NULL,
-    fill = "Manuscripts",
-    caption = "Author: Jason You | Source: Leon Levy Dead Sea Scrolls Digital Library, Tidy Tuesday"
+    fill = NULL,
+    caption = "Data: Leon Levy Dead Sea Scrolls Digital Library, TidyTuesday (2026) | Graphic created: October 6, 2026 | Author: Jason You"
   ) +
+  guides(fill = "none") +
   theme_minimal() +
   theme(
-    panel.grid = element_blank()
+    panel.grid = element_blank(),
+    plot.caption = element_text(
+      hjust = 0,
+      color = "gray50"
+    )
   )
 ```
 
