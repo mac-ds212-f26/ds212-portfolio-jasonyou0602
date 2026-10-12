@@ -600,21 +600,28 @@ cookieconsent.run({
 <span id="cb4-8"><a href="#cb4-8"></a></span>
 <span id="cb4-9"><a href="#cb4-9"></a><span class="fu">ggplot</span>(</span>
 <span id="cb4-10"><a href="#cb4-10"></a>  cave_compositions,</span>
-<span id="cb4-11"><a href="#cb4-11"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(cave), <span class="at">y =</span> composition, <span class="at">fill =</span> n)) <span class="sc">+</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> n), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#F3E9D7"</span>, <span class="at">high =</span> <span class="st">"#8C5A3F"</span>) <span class="sc">+</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a>  <span class="fu">labs</span>(</span>
-<span id="cb4-16"><a href="#cb4-16"></a>    <span class="at">title =</span> <span class="st">"Distribution of compositions types across the caves"</span>,</span>
-<span id="cb4-17"><a href="#cb4-17"></a>    <span class="at">x =</span> <span class="st">"Cave #"</span>,</span>
-<span id="cb4-18"><a href="#cb4-18"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
-<span id="cb4-19"><a href="#cb4-19"></a>    <span class="at">fill =</span> <span class="st">"Manuscripts"</span>,</span>
-<span id="cb4-20"><a href="#cb4-20"></a>    <span class="at">caption =</span> <span class="st">"Author: Jason You | Source: Leon Levy Dead Sea Scrolls Digital Library, Tidy Tuesday"</span></span>
-<span id="cb4-21"><a href="#cb4-21"></a>  ) <span class="sc">+</span></span>
-<span id="cb4-22"><a href="#cb4-22"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb4-23"><a href="#cb4-23"></a>  <span class="fu">theme</span>(</span>
-<span id="cb4-24"><a href="#cb4-24"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb4-25"><a href="#cb4-25"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-11"><a href="#cb4-11"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(cave), <span class="at">y =</span> composition, <span class="at">fill =</span> n)</span>
+<span id="cb4-12"><a href="#cb4-12"></a>) <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> n), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#F3E9D7"</span>, <span class="at">high =</span> <span class="st">"#8C5A3F"</span>) <span class="sc">+</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-17"><a href="#cb4-17"></a>    <span class="at">title =</span> <span class="st">"Most Common Dead Sea Scroll Compositions Across Qumran Caves"</span>,</span>
+<span id="cb4-18"><a href="#cb4-18"></a>    <span class="at">subtitle =</span> <span class="st">"The most common composition types are concentrated in a few caves rather than evenly distributed across Qumran."</span>,</span>
+<span id="cb4-19"><a href="#cb4-19"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb4-20"><a href="#cb4-20"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
+<span id="cb4-21"><a href="#cb4-21"></a>    <span class="at">fill =</span> <span class="cn">NULL</span>,</span>
+<span id="cb4-22"><a href="#cb4-22"></a>    <span class="at">caption =</span> <span class="st">"Data: Leon Levy Dead Sea Scrolls Digital Library, TidyTuesday (2026) | Graphic created: October 6, 2026 | Author: Jason You"</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a>  ) <span class="sc">+</span></span>
+<span id="cb4-24"><a href="#cb4-24"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb4-25"><a href="#cb4-25"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb4-26"><a href="#cb4-26"></a>  <span class="fu">theme</span>(</span>
+<span id="cb4-27"><a href="#cb4-27"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-28"><a href="#cb4-28"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(</span>
+<span id="cb4-29"><a href="#cb4-29"></a>      <span class="at">hjust =</span> <span class="dv">0</span>,</span>
+<span id="cb4-30"><a href="#cb4-30"></a>      <span class="at">color =</span> <span class="st">"gray50"</span></span>
+<span id="cb4-31"><a href="#cb4-31"></a>    )</span>
+<span id="cb4-32"><a href="#cb4-32"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="hw02-tt_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
@@ -1179,24 +1186,31 @@ cookieconsent.run({
 <span id="cb5-75"><a href="#cb5-75"></a></span>
 <span id="cb5-76"><a href="#cb5-76"></a><span class="fu">ggplot</span>(</span>
 <span id="cb5-77"><a href="#cb5-77"></a>  cave_compositions,</span>
-<span id="cb5-78"><a href="#cb5-78"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(cave), <span class="at">y =</span> composition, <span class="at">fill =</span> n)) <span class="sc">+</span></span>
-<span id="cb5-79"><a href="#cb5-79"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb5-80"><a href="#cb5-80"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> n), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb5-81"><a href="#cb5-81"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#F3E9D7"</span>, <span class="at">high =</span> <span class="st">"#8C5A3F"</span>) <span class="sc">+</span></span>
-<span id="cb5-82"><a href="#cb5-82"></a>  <span class="fu">labs</span>(</span>
-<span id="cb5-83"><a href="#cb5-83"></a>    <span class="at">title =</span> <span class="st">"Distribution of compositions types across the caves"</span>,</span>
-<span id="cb5-84"><a href="#cb5-84"></a>    <span class="at">x =</span> <span class="st">"Cave #"</span>,</span>
-<span id="cb5-85"><a href="#cb5-85"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
-<span id="cb5-86"><a href="#cb5-86"></a>    <span class="at">fill =</span> <span class="st">"Manuscripts"</span>,</span>
-<span id="cb5-87"><a href="#cb5-87"></a>    <span class="at">caption =</span> <span class="st">"Author: Jason You | Source: Leon Levy Dead Sea Scrolls Digital Library, Tidy Tuesday"</span></span>
-<span id="cb5-88"><a href="#cb5-88"></a>  ) <span class="sc">+</span></span>
-<span id="cb5-89"><a href="#cb5-89"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb5-90"><a href="#cb5-90"></a>  <span class="fu">theme</span>(</span>
-<span id="cb5-91"><a href="#cb5-91"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb5-92"><a href="#cb5-92"></a>  )</span>
-<span id="cb5-93"><a href="#cb5-93"></a><span class="in">```</span></span>
-<span id="cb5-94"><a href="#cb5-94"></a></span>
-<span id="cb5-95"><a href="#cb5-95"></a><span class="at">&gt; This graph shows that cave 4 have the most amount of scrolls, with all of the types of compositions and the most amount of each of them, while Cave 6 have the least amount of scolls, only one Damascus Document.</span></span>
+<span id="cb5-78"><a href="#cb5-78"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(cave), <span class="at">y =</span> composition, <span class="at">fill =</span> n)</span>
+<span id="cb5-79"><a href="#cb5-79"></a>) <span class="sc">+</span></span>
+<span id="cb5-80"><a href="#cb5-80"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb5-81"><a href="#cb5-81"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> n), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb5-82"><a href="#cb5-82"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#F3E9D7"</span>, <span class="at">high =</span> <span class="st">"#8C5A3F"</span>) <span class="sc">+</span></span>
+<span id="cb5-83"><a href="#cb5-83"></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-84"><a href="#cb5-84"></a>    <span class="at">title =</span> <span class="st">"Most Common Dead Sea Scroll Compositions Across Qumran Caves"</span>,</span>
+<span id="cb5-85"><a href="#cb5-85"></a>    <span class="at">subtitle =</span> <span class="st">"The most common composition types are concentrated in a few caves rather than evenly distributed across Qumran."</span>,</span>
+<span id="cb5-86"><a href="#cb5-86"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb5-87"><a href="#cb5-87"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
+<span id="cb5-88"><a href="#cb5-88"></a>    <span class="at">fill =</span> <span class="cn">NULL</span>,</span>
+<span id="cb5-89"><a href="#cb5-89"></a>    <span class="at">caption =</span> <span class="st">"Data: Leon Levy Dead Sea Scrolls Digital Library, TidyTuesday (2026) | Graphic created: October 6, 2026 | Author: Jason You"</span></span>
+<span id="cb5-90"><a href="#cb5-90"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-91"><a href="#cb5-91"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb5-92"><a href="#cb5-92"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb5-93"><a href="#cb5-93"></a>  <span class="fu">theme</span>(</span>
+<span id="cb5-94"><a href="#cb5-94"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-95"><a href="#cb5-95"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(</span>
+<span id="cb5-96"><a href="#cb5-96"></a>      <span class="at">hjust =</span> <span class="dv">0</span>,</span>
+<span id="cb5-97"><a href="#cb5-97"></a>      <span class="at">color =</span> <span class="st">"gray50"</span></span>
+<span id="cb5-98"><a href="#cb5-98"></a>    )</span>
+<span id="cb5-99"><a href="#cb5-99"></a>  )</span>
+<span id="cb5-100"><a href="#cb5-100"></a><span class="in">```</span></span>
+<span id="cb5-101"><a href="#cb5-101"></a></span>
+<span id="cb5-102"><a href="#cb5-102"></a><span class="at">&gt; This graph shows that cave 4 have the most amount of scrolls, with all of the types of compositions and the most amount of each of them, while Cave 6 have the least amount of scolls, only one Damascus Document.</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
