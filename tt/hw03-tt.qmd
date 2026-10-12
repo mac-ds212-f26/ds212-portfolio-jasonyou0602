@@ -85,15 +85,30 @@ ggplot(
     linewidth = 1,
     arrow = arrow(type = "open", length = unit(0.1, "inches"))
   ) +
+  geom_text(
+    aes(
+      x = green_1990,
+      label = paste0(round(green_1990, 1), "%")
+    ),
+    hjust = 1.4,
+    size = 3,
+    color = "black"
+  ) +
+  geom_text(
+    aes(
+      x = green_2020,
+      label = paste0(round(green_2020, 1), "%")
+    ),
+    hjust = -0.4,
+    size = 3,
+    color = "black"
+  ) +
   scale_color_manual(
     values = c(
       "TRUE" = "darkgreen",
       "FALSE" = "red"
     ),
     guide = "none"
-  ) +
-  scale_x_continuous(
-    labels = scales::label_percent(scale = 1)
   ) +
   labs(
     title = "Change in Chinese Cities' Green-Area Share from 1990 to 2020",
@@ -104,8 +119,9 @@ ggplot(
   ) +
   theme_minimal() +
   theme(
-    panel.grid.major.x = element_blank(),
-    panel.grid.minor.x = element_blank(),
+    panel.grid = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
     plot.caption = element_text(hjust = 0)
   )
 ```
