@@ -17,6 +17,7 @@ library(tidyverse)
 library(ggplot2)
 library(tidymodels)
 library(ggforce)
+
 tuesdata <- tidytuesdayR::tt_load(2026, week = 38)
 urban <- tuesdata$urban
 ```
