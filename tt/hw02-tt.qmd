@@ -15,11 +15,8 @@ Explore the week's [TidyTuesday](https://github.com/rfordatascience/tidytuesday)
 
 ```{r}
 library(tidyverse)
-tuesdata <- tidytuesdayR::tt_load('2026-09-15')
-## OR
-tuesdata <- tidytuesdayR::tt_load(2026, week = 37)
+dead_sea_scrolls <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-09-15/dead_sea_scrolls.csv')
 
-dead_sea_scrolls <- tuesdata$dead_sea_scrolls
 
 head(dead_sea_scrolls)
 ```

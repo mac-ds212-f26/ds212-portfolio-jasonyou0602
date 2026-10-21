@@ -35,10 +35,10 @@ First load required packages.
 
 ```{r setup}
 #Install these packages first if you have not done already
-# install.packages(c("sf","elevatr","terra","stars","tidycensus"))
-# install.packages('devtools')
-# devtools::install_github("ropensci/USAboundaries")
-# install.packages("USAboundariesData", repos = "https://ropensci.r-universe.dev", type = "source")
+install.packages(c("sf","elevatr","terra","stars","tidycensus"))
+install.packages('devtools')
+devtools::install_github("ropensci/USAboundaries")
+install.packages("USAboundariesData", repos = "https://ropensci.r-universe.dev", type = "source")
 
 
 library(tidyverse)
