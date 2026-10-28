@@ -210,3 +210,81 @@ combined_plot <- combined_plot +
 combined_plot
 ```
 
+```{r}
+plot_faceted <- ggplot(
+  major_comparison,
+  aes(
+    x = ai_exposure_percentile,
+    y = median_starting_salary,
+    color = broad_field_short
+  )
+) +
+  geom_point(
+    size = 2,
+    alpha = 0.75
+  ) +
+  geom_smooth(
+    method = "lm",
+    formula = y ~ x,
+    se = FALSE,
+    linewidth = 0.7
+  ) +
+  facet_wrap(
+    ~ broad_field_short,
+    nrow = 1
+  ) +
+  scale_color_manual(
+  values = c(
+    "Engineering" = "#26547C",
+    "Computer Science" = "#ef476f",
+    "Business" = "#ffd166",
+    "Health Professions" = "#06d6a5"
+  )
+  ) +
+  scale_x_continuous(
+    breaks = c(0, 25, 50, 75, 100)
+  ) +
+  labs(
+    title = "Early-career earnings and AI exposure corrolation",
+    subtitle = paste0(
+      "Engineering combines higher median earnings with lower median AI exposure\n",
+      "than computer science and business."
+    ),
+    x = "AI exposure percentile",
+    y = "Earnings one year after graduation (USD)",
+    caption = paste0(
+      "Author: Jason You | Plot created: October 26, 2026",
+      "\nSources: US Department of Education, AIOE Index",
+      "\nTidyTuesday dataset: October 20, 2026"    )
+  ) +
+  theme_minimal(base_size = 10) +
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_line(color = "grey90"),
+    plot.background = element_rect(
+      fill = "white",
+      color = NA
+    ),
+    plot.title.position = "plot",
+    plot.caption.position = "plot",
+    plot.title = element_text(
+      size = 14,
+      face = "bold"
+    ),
+    plot.subtitle = element_text(size = 10),
+    axis.title = element_text(size = 9),
+    axis.text = element_text(size = 8),
+    strip.text = element_text(
+      size = 10,
+      face = "bold"
+    ),
+    plot.caption = element_text(
+      size = 8,
+      hjust = 0
+    ),
+    legend.position = "none"
+  )
+
+plot_faceted
+```
+
