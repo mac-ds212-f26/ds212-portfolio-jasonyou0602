@@ -1,5 +1,294 @@
 ---
-title: "Personal Visualization Journey"
----
+title: "Personal Visualization: WeChat Moments"
 
-Add content here
+author: "Jason You"
+---
+WeChat is a social app mainly used in China. It has a function called "Moments", which is a platform where people can share pictures, video or words. Moments uses a friend-based system, meaning that only mutual friends can see each other's Moments. 
+
+In a Moments post, the poster can post only text, post 1-9 photos or 1 video, either with or without text as caption. The poster can also add a location tag under the post, which is shown in smaller blue text. 
+
+As a long time WeChat user and an active poster on Moments, I am curious about the statistics of my posts. Since WeChat does not do any collection and analysis of statistics for users to see, I collected the data of my posts from Jan 1st, 2021 to 2026 (present) and did the following visualizations to observe the patterns of my posts.
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(patchwork)
+library(maps)
+library(ggplot2)
+```
+
+
+
+```{r}
+pyqdata <- read_csv(
+  "pyqdata.csv",
+  show_col_types = FALSE
+)
+
+year_colors <- c(
+  "2021" = "#ef476f",
+  "2022" = "#f78c6b",
+  "2023" = "#ffd166",
+  "2024" = "#06d6a0",
+  "2025" = "#118ab2",
+  "2026" = "#073b4c"
+)
+```
+
+```{r}
+monthly_avg <- pyqdata %>%
+  mutate(Month = floor_date(ymd(Date), "month")) %>%
+  group_by(Month) %>%
+  summarise(AvgLike = mean(Like, na.rm = TRUE), .groups = "drop") %>%
+  complete(Month = seq.Date(min(Month), max(Month), by = "month"))
+
+year_extremes <- pyqdata %>%
+  mutate(PlotDate = ymd(Date)) %>%
+  arrange(PlotDate) %>%
+  group_by(Year) %>%
+  summarise(
+    MaxDate = PlotDate[which.max(Like)],
+    MaxLike = max(Like, na.rm = TRUE),
+    MinDate = PlotDate[which.min(Like)],
+    MinLike = min(Like, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+ggplot(pyqdata, aes(x = ymd(Date), y = Like)) +
+  geom_point(
+    aes(color = factor(Year)),
+    alpha = 0.7,
+    size = 2.5
+  ) +
+  geom_line(
+    data = monthly_avg,
+    aes(x = Month, y = AvgLike),
+    inherit.aes = FALSE,
+    color = "black",
+    linewidth = 1
+  ) +
+  geom_text(
+    data = year_extremes,
+    aes(x = MaxDate, y = MaxLike, label = MaxLike),
+    inherit.aes = FALSE,
+    nudge_y = 3,
+    size = 3.5
+  ) +
+  geom_text(
+    data = year_extremes,
+    aes(x = MinDate, y = MinLike, label = MinLike),
+    inherit.aes = FALSE,
+    nudge_y = -3,
+    size = 3.5
+  ) +
+  scale_color_manual(values = year_colors) +
+  scale_x_date(
+    date_breaks = "1 year",
+    date_labels = "%Y"
+  ) +
+  scale_y_continuous(
+    expand = expansion(mult = c(0.12, 0.12))
+  ) +
+  labs(
+    title = "Figure 1: Likes of posts over time",
+    subtitle = "Likes per post peaked at 74 in 2024, then the annual high fell to 48 in 2025 and 40 in 2026",
+    x = "Date",
+    y = "Likes",
+    color = "Year",
+    caption = "Black line: monthly average likes\nLabels: annual maximum and minimum\nSource: Personal WeChat Moments records, 2021-2026\nAuthor: Jason You"
+)
+```
+The chart shows how many likes each WeChat Moments post received from 2021 to 2026. Each colored dot represents a post, and the black line tracks the monthly average. The numbers next to individual dots mark each year’s highest and lowest like counts.
+
+The most-liked post of each year rose from 57 likes in 2021 to 74 in 2024, the highest count in the chart. The monthly average also reached about 60 likes in 2023, while 2024 had the widest spread, with individual posts receiving anywhere from 16 to 74 likes.
+
+Likes generally fell in 2025 and 2026. The annual highs dropped to 48 and 40, respectively, and most monthly averages stayed below 40. The final months shown in 2026 did see a rebound, with the average climbing back to around 40 likes.
+
+```{r}
+ggplot(pyqdata, aes(
+  x = fct_reorder(Content, Like, .fun = median),
+  y = Like
+)) +
+  geom_boxplot(
+    width = 0.5,
+    outlier.shape = NA,
+    fill = "white",
+    alpha = 0.3
+  ) +
+  geom_point(
+    aes(color = factor(Video)),
+    position = position_jitter(
+      width = 0.16, height = 0, seed = 212
+    ),
+    alpha = 0.7,
+    size = 1.7
+  ) +
+  scale_color_manual(
+    values = c("0" = "#ef476f", "1" = "#118ab2"),
+    labels = c("0" = "With photo", "1" = "With video"),
+    name = NULL
+  ) +
+  coord_flip() +
+  labs(
+    title = "Figure 2: Likes by content category",
+    subtitle = "Milestone posts typically received the most likes, and concert posts the fewest.",
+    x = "Content",
+    y = "Likes",
+    caption = "Source: Personal WeChat Moments records, 2021-2026\nAuthor: Jason You"
+  )
+```
+I've divided my posts in WeChat Moments into 12 categories. This is the meaning of each category: 
+
+Milestone: Posts about my birthdays and graduation.
+Social: Posts about meeting friends and hanging out, usually containing selfies.
+Recap: Posts that summarize the previous month or year. Usually with caption "(month/year) wrap".
+Event: Posts about attending invents, specifically sports games.
+Travel: Posts sharing my trips.
+Food: Posts sharing food.
+Lifeshare: Generics posts where I share about my life.
+Photography: Posts where I intentionally post higher-quality photos, mostly landscapes.
+Cat: Posts where I share my cat.
+Thought: Posts where I write to share my thought.
+Talent: Posts where I showcase my talent, specifically playing guitar or drum.
+Concert: Posts about concerts I went to.
+
+Milestone posts had a median of about 69 likes, compared with about 39 for social posts and 21 for concert posts. Lifeshare posts varied widely, from fewer than 10 likes to 74, the highest count for any individual post. The milestone category contains only five posts, so its median reflects a small sample.
+
+```{r}
+max_cells <- pyqdata %>%
+  transmute(
+    Hour = as.integer(sub(":.*", "", as.character(Time))),
+    Day = wday(ymd(Date), week_start = 1)
+  ) %>%
+  filter(!is.na(Hour), !is.na(Day)) %>%
+  count(Hour, Day, name = "Posts") %>%
+  slice_max(Posts, n = 1, with_ties = TRUE)
+ggplot(pyqdata, aes(
+  x = as.integer(sub(":.*", "", as.character(Time))),
+  y = wday(ymd(Date), week_start = 1)
+)) +
+  stat_bin_2d(
+    binwidth = c(1, 1),
+    boundary = c(-0.5, 0.5),
+    drop = TRUE
+  ) +
+  scale_fill_viridis_c(name = "Posts") +
+  scale_x_continuous(
+    breaks = seq(0, 23, 3),
+    limits = c(-0.5, 23.5),
+    expand = expansion(mult = 0)
+  ) +
+  scale_y_continuous(
+    breaks = 1:7,
+    labels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
+    limits = c(0.5, 7.5),
+    expand = expansion(mult = 0)
+  ) +
+  coord_fixed() +
+  geom_text(
+    data = max_cells,
+    aes(x = Hour, y = Day, label = Posts),
+    inherit.aes = FALSE,
+    color = "black",
+    size = 3
+  ) +
+  labs(
+    title = "Number of posts posted in each hour of each day of the week",
+    subtitle = "Blank cells indicate zero posts",
+    x = "Hour of day", y = "Day in week",
+    caption = "Source: Personal WeChat Moments records, 2021-2026\nAuthor: Jason You\nThe hour of day is in China Standard Time"
+  ) +
+  theme(panel.grid = element_blank())
+
+```
+
+```{r}
+category_year <- pyqdata %>%
+  count(Content, Year, name = "Posts") %>%
+  complete(
+    Content,
+    Year = seq(min(Year), max(Year)),
+    fill = list(Posts = 0)
+  )
+ggplot(category_year, aes(
+  x = factor(Year),
+  y = Posts,
+  fill = Content
+)) +
+  geom_col(position = "fill", width = 0.7) +
+  scale_fill_viridis_d(option = "turbo") +
+  scale_y_continuous(
+    labels = scales::label_percent(),
+    breaks = seq(0, 1, 0.25),
+    expand = expansion(mult = 0)
+  ) +
+  labs(
+    title = "Yearly content composition",
+    x = "Year",
+    y = "Percentage of posts",
+    fill = "Content"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank()
+  )
+```
+
+```{r}
+world <- map_data("world")
+
+ggplot() +
+  geom_polygon(
+    data = world,
+    aes(x = long, y = lat, group = group),
+    fill = "grey95",
+    color = "grey75",
+    linewidth = 0.2
+  ) +
+  geom_count(
+    data = pyqdata,
+    aes(
+      x = round(Long, 1),
+      y = round(Lat, 1),
+      size = after_stat(n)
+    ),
+    shape = 21,
+    fill = "#23c245",
+    color = "white",
+    stroke = 0.3,
+    alpha = 0.5,
+    na.rm = TRUE
+  ) +
+  scale_size_area(
+    max_size = 10,
+    name = "Number of posts"
+  ) +
+  coord_quickmap(
+    xlim = c(-180, 180),
+    ylim = c(-60, 85),
+    expand = FALSE
+  ) +
+  labs(
+    title = "Locations of WeChat Moments posts",
+    subtitle = "Bubble area represents the number of posts at identical coordinates",
+    x = NULL,
+    y = NULL,
+    caption = paste(
+      "Source: Personal WeChat Moments records, 2021–2026",
+      "Author: Jason You",
+      sep = "\n"
+    )
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    panel.grid = element_blank(),
+    axis.text = element_blank(),
+    panel.background = element_rect(
+      fill = "#EAF3F8",
+      color = NA 
+    ),
+    legend.position = "bottom"
+  )
+```
+
