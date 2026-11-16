@@ -194,7 +194,7 @@ ggplot(pyqdata, aes(
   ) +
   labs(
     title = "Number of posts posted in each hour of each day of the week",
-    subtitle = "Blank cells indicate zero posts",
+    subtitle = "The hours of the day with the most amount of posts are from 18:00 to 21:00, no posts\nare posted on 3am. ",
     x = "Hour of day", y = "Day in week",
     caption = "Source: Personal WeChat Moments records, 2021-2026\nAuthor: Jason You\nThe hour of day is in China Standard Time"
   ) +
