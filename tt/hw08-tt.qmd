@@ -1,0 +1,91 @@
+---
+title: "Homework 08"
+---
+
+
+## TidyTuesday Part (Optional)
+
+::: {.callout-important title="Instructions"}
+You can count work on this week's TidyTuesday toward the exceptional work.
+:::
+
+Explore the week's [TidyTuesday](https://github.com/rfordatascience/tidytuesday) challenge. Develop a research question, then answer it through a short data story mainly composed of [effective visualizations](https://docs.google.com/presentation/d/1Q-C0sFxYGQvkxb6PU6OM_YOv6Nilalpk-IWb362PoRc/preview?slide=id.g13360dab5d5_0_61#slide=id.g13360dab5d5_0_61).  Provide sufficient background for readers to grasp your narrative.  Refer to the Homework Instructions ⭐ page on the course website for details on how to submit this part.
+
+```{r}
+tuesdata <- tidytuesdayR::tt_load(2026, week = 45)
+
+fiction_citations <- tuesdata$fiction_citations
+fiction_deaths <- tuesdata$fiction_deaths
+fiction_rankings <- tuesdata$fiction_rankings
+```
+
+```{r}
+head(fiction_citations)
+head(fiction_deaths)
+head(fiction_rankings)
+```
+```{r}
+ggplot(
+  fiction_deaths,
+  aes(
+    x = confidence,
+    fill = if_else(undone, "Reversed", "Not reversed")
+  )
+) +
+  geom_bar() +
+  geom_text(
+    stat = "count",
+    aes(label = after_stat(count)),
+    position = position_stack(vjust = 0.5),
+    size = 3
+  ) +
+  facet_wrap(~ franchise_slug, ncol = 4) +
+  labs(
+    title = "Recorded deaths by franchise, evidence, and reversal",
+    subtitle = "40 of 307 recorded deaths were later reversed (13.0%).",
+    x = "Evidence type",
+    y = "Number of recorded deaths",
+    fill = "Death outcome",
+    caption = paste0(
+      "Shown = directly depicted; stated = reported by a character or narrator.\n",
+      "Author: Jason You | Source: Cited Feats / TidyTuesday, 2026-11-10"
+    )
+  ) +
+  theme(
+    plot.caption = element_text(hjust = 0)
+  )
+```
+```{r}
+
+
+reversal_rates <- tapply(
+  fiction_deaths$undone,
+  fiction_deaths$confidence,
+  mean
+)
+
+ggplot(
+  fiction_deaths,
+  aes(
+    x = confidence,
+    fill = if_else(undone, "Reversed", "Not reversed")
+  )
+) +
+  geom_bar(position = "fill") +
+  facet_wrap(~ franchise_slug, ncol = 4) +
+  scale_y_continuous(labels = scales::label_percent()) +
+  labs(
+    title = "Death reversal proportions within each franchise",
+    subtitle = "Overall, 15.9% of the shown death were reversed, compared with 4.1% of stated deaths",
+    x = "Evidence type",
+    y = "Percentage of recorded deaths",
+    fill = "Death outcome",
+    caption = paste0(
+      "Author: Jason You | Source: Cited Feats / TidyTuesday, 2026-11-10"
+    )
+  ) +
+  theme(
+    plot.caption = element_text(hjust = 0)
+  )
+```
+

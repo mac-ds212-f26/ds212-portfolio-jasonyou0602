@@ -15,6 +15,8 @@ library(lubridate)
 library(patchwork)
 library(maps)
 library(ggplot2)
+library(ggridges)
+
 ```
 
 
@@ -155,51 +157,66 @@ Concert: Posts about concerts I went to.
 Milestone posts had a median of about 69 likes, compared with about 39 for social posts and 21 for concert posts. Lifeshare posts varied widely, from fewer than 10 likes to 74, the highest count for any individual post. The milestone category contains only five posts, so its median reflects a small sample.
 
 ```{r}
-max_cells <- pyqdata %>%
+# Count posts for each hour and weekday
+ridge_data <- pyqdata %>%
   transmute(
     Hour = as.integer(sub(":.*", "", as.character(Time))),
     Day = wday(ymd(Date), week_start = 1)
   ) %>%
   filter(!is.na(Hour), !is.na(Day)) %>%
   count(Hour, Day, name = "Posts") %>%
-  slice_max(Posts, n = 1, with_ties = TRUE)
-ggplot(pyqdata, aes(
-  x = as.integer(sub(":.*", "", as.character(Time))),
-  y = wday(ymd(Date), week_start = 1)
+  complete(Hour = 0:23, Day = 1:7, fill = list(Posts = 0)) %>%
+  mutate(
+    Day = factor(
+      Day,
+      levels = 7:1,
+      labels = c("Sun", "Sat", "Fri", "Thu", "Wed", "Tue", "Mon")
+    )
+  )
+
+# Create the ridgeline plot
+ggplot(ridge_data, aes(
+  x = Hour,
+  y = Day,
+  height = Posts,
+  fill = Day
 )) +
-  stat_bin_2d(
-    binwidth = c(1, 1),
-    boundary = c(-0.5, 0.5),
-    drop = TRUE
+  geom_density_ridges(
+    stat = "identity",
+    scale = 0.9,
+    alpha = 0.8,
+    color = "white"
   ) +
-  scale_fill_viridis_c(name = "Posts") +
+  scale_fill_viridis_d(guide = "none") +
   scale_x_continuous(
     breaks = seq(0, 23, 3),
+    labels = c("12am", "3am", "6am", "9am",
+               "12pm", "3pm", "6pm", "9pm"),
     limits = c(-0.5, 23.5),
     expand = expansion(mult = 0)
   ) +
-  scale_y_continuous(
-    breaks = 1:7,
-    labels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
-    limits = c(0.5, 7.5),
-    expand = expansion(mult = 0)
-  ) +
-  coord_fixed() +
-  geom_text(
-    data = max_cells,
-    aes(x = Hour, y = Day, label = Posts),
-    inherit.aes = FALSE,
-    color = "black",
-    size = 3
+  scale_y_discrete(
+    expand = expansion(add = c(0.2, 1))
   ) +
   labs(
-    title = "Number of posts posted in each hour of each day of the week",
-    subtitle = "The hours of the day with the most amount of posts are from 18:00 to 21:00, no posts\nare posted on 3am. ",
-    x = "Hour of day", y = "Day in week",
-    caption = "Source: Personal WeChat Moments records, 2021-2026\nAuthor: Jason You\nThe hour of day is in China Standard Time"
+    title = "Posting activity by hour and day of the week",
+    subtitle = "The hours of the day with the most amount of posts are from 18:00 to 21:00, no posts\nare posted on 3am.",
+    caption = paste(
+      "Source: Personal WeChat Moments records, 2021–2026",
+      "Author: Jason You",
+      "The hour of day is in China Standard Time",
+      sep = "\n"
+    )
   ) +
-  theme(panel.grid = element_blank())
-
+  theme_ridges() +
+  theme(
+    panel.grid = element_blank(),
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    plot.subtitle = element_text(size = 10),
+    plot.caption = element_text(hjust = 0, size = 9),
+    plot.caption.position = "plot"
+  )
 ```
 
 ```{r}
